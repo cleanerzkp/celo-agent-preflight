@@ -1,11 +1,28 @@
-export const REPORT_SCHEMA_VERSION = "preflight.report.v0.1" as const;
-
-export interface PackageMarker {
-  readonly packageName: "@celo-agent-preflight/report-schema";
-  readonly schemaVersion: typeof REPORT_SCHEMA_VERSION;
-}
-
-export const reportSchemaPackage: PackageMarker = {
-  packageName: "@celo-agent-preflight/report-schema",
-  schemaVersion: REPORT_SCHEMA_VERSION
-};
+export { canonicalJson } from "./canonical-json.js";
+export {
+  attachReportHash,
+  hashPreflightReport,
+  toHashableReport,
+  type ReportHash
+} from "./hash.js";
+export { labelScore, scoreChecks } from "./score.js";
+export {
+  AttestationSchema,
+  CheckCategorySchema,
+  CheckSeveritySchema,
+  CheckStatusSchema,
+  EvidenceSchema,
+  parsePreflightReport,
+  PreflightReportSchema,
+  ReadinessCheckSchema,
+  REPORT_SCHEMA_VERSION,
+  ScoreSchema,
+  SubjectSchema,
+  type CheckCategory,
+  type CheckSeverity,
+  type CheckStatus,
+  type Evidence,
+  type PreflightReport,
+  type ReadinessCheck,
+  type Score
+} from "./schema.js";
