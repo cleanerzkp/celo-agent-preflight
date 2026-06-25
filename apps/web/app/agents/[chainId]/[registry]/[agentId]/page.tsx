@@ -5,6 +5,8 @@ import { notFound } from "next/navigation";
 import { getReportForAgent } from "../../../../../src/data/reports";
 import styles from "../../../../page.module.css";
 
+export const dynamic = "force-dynamic";
+
 interface AgentPageParams {
   readonly agentId: string;
   readonly chainId: string;
@@ -69,7 +71,7 @@ export default async function AgentPage({
                 <td>{report.subject.metadataURI}</td>
               </tr>
               <tr>
-                <th>Report</th>
+                <th>Preflight Report</th>
                 <td>
                   <Link href={`/reports/${report.reportHash}` as Route} className={styles.textLink}>
                     {report.reportHash}

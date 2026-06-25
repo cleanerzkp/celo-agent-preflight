@@ -1,8 +1,16 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
+import {
+  canonicalJson,
+  hashPreflightReport,
+  toHashableReport
+} from "@celo-agent-preflight/report-schema";
+
 import { getReportByHash } from "../../../src/data/reports";
 import styles from "../../page.module.css";
+
+export const dynamic = "force-dynamic";
 
 interface ReportPageParams {
   readonly hash: string;
@@ -20,22 +28,61 @@ export default async function ReportPage({
     notFound();
   }
 
+  const canonical = canonicalJson(toHashableReport(report));
+  const recomputedHash = hashPreflightReport(report);
+  const hashVerified = report.reportHash === recomputedHash;
+  const attestationUrl = formatExplorerUrl(
+    report.attestation?.chainId,
+    report.attestation?.txHash
+  );
+
   return (
     <main className={styles.shell}>
       <section className={styles.section}>
         <div className={styles.sectionHeader}>
           <div>
-            <p className={styles.kicker}>Preflight report</p>
+            <p className={styles.kicker}>Preflight Report</p>
             <h1>{report.score.value} / {report.score.label.replaceAll("_", " ")}</h1>
           </div>
           <Link href="/agents" className={styles.textLink}>
             ReadyList
           </Link>
         </div>
-        <div className={styles.commandBox}>
-          <span>Report hash</span>
-          <code>{report.reportHash}</code>
+        <div className={styles.statusRow}>
+          <span className={`${styles.badge} ${hashVerified ? styles.pass : styles.fail}`}>
+            {hashVerified ? "hash verified" : "hash mismatch"}
+          </span>
+          <span className={styles.mono}>schema {report.schemaVersion}</span>
         </div>
+        <div className={styles.verificationGrid}>
+          <div className={styles.commandBox}>
+            <span>Stored report hash</span>
+            <code>{report.reportHash}</code>
+          </div>
+          <div className={styles.commandBox}>
+            <span>Recomputed canonical hash</span>
+            <code>{recomputedHash}</code>
+          </div>
+          <div className={styles.commandBox}>
+            <span>Celo attestation</span>
+            {attestationUrl ? (
+              <a href={attestationUrl} className={styles.textLink}>
+                {report.attestation?.txHash}
+              </a>
+            ) : (
+              <code>not attested</code>
+            )}
+          </div>
+        </div>
+      </section>
+      <section className={styles.section}>
+        <div className={styles.sectionHeader}>
+          <div>
+            <p className={styles.kicker}>Canonical JSON</p>
+            <h2>Hash preimage</h2>
+          </div>
+        </div>
+        <pre className={styles.jsonBlock}>{canonical}</pre>
       </section>
       <section className={styles.section}>
         <div className={styles.tableWrap}>
@@ -63,4 +110,19 @@ export default async function ReportPage({
       </section>
     </main>
   );
+}
+
+function formatExplorerUrl(
+  chainId: number | undefined,
+  txHash: string | undefined
+): string | undefined {
+  if (!txHash) {
+    return undefined;
+  }
+
+  if (chainId === 11142220) {
+    return `https://sepolia.celoscan.io/tx/${txHash}`;
+  }
+
+  return `https://celoscan.io/tx/${txHash}`;
 }

@@ -6,7 +6,7 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "Celo Agent Preflight",
   description:
-    "Deterministic readiness reports and Celo attestations for ERC-8004 agents."
+    "Deterministic Preflight Reports and Celo attestations for ERC-8004 agents."
 };
 
 export default function RootLayout({
