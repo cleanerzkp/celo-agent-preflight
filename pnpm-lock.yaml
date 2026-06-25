@@ -95,6 +95,9 @@ importers:
 
   apps/web:
     dependencies:
+      '@celo-agent-preflight/preflight-core':
+        specifier: workspace:*
+        version: link:../../packages/preflight-core
       '@celo-agent-preflight/readylist':
         specifier: workspace:*
         version: link:../../packages/readylist

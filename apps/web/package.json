@@ -4,13 +4,14 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "next build",
-    "dev": "next dev",
+    "build": "next build --webpack",
+    "dev": "next dev --webpack",
     "lint": "tsc -p tsconfig.json --noEmit",
     "test": "node --import tsx --test \"src/**/*.test.ts\"",
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {
+    "@celo-agent-preflight/preflight-core": "workspace:*",
     "@celo-agent-preflight/readylist": "workspace:*",
     "@celo-agent-preflight/report-schema": "workspace:*",
     "next": "^16.2.9",
