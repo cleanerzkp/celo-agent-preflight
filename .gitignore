@@ -1,0 +1,15 @@
+node_modules/
+.turbo/
+.next/
+out/
+cache/
+broadcast/
+lib/
+.env
+.env.*
+!.env.example
+.dev.vars
+dist/
+coverage/
+lcov.info
+

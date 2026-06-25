@@ -1,0 +1,22 @@
+packages:
+  - "apps/*"
+  - "packages/*"
+overrides:
+  postcss: ^8.5.10
+  ws: ^8.21.0
+allowBuilds:
+  '@coinbase/x402': true
+  bufferutil: false
+  esbuild: true
+  keccak: true
+  sharp: true
+  utf-8-validate: false
+  workerd: true
+minimumReleaseAgeExclude:
+  - '@turbo/darwin-64@2.10.0'
+  - '@turbo/darwin-arm64@2.10.0'
+  - '@turbo/linux-64@2.10.0'
+  - '@turbo/linux-arm64@2.10.0'
+  - '@turbo/windows-64@2.10.0'
+  - '@turbo/windows-arm64@2.10.0'
+  - turbo@2.10.0

@@ -1,0 +1,18 @@
+title = "Celo Agent Preflight gitleaks config"
+
+[allowlist]
+description = "Ignore generated dependencies and build outputs"
+paths = [
+  '''node_modules/''',
+  '''\.git/''',
+  '''\.next/''',
+  '''\.turbo/''',
+  '''dist/''',
+  '''coverage/''',
+  '''contracts/lib/''',
+  '''contracts/out/''',
+  '''contracts/cache/''',
+  '''contracts/broadcast/''',
+  '''pnpm-lock\.yaml'''
+]
+
