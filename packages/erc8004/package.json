@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@celo-agent-preflight/celo": "workspace:*",
+    "undici": "^8.5.0",
     "viem": "^2.53.1",
     "zod": "^4.4.3"
   },
