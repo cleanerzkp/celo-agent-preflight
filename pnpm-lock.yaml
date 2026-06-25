@@ -71,6 +71,223 @@ importers:
         specifier: ^4.104.0
         version: 4.104.0(bufferutil@4.1.0)(utf-8-validate@5.0.10)
 
+  apps/mcp:
+    dependencies:
+      '@celo-agent-preflight/preflight-core':
+        specifier: workspace:*
+        version: link:../../packages/preflight-core
+      '@modelcontextprotocol/sdk':
+        specifier: ^1.29.0
+        version: 1.29.0(zod@4.4.3)
+      zod:
+        specifier: ^4.4.3
+        version: 4.4.3
+    devDependencies:
+      '@types/node':
+        specifier: ^24.10.0
+        version: 24.13.2
+      tsx:
+        specifier: ^4.22.4
+        version: 4.22.4
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
+
+  apps/web:
+    dependencies:
+      '@celo-agent-preflight/readylist':
+        specifier: workspace:*
+        version: link:../../packages/readylist
+      '@celo-agent-preflight/report-schema':
+        specifier: workspace:*
+        version: link:../../packages/report-schema
+      next:
+        specifier: ^16.2.9
+        version: 16.2.9(@babel/core@7.29.7)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      react-dom:
+        specifier: ^18.3.1
+        version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@types/node':
+        specifier: ^24.10.0
+        version: 24.13.2
+      '@types/react':
+        specifier: ^18.3.0
+        version: 18.3.31
+      '@types/react-dom':
+        specifier: ^18.3.0
+        version: 18.3.7(@types/react@18.3.31)
+      tsx:
+        specifier: ^4.22.4
+        version: 4.22.4
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
+
+  packages/celo:
+    dependencies:
+      viem:
+        specifier: ^2.53.1
+        version: 2.53.1(bufferutil@4.1.0)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@4.4.3)
+    devDependencies:
+      '@types/node':
+        specifier: ^24.10.0
+        version: 24.13.2
+      tsx:
+        specifier: ^4.22.4
+        version: 4.22.4
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
+
+  packages/cli:
+    dependencies:
+      '@celo-agent-preflight/preflight-core':
+        specifier: workspace:*
+        version: link:../preflight-core
+      '@celo-agent-preflight/report-schema':
+        specifier: workspace:*
+        version: link:../report-schema
+    devDependencies:
+      '@types/node':
+        specifier: ^24.10.0
+        version: 24.13.2
+      tsx:
+        specifier: ^4.22.4
+        version: 4.22.4
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
+
+  packages/erc8004:
+    dependencies:
+      '@celo-agent-preflight/celo':
+        specifier: workspace:*
+        version: link:../celo
+      viem:
+        specifier: ^2.53.1
+        version: 2.53.1(bufferutil@4.1.0)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@4.4.3)
+      zod:
+        specifier: ^4.4.3
+        version: 4.4.3
+    devDependencies:
+      '@types/node':
+        specifier: ^24.10.0
+        version: 24.13.2
+      tsx:
+        specifier: ^4.22.4
+        version: 4.22.4
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
+
+  packages/preflight-core:
+    dependencies:
+      '@celo-agent-preflight/celo':
+        specifier: workspace:*
+        version: link:../celo
+      '@celo-agent-preflight/erc8004':
+        specifier: workspace:*
+        version: link:../erc8004
+      '@celo-agent-preflight/report-schema':
+        specifier: workspace:*
+        version: link:../report-schema
+      '@celo-agent-preflight/self-agent-id':
+        specifier: workspace:*
+        version: link:../self-agent-id
+      '@celo-agent-preflight/x402':
+        specifier: workspace:*
+        version: link:../x402
+      zod:
+        specifier: ^4.4.3
+        version: 4.4.3
+    devDependencies:
+      '@types/node':
+        specifier: ^24.10.0
+        version: 24.13.2
+      tsx:
+        specifier: ^4.22.4
+        version: 4.22.4
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
+
+  packages/readylist:
+    dependencies:
+      '@celo-agent-preflight/report-schema':
+        specifier: workspace:*
+        version: link:../report-schema
+      zod:
+        specifier: ^4.4.3
+        version: 4.4.3
+    devDependencies:
+      '@types/node':
+        specifier: ^24.10.0
+        version: 24.13.2
+      tsx:
+        specifier: ^4.22.4
+        version: 4.22.4
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
+
+  packages/report-schema:
+    dependencies:
+      viem:
+        specifier: ^2.53.1
+        version: 2.53.1(bufferutil@4.1.0)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@4.4.3)
+      zod:
+        specifier: ^4.4.3
+        version: 4.4.3
+    devDependencies:
+      '@types/node':
+        specifier: ^24.10.0
+        version: 24.13.2
+      tsx:
+        specifier: ^4.22.4
+        version: 4.22.4
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
+
+  packages/self-agent-id:
+    dependencies:
+      zod:
+        specifier: ^4.4.3
+        version: 4.4.3
+    devDependencies:
+      '@types/node':
+        specifier: ^24.10.0
+        version: 24.13.2
+      tsx:
+        specifier: ^4.22.4
+        version: 4.22.4
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
+
+  packages/x402:
+    dependencies:
+      viem:
+        specifier: ^2.53.1
+        version: 2.53.1(bufferutil@4.1.0)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@4.4.3)
+      zod:
+        specifier: ^4.4.3
+        version: 4.4.3
+    devDependencies:
+      '@types/node':
+        specifier: ^24.10.0
+        version: 24.13.2
+      tsx:
+        specifier: ^4.22.4
+        version: 4.22.4
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
+
 packages:
 
   '@adraffy/ens-normalize@1.11.1':
@@ -1309,11 +1526,22 @@ packages:
   '@types/picomatch@4.0.3':
     resolution: {integrity: sha512-iG0T6+nYJ9FAPmx9SsUlnwcq1ZVRuCXcVEvWnntoPlrOpwtSTKNDC9uVAxTsC3PUvJ+99n4RpAcNgBbHX3JSnQ==}
 
+  '@types/prop-types@15.7.15':
+    resolution: {integrity: sha512-F6bEyamV9jKGAFBEmlQnesRPGOQqS2+Uwi0Em15xenOxHaf2hv6L8YCVn3rPdPJOiJfPiCnLIRyvwVaqMY3MIw==}
+
   '@types/qs@6.15.1':
     resolution: {integrity: sha512-GZHUBZR9hckSUhrxmp1nG6NwdpM9fCunJwyThLW1X3AyHgd9IlHb6VANpQQqDr2o/qQp6McZ3y/IA2rVzKzSbw==}
 
   '@types/range-parser@1.2.7':
     resolution: {integrity: sha512-hKormJbkJqzQGhziax5PItDUTMAM9uE2XXQmM37dyd4hVM+5aVl7oVxMVUiVQn2oCQFN/LKCZdvSM0pFRqbSmQ==}
+
+  '@types/react-dom@18.3.7':
+    resolution: {integrity: sha512-MEe3UeoENYVFXzoXEWsvcpg6ZvlrFNlOQ7EOsvhI3CfAXwzPfO8Qwuxd40nepsYKqyyVQnTdEfv68q91yLcKrQ==}
+    peerDependencies:
+      '@types/react': ^18.0.0
+
+  '@types/react@18.3.31':
+    resolution: {integrity: sha512-vfEqpXTvwT91yhmwdfouStN2hSKwTvyRs8qpLfADyrq/kxDw0hZM7Wk9Ug1FELj8hIby+S/+kQCSRFF32nv2Qw==}
 
   '@types/send@1.2.1':
     resolution: {integrity: sha512-arsCikDvlU99zl1g69TcAB3mzZPpxgw0UQnaHeC1Nwb015xp8bknZv5rIfri9xTOcMuaVgvabfIRA7PSZVuZIQ==}
@@ -1672,6 +1900,9 @@ packages:
     resolution: {integrity: sha512-/Tb/JcjK111nNScGob5MNtsntNM1aCNUDipB/TkwZFhyDrrE47SOx/18wF2bbjgc3ZzCSKW1T5nt5EbFoAz/Vg==}
     engines: {node: '>=4'}
     hasBin: true
+
+  csstype@3.2.3:
+    resolution: {integrity: sha512-z1HGKcYy2xA8AGQfwrn0PAy+PB7X/GSj3UVJW9qKyn43xWa+gl5nXmU4qqLMRzWVLFC8KusUX8T/0kCiOYpAIQ==}
 
   ctx7@0.5.3:
     resolution: {integrity: sha512-6ZrLIdVs5BUAkKNNbhX+nQ2Fr3CA6dUqMs5RLDHihE7ifx3NE8oljbLJ9Luwvvgqgo1IYp8PjM0i+30Z/O98Bw==}
@@ -4426,9 +4657,20 @@ snapshots:
 
   '@types/picomatch@4.0.3': {}
 
+  '@types/prop-types@15.7.15': {}
+
   '@types/qs@6.15.1': {}
 
   '@types/range-parser@1.2.7': {}
+
+  '@types/react-dom@18.3.7(@types/react@18.3.31)':
+    dependencies:
+      '@types/react': 18.3.31
+
+  '@types/react@18.3.31':
+    dependencies:
+      '@types/prop-types': 15.7.15
+      csstype: 3.2.3
 
   '@types/send@1.2.1':
     dependencies:
@@ -4774,6 +5016,8 @@ snapshots:
   crypt@0.0.2: {}
 
   cssesc@3.0.0: {}
+
+  csstype@3.2.3: {}
 
   ctx7@0.5.3(@types/node@24.13.2):
     dependencies:

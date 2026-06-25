@@ -16,7 +16,7 @@ fuzz = { runs = 512 }
 invariant = { runs = 128, depth = 32 }
 
 [rpc_endpoints]
-celo = "${CELO_RPC_URL}"
+celo = "${CELO_MAINNET_RPC_URL}"
 celo_sepolia = "${CELO_SEPOLIA_RPC_URL}"
 forno = "https://forno.celo.org"
 forno_sepolia = "https://forno.celo-sepolia.celo-testnet.org"
@@ -25,4 +25,3 @@ localhost = "http://127.0.0.1:8545"
 [etherscan]
 celo = { key = "${ETHERSCAN_API_KEY}", chain = 42220, url = "https://api.etherscan.io/v2/api" }
 celo_sepolia = { key = "${ETHERSCAN_API_KEY}", chain = 11142220, url = "https://api.etherscan.io/v2/api" }
-

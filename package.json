@@ -7,7 +7,14 @@
     "pnpm": "11.9.0"
   },
   "scripts": {
+    "build": "turbo run build",
+    "ci": "pnpm doctor && pnpm lint && pnpm typecheck && pnpm test && pnpm build && pnpm foundry:fmt && pnpm foundry:test && pnpm security:secrets",
+    "cli": "pnpm --filter @celo-agent-preflight/cli dev",
+    "dev": "turbo run dev --parallel",
     "doctor": "node scripts/tool-doctor.mjs",
+    "lint": "turbo run lint",
+    "test": "turbo run test",
+    "typecheck": "turbo run typecheck",
     "security:deps": "pnpm audit --audit-level moderate",
     "security:secrets": "gitleaks dir . --redact --no-banner --config .gitleaks.toml",
     "security:osv": "osv-scanner scan source --lockfile pnpm-lock.yaml",
