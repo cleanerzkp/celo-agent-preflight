@@ -14,7 +14,21 @@ import {
   parsePreflightReport,
   type PreflightReport
 } from "@celo-agent-preflight/report-schema";
-import type { Address } from "viem";
+import {
+  createPublicClient,
+  createWalletClient,
+  encodeFunctionData,
+  http,
+  parseAbi,
+  type Address,
+  type Hex
+} from "viem";
+import { privateKeyToAccount } from "viem/accounts";
+import { celo, celoSepolia } from "viem/chains";
+
+const attestationAbi = parseAbi([
+  "function attestAgentReport(uint256 agentId,address subject,bytes32 reportHash,uint16 score,string reportURI)"
+]);
 
 const args = process.argv.slice(2);
 const command = args[0] === "--" ? args[1] : args[0];
@@ -45,6 +59,11 @@ async function main(command: string | undefined, flags: ParsedFlags): Promise<vo
 
   if (command === "explain") {
     await runExplain(flags);
+    return;
+  }
+
+  if (command === "attest") {
+    await runAttest(flags);
     return;
   }
 
@@ -98,6 +117,94 @@ async function runExplain(flags: ParsedFlags): Promise<void> {
   }
 
   printReportSummary(parsePreflightReport(JSON.parse(await readPathOrStdin(path))));
+}
+
+async function runAttest(flags: ParsedFlags): Promise<void> {
+  const reportPath = flags.report ?? firstPositional(flags);
+
+  if (!reportPath) {
+    throw new Error("attest requires --report <path> or a positional report path.");
+  }
+
+  if (!flags.contract) {
+    throw new Error("attest requires --contract <attestation contract address>.");
+  }
+
+  if (!flags.reportUri) {
+    throw new Error("attest requires --report-uri <public report URI>.");
+  }
+
+  const report = attachReportHash(JSON.parse(await readPathOrStdin(reportPath)));
+  const contract = parseAddress(flags.contract, "--contract");
+  const subject = parseAddress(
+    flags.subject ?? report.subject.agentWallet ?? report.subject.owner ?? "",
+    "--subject"
+  );
+  const agentId = parseAgentId(flags.agentId ?? report.subject.agentId ?? "0");
+  const reportHash = report.reportHash as Hex;
+  const args = [
+    agentId,
+    subject,
+    reportHash,
+    report.score.value,
+    flags.reportUri
+  ] as const;
+  const data = encodeFunctionData({
+    abi: attestationAbi,
+    functionName: "attestAgentReport",
+    args
+  });
+  const privateKey = normalizePrivateKey(flags.privateKey ?? process.env.DEPLOYER_PRIVATE_KEY);
+
+  if (flags.dryRun || !privateKey) {
+    console.log(
+      JSON.stringify(
+        {
+          mode: "dry-run",
+          to: contract,
+          functionName: "attestAgentReport",
+          args: {
+            agentId: agentId.toString(),
+            subject,
+            reportHash,
+            score: report.score.value,
+            reportURI: flags.reportUri
+          },
+          data
+        },
+        null,
+        2
+      )
+    );
+    return;
+  }
+
+  const chain = parseViemChain(flags.chain ?? chainFromReport(report));
+  const account = privateKeyToAccount(privateKey);
+  const transport = http(flags.rpcUrl);
+  const walletClient = createWalletClient({ account, chain, transport });
+  const publicClient = createPublicClient({ chain, transport });
+  const txHash = await walletClient.writeContract({
+    address: contract,
+    abi: attestationAbi,
+    functionName: "attestAgentReport",
+    args
+  });
+  const receipt = await publicClient.waitForTransactionReceipt({ hash: txHash });
+
+  console.log(
+    JSON.stringify(
+      {
+        mode: "submitted",
+        txHash,
+        blockNumber: receipt.blockNumber.toString(),
+        contract,
+        reportHash
+      },
+      null,
+      2
+    )
+  );
 }
 
 function buildTarget(flags: ParsedFlags, metadataUrlRequired: boolean): PreflightTarget {
@@ -160,13 +267,20 @@ interface ParsedFlags {
   readonly agentId?: string;
   readonly chain?: string;
   readonly commit?: string;
+  readonly contract?: string;
+  readonly dryRun: boolean;
   readonly ipfsGateway?: string;
   readonly json: boolean;
   readonly maxBytes?: number;
   readonly metadataUrl?: string;
   readonly noProbeEndpoints: boolean;
   readonly output?: string;
+  readonly privateKey?: string;
   readonly registry?: string;
+  readonly report?: string;
+  readonly reportUri?: string;
+  readonly rpcUrl?: string;
+  readonly subject?: string;
   readonly timeoutMs?: number;
   readonly userAgent?: string;
 }
@@ -207,11 +321,17 @@ function parseFlags(argsToParse: readonly string[]): ParsedFlags {
   const agentId = stringFlag(flags.agentId);
   const chain = stringFlag(flags.chain);
   const commit = stringFlag(flags.commit);
+  const contract = stringFlag(flags.contract);
   const ipfsGateway = stringFlag(flags.ipfsGateway);
   const maxBytes = numberFlag(flags.maxBytes, "--max-bytes");
   const metadataUrl = stringFlag(flags.metadataUrl);
   const output = stringFlag(flags.output);
+  const privateKey = stringFlag(flags.privateKey);
   const registry = stringFlag(flags.registry);
+  const report = stringFlag(flags.report);
+  const reportUri = stringFlag(flags.reportUri);
+  const rpcUrl = stringFlag(flags.rpcUrl);
+  const subject = stringFlag(flags.subject);
   const timeoutMs = numberFlag(flags.timeoutMs, "--timeout-ms");
   const userAgent = stringFlag(flags.userAgent);
 
@@ -220,13 +340,20 @@ function parseFlags(argsToParse: readonly string[]): ParsedFlags {
     ...(agentId ? { agentId } : {}),
     ...(chain ? { chain } : {}),
     ...(commit ? { commit } : {}),
+    ...(contract ? { contract } : {}),
+    dryRun: Boolean(flags.dryRun),
     ...(ipfsGateway ? { ipfsGateway } : {}),
     json: Boolean(flags.json),
     ...(maxBytes === undefined ? {} : { maxBytes }),
     ...(metadataUrl ? { metadataUrl } : {}),
     noProbeEndpoints: Boolean(flags.noProbeEndpoints),
     ...(output ? { output } : {}),
+    ...(privateKey ? { privateKey } : {}),
     ...(registry ? { registry } : {}),
+    ...(report ? { report } : {}),
+    ...(reportUri ? { reportUri } : {}),
+    ...(rpcUrl ? { rpcUrl } : {}),
+    ...(subject ? { subject } : {}),
     ...(timeoutMs === undefined ? {} : { timeoutMs }),
     ...(userAgent ? { userAgent } : {})
   };
@@ -271,7 +398,7 @@ function normalizeFlag(input: string): string {
 }
 
 function isBooleanFlag(key: string): boolean {
-  return key === "json" || key === "noProbeEndpoints";
+  return key === "dryRun" || key === "json" || key === "noProbeEndpoints";
 }
 
 function stringFlag(input: string | boolean | undefined): string | undefined {
@@ -300,6 +427,44 @@ function compactUri(uri: string): string {
   return uri.startsWith("data:") ? "data:application/json" : uri;
 }
 
+function parseAgentId(input: string): bigint {
+  try {
+    const parsed = BigInt(input);
+
+    if (parsed >= 0n) {
+      return parsed;
+    }
+  } catch {
+    // handled below
+  }
+
+  throw new Error("agentId must be a non-negative integer.");
+}
+
+function chainFromReport(report: PreflightReport): PreflightTarget["chain"] {
+  return report.subject.chainId === 11142220 ? "celo-sepolia" : "celo";
+}
+
+function parseViemChain(input: string) {
+  const chain = parseChain(input);
+
+  return chain === "celo" ? celo : celoSepolia;
+}
+
+function normalizePrivateKey(input: string | undefined): Hex | undefined {
+  if (!input) {
+    return undefined;
+  }
+
+  const prefixed = input.startsWith("0x") ? input : `0x${input}`;
+
+  if (/^0x[a-fA-F0-9]{64}$/.test(prefixed)) {
+    return prefixed as Hex;
+  }
+
+  throw new Error("private key must be 32 bytes hex; prefer DEPLOYER_PRIVATE_KEY over --private-key.");
+}
+
 function printHelp(): void {
   console.log(`${preflightEngineInfo.name} v${preflightEngineInfo.version}`);
   console.log("");
@@ -307,6 +472,7 @@ function printHelp(): void {
   console.log("  celo-agent-preflight check --chain celo --agent-id 123");
   console.log("  celo-agent-preflight check-url --metadata-url https://example.com/agent.json");
   console.log("  celo-agent-preflight hash report.json");
+  console.log("  celo-agent-preflight attest --report report.json --report-uri https://example.com/report.json --contract 0x...");
   console.log("  celo-agent-preflight explain report.json");
   console.log("");
   console.log("Options:");
@@ -317,4 +483,5 @@ function printHelp(): void {
   console.log("  --output <path>                 Write full report JSON");
   console.log("  --json                          Print full report JSON");
   console.log("  --no-probe-endpoints            Skip live endpoint probes");
+  console.log("  --dry-run                       Print attestation calldata without sending a transaction");
 }
