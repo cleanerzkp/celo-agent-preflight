@@ -25,11 +25,11 @@ contract AgentPreflightAttestation {
     event AgentReportAttested(
         uint256 indexed agentId,
         address indexed subject,
-        address indexed attester,
-        bytes32 reportHash,
+        bytes32 indexed reportHash,
         uint16 score,
         string reportURI,
-        uint64 timestamp
+        uint64 timestamp,
+        address attester
     );
 
     uint16 public constant MAX_SCORE = 100;
@@ -106,6 +106,6 @@ contract AgentPreflightAttestation {
 
         latestReportHashByAttesterAndSubject[msg.sender][subject] = reportHash;
 
-        emit AgentReportAttested(agentId, subject, msg.sender, reportHash, score, reportURI, timestamp);
+        emit AgentReportAttested(agentId, subject, reportHash, score, reportURI, timestamp, msg.sender);
     }
 }

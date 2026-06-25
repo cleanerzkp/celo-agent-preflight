@@ -30,6 +30,9 @@ const attestationAbi = parseAbi([
   "function attestAgentReport(uint256 agentId,address subject,bytes32 reportHash,uint16 score,string reportURI)"
 ]);
 
+const CELO_RPC_URL = "https://forno.celo.org";
+const CELO_SEPOLIA_RPC_URL = "https://forno.celo-sepolia.celo-testnet.org";
+
 const args = process.argv.slice(2);
 const command = args[0] === "--" ? args[1] : args[0];
 const commandArgs = args[0] === "--" ? args.slice(2) : args.slice(1);
@@ -179,9 +182,11 @@ async function runAttest(flags: ParsedFlags): Promise<void> {
     return;
   }
 
-  const chain = parseViemChain(flags.chain ?? chainFromReport(report));
+  const chainKey = flags.chain ?? chainFromReport(report);
+  const chain = parseViemChain(chainKey);
   const account = privateKeyToAccount(privateKey);
-  const transport = http(flags.rpcUrl);
+  const rpcUrl = resolveRpcUrl(chainKey, flags.rpcUrl);
+  const transport = http(rpcUrl);
   const walletClient = createWalletClient({ account, chain, transport });
   const publicClient = createPublicClient({ chain, transport });
   const txHash = await walletClient.writeContract({
@@ -451,6 +456,16 @@ function parseViemChain(input: string) {
   return chain === "celo" ? celo : celoSepolia;
 }
 
+function resolveRpcUrl(chain: string, explicitRpcUrl: string | undefined): string {
+  if (explicitRpcUrl) {
+    return explicitRpcUrl;
+  }
+
+  return parseChain(chain) === "celo"
+    ? process.env.CELO_RPC_URL ?? CELO_RPC_URL
+    : process.env.CELO_SEPOLIA_RPC_URL ?? CELO_SEPOLIA_RPC_URL;
+}
+
 function normalizePrivateKey(input: string | undefined): Hex | undefined {
   if (!input) {
     return undefined;
@@ -483,5 +498,6 @@ function printHelp(): void {
   console.log("  --output <path>                 Write full report JSON");
   console.log("  --json                          Print full report JSON");
   console.log("  --no-probe-endpoints            Skip live endpoint probes");
+  console.log("  --rpc-url <url>                 Override Celo RPC for attest writes");
   console.log("  --dry-run                       Print attestation calldata without sending a transaction");
 }

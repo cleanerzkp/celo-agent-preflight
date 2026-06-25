@@ -16,11 +16,11 @@ contract AgentPreflightAttestationTest is Test {
     event AgentReportAttested(
         uint256 indexed agentId,
         address indexed subject,
-        address indexed attester,
-        bytes32 reportHash,
+        bytes32 indexed reportHash,
         uint16 score,
         string reportURI,
-        uint64 timestamp
+        uint64 timestamp,
+        address attester
     );
 
     function setUp() public {
@@ -31,7 +31,7 @@ contract AgentPreflightAttestationTest is Test {
         vm.warp(1_780_000_000);
         vm.prank(attester);
         vm.expectEmit(true, true, true, true);
-        emit AgentReportAttested(42, subject, attester, reportHash, 87, reportURI, uint64(block.timestamp));
+        emit AgentReportAttested(42, subject, reportHash, 87, reportURI, uint64(block.timestamp), attester);
 
         attestation.attestAgentReport(42, subject, reportHash, 87, reportURI);
     }
