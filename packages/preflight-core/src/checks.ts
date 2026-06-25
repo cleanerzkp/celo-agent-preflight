@@ -35,7 +35,9 @@ export function check(input: CheckInput): ReadinessCheck {
     scoreImpact: scoreImpact(input.status, input.severity),
     summary: input.summary,
     evidence: [...(input.evidence ?? [])],
-    ...(input.remediation ? { remediation: input.remediation } : {})
+    ...(shouldEmitRemediation(input.status) && input.remediation
+      ? { remediation: input.remediation }
+      : {})
   };
 }
 
@@ -49,4 +51,8 @@ function scoreImpact(status: CheckStatus, severity: CheckSeverity): number {
   }
 
   return 0;
+}
+
+function shouldEmitRemediation(status: CheckStatus): boolean {
+  return status === "warn" || status === "fail" || status === "error";
 }

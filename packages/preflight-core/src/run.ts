@@ -495,7 +495,7 @@ function addServiceDeclarationCheck(
       severity: "medium",
       summary: services.length > 0
         ? `Metadata declares ${services.length} ${type.toUpperCase()} service(s).`
-        : `Metadata does not declare a ${type.toUpperCase()} service.`,
+        : `Metadata does not declare ${type.toUpperCase()} service.`,
       evidence: services.map(serviceEvidence)
     })
   );
