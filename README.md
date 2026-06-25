@@ -4,6 +4,7 @@ This repository is now set up for Frontier Pool grant preparation, not a website
 
 Start here:
 
+- [docs/reviewer-guide.md](docs/reviewer-guide.md)
 - [Frontier Grant Workspace/README.md](Frontier%20Grant%20Workspace/README.md)
 - [Frontier Grant Workspace/Project/Selected Project - Celo Agent Preflight.md](Frontier%20Grant%20Workspace/Project/Selected%20Project%20-%20Celo%20Agent%20Preflight.md)
 - [Frontier Grant Workspace/Application/Frontier Answer Draft Template.md](Frontier%20Grant%20Workspace/Application/Frontier%20Answer%20Draft%20Template.md)
