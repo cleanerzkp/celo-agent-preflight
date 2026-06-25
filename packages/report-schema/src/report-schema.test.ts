@@ -12,6 +12,14 @@ import {
   type ReadinessCheck
 } from "./index.js";
 
+const passEvidence = {
+  type: "http" as const,
+  label: "metadata",
+  value: "https://agent.example/.well-known/agent.json",
+  statusCode: 200,
+  fetchedAt: "2026-06-25T00:00:00.000Z"
+};
+
 const passCheck: ReadinessCheck = {
   id: "metadata.resolves",
   category: "metadata",
@@ -21,13 +29,7 @@ const passCheck: ReadinessCheck = {
   scoreImpact: 0,
   summary: "The metadata document resolved and parsed.",
   evidence: [
-    {
-      type: "http",
-      label: "metadata",
-      value: "https://agent.example/.well-known/agent.json",
-      statusCode: 200,
-      fetchedAt: "2026-06-25T00:00:00.000Z"
-    }
+    passEvidence
   ]
 };
 
@@ -98,6 +100,46 @@ test("hashPreflightReport ignores publication attestation metadata", () => {
   });
 
   assert.equal(hashPreflightReport(report), hashPreflightReport(attested));
+});
+
+test("hashPreflightReport ignores scan timestamps", () => {
+  const report = sampleReport();
+  const rescanned = sampleReport({
+    generatedAt: "2026-06-25T00:05:00.000Z",
+    checks: [
+      {
+        ...passCheck,
+        evidence: [
+          {
+            ...passEvidence,
+            durationMs: 987,
+            fetchedAt: "2026-06-25T00:05:00.000Z"
+          }
+        ]
+      }
+    ]
+  });
+
+  assert.equal(hashPreflightReport(report), hashPreflightReport(rescanned));
+});
+
+test("hashPreflightReport is stable across check completion order", () => {
+  const first = {
+    ...passCheck,
+    id: "endpoint.1.reachable",
+    category: "mcp" as const
+  };
+  const second = {
+    ...passCheck,
+    id: "x402.endpoint.probe",
+    category: "x402" as const,
+    status: "warn" as const
+  };
+
+  assert.equal(
+    hashPreflightReport(sampleReport({ checks: [first, second] })),
+    hashPreflightReport(sampleReport({ checks: [second, first] }))
+  );
 });
 
 test("scoreChecks applies deterministic severity penalties", () => {

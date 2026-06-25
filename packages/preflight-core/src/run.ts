@@ -232,6 +232,7 @@ export async function runPreflight(
         label: "metadata document",
         value: compactUri(resolved.fetchedUrl),
         ...(resolved.statusCode ? { statusCode: resolved.statusCode } : {}),
+        ...(resolved.durationMs === undefined ? {} : { durationMs: resolved.durationMs }),
         fetchedAt: generatedAt
       }
     ];
@@ -677,6 +678,7 @@ async function probeEndpoint({
           label: `${service.type} endpoint`,
           value: response.url,
           statusCode: response.statusCode,
+          ...(response.durationMs === undefined ? {} : { durationMs: response.durationMs }),
           fetchedAt: generatedAt
         }
       ]
@@ -781,6 +783,7 @@ async function addX402ProbeCheck({
             label: "x402 endpoint",
             value: x402Url,
             statusCode: response.statusCode,
+            ...(response.durationMs === undefined ? {} : { durationMs: response.durationMs }),
             fetchedAt: generatedAt
           },
           ...(summary.network
@@ -823,6 +826,8 @@ function finalizeReport({
   readonly options: RunPreflightOptions;
   readonly subject: PreflightReport["subject"];
 }): PreflightReport {
+  const orderedChecks = [...checks].sort(compareChecks);
+
   return attachReportHash({
     schemaVersion: REPORT_SCHEMA_VERSION,
     generatedAt,
@@ -832,9 +837,18 @@ function finalizeReport({
       ...(options.commit ? { commit: options.commit } : {})
     },
     subject,
-    score: scoreChecks(checks),
-    checks
+    score: scoreChecks(orderedChecks),
+    checks: orderedChecks
   });
+}
+
+function compareChecks(left: ReadinessCheck, right: ReadinessCheck): number {
+  return (
+    left.id.localeCompare(right.id) ||
+    left.category.localeCompare(right.category) ||
+    left.title.localeCompare(right.title) ||
+    left.summary.localeCompare(right.summary)
+  );
 }
 
 function findX402ProbeUrl(metadata: NormalizedAgentMetadata): string | undefined {

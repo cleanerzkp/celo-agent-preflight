@@ -1,5 +1,7 @@
-import { listReports } from "../../../src/data/reports";
+import { getReadyListSnapshot } from "../../../src/data/reports";
 
 export function GET() {
-  return Response.json({ reports: listReports() });
+  const { generatedAt, reports, summary } = getReadyListSnapshot();
+
+  return Response.json({ generatedAt, summary, reports });
 }

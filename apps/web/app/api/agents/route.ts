@@ -1,5 +1,7 @@
-import { listReadyListEntries } from "../../../src/data/reports";
+import { getReadyListSnapshot } from "../../../src/data/reports";
 
 export function GET() {
-  return Response.json({ agents: listReadyListEntries() });
+  const { entries, generatedAt, summary } = getReadyListSnapshot();
+
+  return Response.json({ generatedAt, summary, agents: entries });
 }

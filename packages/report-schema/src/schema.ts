@@ -53,6 +53,7 @@ export const EvidenceSchema = z
     txHash: z.string().regex(/^0x[a-fA-F0-9]{64}$/).optional(),
     blockNumber: z.number().int().nonnegative().optional(),
     statusCode: z.number().int().min(100).max(599).optional(),
+    durationMs: z.number().int().nonnegative().optional(),
     fetchedAt: z.string().datetime().optional()
   })
   .strict();

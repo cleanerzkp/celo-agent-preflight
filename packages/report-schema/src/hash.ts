@@ -2,9 +2,11 @@ import { keccak256, toBytes } from "viem";
 
 import { canonicalJson } from "./canonical-json.js";
 import {
+  type Evidence,
   parsePreflightReport,
   type PreflightReport,
-  PreflightReportSchema
+  PreflightReportSchema,
+  type ReadinessCheck
 } from "./schema.js";
 
 export type ReportHash = `0x${string}`;
@@ -27,8 +29,43 @@ export function attachReportHash(input: unknown): PreflightReport {
 
 export function toHashableReport(
   report: PreflightReport
-): Omit<PreflightReport, "attestation" | "reportHash"> {
-  const { attestation: _attestation, reportHash: _reportHash, ...hashable } = report;
+): unknown {
+  const {
+    attestation: _attestation,
+    checks,
+    generatedAt: _generatedAt,
+    reportHash: _reportHash,
+    ...hashable
+  } = report;
 
-  return hashable;
+  return {
+    ...hashable,
+    checks: [...checks]
+      .sort(compareChecks)
+      .map((checkEntry) => ({
+        ...checkEntry,
+        evidence: checkEntry.evidence.map(removeVolatileEvidenceFields)
+      }))
+  };
+}
+
+function removeVolatileEvidenceFields(
+  evidence: Evidence
+): Omit<Evidence, "durationMs" | "fetchedAt"> {
+  const {
+    durationMs: _durationMs,
+    fetchedAt: _fetchedAt,
+    ...stableEvidence
+  } = evidence;
+
+  return stableEvidence;
+}
+
+function compareChecks(left: ReadinessCheck, right: ReadinessCheck): number {
+  return (
+    left.id.localeCompare(right.id) ||
+    left.category.localeCompare(right.category) ||
+    left.title.localeCompare(right.title) ||
+    left.summary.localeCompare(right.summary)
+  );
 }

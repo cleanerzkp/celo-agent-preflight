@@ -8,6 +8,7 @@ export interface ResolvedJsonDocument {
   readonly uri: string;
   readonly fetchedUrl: string;
   readonly statusCode?: number;
+  readonly durationMs?: number;
   readonly json: unknown;
 }
 
@@ -43,6 +44,7 @@ export async function resolveJsonUri(
     uri,
     fetchedUrl: response.url,
     statusCode: response.statusCode,
+    ...(response.durationMs === undefined ? {} : { durationMs: response.durationMs }),
     json: JSON.parse(response.bodyText)
   };
 }

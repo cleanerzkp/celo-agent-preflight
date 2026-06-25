@@ -19,6 +19,7 @@ export interface SafeFetchResult {
   readonly url: string;
   readonly statusCode: number;
   readonly contentType: string | null;
+  readonly durationMs?: number;
   readonly bodyText: string;
 }
 
@@ -41,6 +42,7 @@ export async function safeFetchText(
   const timeoutMs = options.timeoutMs ?? DEFAULT_TIMEOUT_MS;
   const maxRedirects = options.maxRedirects ?? DEFAULT_MAX_REDIRECTS;
   const maxBytes = options.maxBytes ?? DEFAULT_MAX_BYTES;
+  const startedAt = Date.now();
   let url = new URL(input);
 
   for (let redirectCount = 0; redirectCount <= maxRedirects; redirectCount += 1) {
@@ -79,6 +81,7 @@ export async function safeFetchText(
         url: url.href,
         statusCode: response.status,
         contentType: response.headers.get("content-type"),
+        durationMs: Date.now() - startedAt,
         bodyText: await readResponseBody(response, maxBytes)
       };
     } finally {
