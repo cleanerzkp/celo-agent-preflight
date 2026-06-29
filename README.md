@@ -4,7 +4,7 @@ This repository is now set up for Frontier Pool grant preparation, not a website
 
 Live demo: https://celo-agent-preflight.vercel.app
 
-Planned public repository: https://github.com/cleanerzkp/celo-agent-preflight
+Public repository: https://github.com/cleanerzkp/celo-agent-preflight
 
 Start here:
 

@@ -7,11 +7,11 @@ Use this file as the single place to collect proof for the application.
 | Item | Link | Status |
 | --- | --- | --- |
 | Website/demo | https://celo-agent-preflight.vercel.app | Live Vercel deployment |
-| GitHub | https://github.com/cleanerzkp/celo-agent-preflight | Pending public push |
+| GitHub | https://github.com/cleanerzkp/celo-agent-preflight | Live public repo |
 | KarmaGAP | TODO | Missing |
 | X announcement | TODO | Missing |
 | Demo video | TODO | Missing |
-| Docs | https://github.com/cleanerzkp/celo-agent-preflight/tree/master/docs | Pending public push |
+| Docs | https://github.com/cleanerzkp/celo-agent-preflight/tree/master/docs | Live public docs |
 | Public report index | https://celo-agent-preflight.vercel.app/api/agents | Live; stale demo reports only |
 
 ## Celo mainnet contracts
