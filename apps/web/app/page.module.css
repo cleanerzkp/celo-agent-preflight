@@ -275,31 +275,6 @@
   text-transform: uppercase;
 }
 
-.consoleShell {
-  animation: enterUp 760ms var(--ease-out) 120ms both;
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.085), rgba(255, 255, 255, 0.025)),
-    var(--panel);
-  box-shadow: var(--shadow-border);
-  min-height: 620px;
-  overflow: hidden;
-  padding: 8px;
-}
-
-.consoleHeader {
-  align-items: center;
-  background: #07100b;
-  color: var(--muted);
-  display: flex;
-  font-family: "DIN Alternate", "Avenir Next Condensed", sans-serif;
-  font-size: 0.74rem;
-  justify-content: space-between;
-  letter-spacing: 0.12em;
-  min-height: 44px;
-  padding: 0 14px;
-  text-transform: uppercase;
-}
-
 .commandBox {
   background: rgba(255, 255, 255, 0.05);
   box-shadow:
@@ -318,137 +293,14 @@
 }
 
 .commandBox code,
-.mono,
-.hashBar code {
+.mono {
   font-family: "SFMono-Regular", "IBM Plex Mono", "Liberation Mono", Consolas, monospace;
 }
 
-.commandBox code,
-.hashBar code {
+.commandBox code {
   color: var(--ink);
   line-height: 1.45;
   overflow-wrap: anywhere;
-}
-
-.scanGrid {
-  display: grid;
-  gap: 1px;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  margin-top: 8px;
-}
-
-.scanGrid span {
-  background:
-    linear-gradient(180deg, rgba(53, 208, 127, 0.12), rgba(255, 255, 255, 0.035));
-  color: var(--muted-strong);
-  font-family: "DIN Alternate", "Avenir Next Condensed", sans-serif;
-  font-size: 0.68rem;
-  letter-spacing: 0.1em;
-  min-height: 78px;
-  padding: 12px;
-  text-transform: uppercase;
-}
-
-.scorePanel {
-  align-items: end;
-  background:
-    linear-gradient(135deg, rgba(53, 208, 127, 0.22), rgba(147, 168, 255, 0.08)),
-    #08140d;
-  display: flex;
-  justify-content: space-between;
-  margin-top: 8px;
-  min-height: 148px;
-  padding: 20px;
-}
-
-.scorePanel span {
-  color: var(--muted-strong);
-  display: block;
-  font-size: 0.86rem;
-  margin-bottom: 10px;
-}
-
-.scorePanel strong {
-  color: var(--ink);
-  font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
-  font-size: clamp(4rem, 9vw, 7.5rem);
-  font-weight: 500;
-  line-height: 0.78;
-}
-
-.scorePanel p {
-  background: var(--green);
-  color: #041209;
-  font-size: 0.82rem;
-  font-weight: 850;
-  margin: 0;
-  padding: 8px 10px;
-  text-transform: uppercase;
-}
-
-.checkList {
-  display: grid;
-  gap: 1px;
-  list-style: none;
-  margin: 8px 0 0;
-  padding: 0;
-}
-
-.checkList li {
-  align-items: center;
-  background: rgba(255, 255, 255, 0.045);
-  display: grid;
-  gap: 12px;
-  grid-template-columns: 10px minmax(0, 1fr);
-  min-height: 72px;
-  padding: 14px 16px;
-}
-
-.checkList strong,
-.checkList span {
-  display: block;
-}
-
-.checkList strong {
-  color: var(--ink);
-  font-size: 0.94rem;
-  line-height: 1.25;
-  text-wrap: pretty;
-}
-
-.checkList span:last-child {
-  color: var(--muted);
-  font-size: 0.78rem;
-  margin-top: 5px;
-  text-transform: uppercase;
-}
-
-.checkDot {
-  background: var(--muted);
-  height: 10px;
-  width: 10px;
-}
-
-.consoleEmpty {
-  align-items: center;
-  background: rgba(255, 255, 255, 0.045);
-  color: var(--muted);
-  display: flex;
-  line-height: 1.5;
-  margin-top: 8px;
-  min-height: 292px;
-  padding: 18px;
-}
-
-.hashBar {
-  align-items: center;
-  background: #07100b;
-  color: var(--muted);
-  display: flex;
-  justify-content: space-between;
-  margin-top: 8px;
-  min-height: 52px;
-  padding: 0 16px;
 }
 
 .metrics {
@@ -477,10 +329,11 @@
 .metric strong {
   color: var(--ink);
   font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
-  font-size: clamp(3rem, 6vw, 5.2rem);
+  font-size: 3.6rem;
   font-variant-numeric: tabular-nums;
   font-weight: 500;
-  line-height: 0.82;
+  line-height: 0.9;
+  min-width: 0;
 }
 
 .neutral {
@@ -849,6 +702,12 @@
   text-wrap: balance;
 }
 
+.reportName {
+  color: var(--muted-strong);
+  font-weight: 850;
+  line-height: 1.2;
+}
+
 .reportCard span:last-child {
   color: var(--muted);
   line-height: 1.45;
@@ -886,10 +745,6 @@
 @media (max-width: 920px) {
   .hero {
     grid-template-columns: 1fr;
-    min-height: auto;
-  }
-
-  .consoleShell {
     min-height: auto;
   }
 
@@ -941,7 +796,6 @@
   .metrics,
   .fieldGrid,
   .reportGrid,
-  .scanGrid,
   .verificationGrid {
     grid-template-columns: 1fr;
   }
@@ -955,17 +809,10 @@
   .table td {
     padding: 14px;
   }
-
-  .scorePanel {
-    align-items: start;
-    flex-direction: column;
-    gap: 18px;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .heroCopy,
-  .consoleShell,
   .metrics,
   .section {
     animation: none;

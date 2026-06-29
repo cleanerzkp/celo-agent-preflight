@@ -4,10 +4,10 @@
 
 ```bash
 pnpm install
-pnpm ci
+pnpm run ci
 ```
 
-`pnpm ci` runs tool checks, TypeScript, tests, builds, Foundry formatting/tests, and secret scanning.
+`pnpm run ci` runs tool checks, TypeScript, tests, builds, Foundry formatting/tests, and secret scanning.
 
 ## CLI Scan
 
@@ -77,6 +77,22 @@ Exposed read-only tools:
 - `check_x402_endpoint`
 
 The MCP server calls `packages/preflight-core`; it does not duplicate scanner logic or expose write tools by default.
+
+## Backend Worker
+
+The production backend direction is documented in
+[backend-architecture.md](backend-architecture.md). The first local worker
+entrypoint can run scanner-shaped jobs and publish canonical report JSON:
+
+```bash
+pnpm --filter @celo-agent-preflight/worker dev -- celo:2 celo:17
+```
+
+The Postgres migration lives at:
+
+```txt
+packages/db/migrations/0001_agentproof_core.sql
+```
 
 ## Web And API
 

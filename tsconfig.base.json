@@ -21,6 +21,7 @@
     "paths": {
       "@celo-agent-preflight/celo": ["packages/celo/src/index.ts"],
       "@celo-agent-preflight/cli": ["packages/cli/src/index.ts"],
+      "@celo-agent-preflight/db": ["packages/db/src/index.ts"],
       "@celo-agent-preflight/erc8004": ["packages/erc8004/src/index.ts"],
       "@celo-agent-preflight/preflight-core": [
         "packages/preflight-core/src/index.ts"
@@ -32,6 +33,7 @@
       "@celo-agent-preflight/self-agent-id": [
         "packages/self-agent-id/src/index.ts"
       ],
+      "@celo-agent-preflight/storage": ["packages/storage/src/index.ts"],
       "@celo-agent-preflight/x402": ["packages/x402/src/index.ts"]
     },
     "types": ["node"],

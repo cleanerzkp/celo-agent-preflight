@@ -1,0 +1,740 @@
+/* PreflightVerifier — co-located CSS module.
+ *
+ * DECODE-REVEAL + LIVE CHECKLIST. Sharp square corners (no border-radius),
+ * 1px hairlines via box-shadow, inset top highlight, dark terminal-meets-
+ * editorial. Green is the hero accent. Animates ONLY transform / opacity
+ * (+ GPU-composited blur on the decode cross-fade). Glow is restrained to the
+ * single scan-line + its soft trailing gradient.
+ *
+ * Tokens are inherited from .shell via the cascade and referenced with
+ * fallbacks so the module is fully self-contained.
+ */
+
+.card {
+  --pf-green: var(--green, #35d07f);
+  --pf-green-soft: var(--green-soft, rgba(53, 208, 127, 0.16));
+  --pf-amber: var(--amber, #e2aa45);
+  --pf-red: var(--red, #f16f5f);
+  --pf-blue: var(--blue, #93a8ff);
+  --pf-ink: var(--ink, #f3f8ed);
+  --pf-muted: var(--muted, #98aa9b);
+  --pf-muted-strong: var(--muted-strong, #c6d6c8);
+  --pf-line: var(--line, rgba(243, 248, 237, 0.11));
+  --pf-panel: var(--panel, rgba(10, 17, 13, 0.88));
+  --pf-ease-out: var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1));
+  --pf-ease-snap: var(--ease-snap, cubic-bezier(0.2, 0, 0, 1));
+
+  --pf-mono: "SFMono-Regular", "IBM Plex Mono", "Liberation Mono", Consolas, monospace;
+  --pf-label: "DIN Alternate", "Avenir Next Condensed", sans-serif;
+  --pf-serif: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.085),
+      rgba(255, 255, 255, 0.025)
+    ),
+    var(--pf-panel);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.09),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05),
+    0 18px 60px rgba(0, 0, 0, 0.28);
+  color: var(--pf-ink);
+  min-height: 620px;
+  overflow: hidden;
+  padding: 8px;
+  position: relative;
+}
+
+.inner {
+  /* Explicit row template so beats never reflow between phases (no CLS). */
+  display: grid;
+  gap: 8px;
+  grid-template-rows: auto auto 1fr auto auto;
+  height: 100%;
+  min-height: 604px;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* ---------- Header ---------- */
+.header {
+  align-items: center;
+  background: #07100b;
+  color: var(--pf-muted);
+  display: flex;
+  font-family: var(--pf-label);
+  font-size: 0.74rem;
+  justify-content: space-between;
+  letter-spacing: 0.12em;
+  min-height: 44px;
+  padding: 0 14px;
+  text-transform: uppercase;
+}
+
+.brand {
+  color: var(--pf-muted-strong);
+}
+
+/* Muted/neutral chain badge — matches .consoleHeader, not full green. */
+.chain {
+  align-items: center;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1);
+  color: var(--pf-muted);
+  display: inline-flex;
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  min-height: 26px;
+  padding: 0 9px;
+}
+
+/* ---------- Command line (types in) ---------- */
+.command {
+  align-items: baseline;
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  display: flex;
+  gap: 10px;
+  min-height: 50px;
+  padding: 13px 16px;
+}
+
+.prompt {
+  color: var(--pf-green);
+  font-family: var(--pf-mono);
+  font-size: 0.82rem;
+}
+
+.cmd {
+  color: var(--pf-ink);
+  font-family: var(--pf-mono);
+  font-size: 0.8rem;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+/* Blinking green caret — present only while typing. */
+.caret {
+  background: var(--pf-green);
+  display: inline-block;
+  height: 0.95em;
+  margin-left: 1px;
+  opacity: 0;
+  transform: translateY(0.12em);
+  width: 7px;
+}
+
+.caret[data-on="true"] {
+  animation: pf-blink 1s steps(2, start) infinite;
+}
+
+/* ---------- Scan body ---------- */
+.body {
+  background: rgba(255, 255, 255, 0.025);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+  display: grid;
+  gap: 8px;
+  grid-template-rows: auto 1fr;
+  overflow: hidden;
+  padding: 12px;
+  position: relative;
+}
+
+/* Intake target — raw -> clean cross-fade in a fixed-height box (no shift). */
+.intake {
+  align-items: center;
+  background: rgba(5, 8, 6, 0.55);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+  display: grid;
+  height: 34px;
+  opacity: 0;
+  padding: 0 12px;
+  position: relative;
+  transform: translate3d(0, -6px, 0);
+  transition:
+    opacity 320ms var(--pf-ease-out),
+    transform 320ms var(--pf-ease-out);
+}
+
+.intake[data-in="true"] {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+.intakeRaw,
+.intakeClean {
+  font-family: var(--pf-mono);
+  font-size: 0.74rem;
+  grid-area: 1 / 1;
+  letter-spacing: 0.01em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  transition: opacity 360ms var(--pf-ease-out);
+}
+
+.intakeRaw {
+  color: var(--pf-muted);
+  filter: blur(0.4px);
+  opacity: 1;
+}
+
+.intakeClean {
+  color: var(--pf-muted-strong);
+  opacity: 0;
+}
+
+.intake[data-decoded="true"] .intakeRaw {
+  opacity: 0;
+}
+
+.intake[data-decoded="true"] .intakeClean {
+  color: var(--pf-green);
+  opacity: 1;
+}
+
+/* ---------- Scan-line overlay (covers only the row stack region) ---------- */
+.scanLayer {
+  bottom: 12px;
+  left: 12px;
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  right: 12px;
+  /* Anchored to the .rows track: body padding (12) + intake (34) + gap (8) = 54.
+     The line translates by a % of THIS overlay's own height, so the sweep
+     deterministically covers exactly the row stack at any card height. */
+  top: 54px;
+  transition: opacity 200ms var(--pf-ease-out);
+  z-index: 3;
+}
+
+.scanLayer[data-active="true"] {
+  opacity: 1;
+}
+
+.scanLine {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--pf-green) 18%,
+    rgba(255, 255, 255, 0.92) 50%,
+    var(--pf-green) 82%,
+    transparent
+  );
+  box-shadow: 0 0 12px 1px rgba(53, 208, 127, 0.55);
+  height: 2px;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  will-change: transform;
+}
+
+.scanGlow {
+  background: linear-gradient(
+    180deg,
+    transparent,
+    rgba(53, 208, 127, 0.1) 70%,
+    rgba(53, 208, 127, 0.2)
+  );
+  height: 96px;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: -96px;
+  will-change: transform;
+}
+
+/* ---------- Pillar rows ---------- */
+.rows {
+  align-content: stretch;
+  display: grid;
+  gap: 6px;
+  grid-auto-rows: 1fr;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.row {
+  align-items: center;
+  background: rgba(255, 255, 255, 0.04);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.045);
+  display: grid;
+  gap: 0 12px;
+  grid-template-columns: 3px 22px minmax(0, 1fr);
+  min-height: 64px;
+  overflow: hidden;
+  padding: 10px 14px 10px 11px;
+  position: relative;
+  transition: box-shadow 300ms var(--pf-ease-out);
+}
+
+.row[data-state="settled"][data-status="pass"] {
+  box-shadow: inset 0 0 0 1px rgba(53, 208, 127, 0.26);
+}
+
+.row[data-state="settled"][data-status="warn"] {
+  box-shadow: inset 0 0 0 1px rgba(226, 170, 69, 0.26);
+}
+
+/* Left accent rail — scaleY resolve cue (transform only, no bloom). */
+.rail {
+  align-self: stretch;
+  background: var(--pf-muted);
+  height: 100%;
+  margin: -10px 0 -10px -11px;
+  opacity: 0.3;
+  transform: scaleY(0);
+  transform-origin: top center;
+  transition:
+    transform 300ms var(--pf-ease-snap),
+    opacity 240ms var(--pf-ease-out),
+    background-color 240ms var(--pf-ease-out);
+  width: 3px;
+}
+
+.row[data-state="spinning"] .rail {
+  background: var(--pf-green);
+  opacity: 0.7;
+  transform: scaleY(1);
+}
+
+.row[data-state="settled"][data-status="pass"] .rail {
+  background: var(--pf-green);
+  opacity: 1;
+  transform: scaleY(1);
+}
+
+.row[data-state="settled"][data-status="warn"] .rail {
+  background: var(--pf-amber);
+  opacity: 1;
+  transform: scaleY(1);
+}
+
+/* Status marker: dot -> spinner -> tick, layered and cross-faded by state. */
+.marker {
+  align-items: center;
+  display: inline-flex;
+  height: 22px;
+  justify-content: center;
+  position: relative;
+  width: 22px;
+}
+
+.markerDot {
+  background: var(--pf-muted);
+  height: 9px;
+  opacity: 1;
+  position: absolute;
+  transition: opacity 200ms var(--pf-ease-out);
+  width: 9px;
+}
+
+.markerSpin {
+  border: 2px solid rgba(147, 168, 255, 0.25);
+  border-top-color: var(--pf-blue);
+  border-radius: 50%;
+  box-sizing: border-box;
+  height: 16px;
+  opacity: 0;
+  position: absolute;
+  width: 16px;
+}
+
+.markerTick {
+  height: 16px;
+  opacity: 0;
+  position: absolute;
+  transform: scale(0.6);
+  transition:
+    opacity 200ms var(--pf-ease-out),
+    transform 240ms var(--pf-ease-snap);
+  width: 16px;
+}
+
+.row[data-status="pass"] .markerTick {
+  color: var(--pf-green);
+}
+
+.row[data-status="warn"] .markerTick {
+  color: var(--pf-amber);
+}
+
+.row[data-state="spinning"] .markerDot {
+  opacity: 0;
+}
+
+.row[data-state="spinning"] .markerSpin {
+  animation: pf-spin 700ms linear infinite;
+  opacity: 1;
+}
+
+.row[data-state="settled"] .markerDot {
+  opacity: 0;
+}
+
+.row[data-state="settled"] .markerTick {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Row content — label, decode-reveal title, single evidence line. */
+.rowMain {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+
+.rowLabel {
+  color: var(--pf-muted);
+  font-family: var(--pf-label);
+  font-size: 0.64rem;
+  letter-spacing: 0.12em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* Decode-reveal: raw glyphs and clean title share one fixed-height cell. */
+.rowTitleWrap {
+  display: grid;
+  height: 19px;
+  position: relative;
+}
+
+.rowRaw,
+.rowTitle {
+  grid-area: 1 / 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  transition:
+    opacity 320ms var(--pf-ease-out),
+    transform 320ms var(--pf-ease-out),
+    filter 320ms var(--pf-ease-out);
+}
+
+.rowRaw {
+  color: var(--pf-muted);
+  filter: blur(0.6px);
+  font-family: var(--pf-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.02em;
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+.rowTitle {
+  color: var(--pf-ink);
+  font-size: 0.9rem;
+  font-weight: 600;
+  line-height: 1.25;
+  opacity: 0;
+  transform: translate3d(0, 4px, 0);
+}
+
+.row[data-state="settled"] .rowRaw {
+  filter: blur(3px);
+  opacity: 0;
+  transform: translate3d(0, -4px, 0);
+}
+
+.row[data-state="settled"] .rowTitle {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+/* Single concise evidence line — fades in once settled (fixed-height slot). */
+.rowEvidence {
+  color: var(--pf-muted);
+  font-family: var(--pf-mono);
+  font-size: 0.7rem;
+  height: 15px;
+  letter-spacing: 0.01em;
+  opacity: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transform: translate3d(0, 3px, 0);
+  transition:
+    opacity 300ms var(--pf-ease-out) 80ms,
+    transform 300ms var(--pf-ease-out) 80ms;
+  white-space: nowrap;
+}
+
+.row[data-state="settled"] .rowEvidence {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+/* ---------- Score panel (editorial climax) ---------- */
+.score {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(53, 208, 127, 0.22),
+      rgba(147, 168, 255, 0.08)
+    ),
+    #08140d;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  display: grid;
+  gap: 10px;
+  min-height: 132px;
+  padding: 16px 18px;
+  position: relative;
+}
+
+/* Confident settle when the count-up lands — subtle, transform only. */
+.score[data-settled="true"] {
+  animation: pf-score-settle 460ms var(--pf-ease-snap) both;
+}
+
+.scoreHead {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+}
+
+.scoreCaption {
+  color: var(--pf-muted-strong);
+  font-family: var(--pf-label);
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.scoreTag {
+  background: var(--pf-green);
+  color: #041209;
+  font-family: var(--pf-label);
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  line-height: 1;
+  padding: 6px 9px;
+  text-transform: uppercase;
+}
+
+.scoreMain {
+  align-items: baseline;
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* Fixed-width box: the count-up causes ZERO horizontal layout shift. */
+.scoreNumberBox {
+  align-items: baseline;
+  display: inline-flex;
+  gap: 6px;
+}
+
+.scoreNumber {
+  color: var(--pf-ink);
+  font-family: var(--pf-serif);
+  font-size: 4.6rem;
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+  line-height: 0.78;
+  min-width: 2.7ch;
+  text-align: right;
+}
+
+.scoreDenom {
+  color: var(--pf-muted);
+  font-family: var(--pf-mono);
+  font-size: 1rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.scoreBarTrack {
+  background: rgba(5, 8, 6, 0.5);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+  height: 6px;
+  overflow: hidden;
+  position: relative;
+}
+
+.scoreBarFill {
+  background: linear-gradient(90deg, var(--pf-green), #6ff0a8);
+  box-shadow: 0 0 10px rgba(53, 208, 127, 0.45);
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  transform: scaleX(0);
+  transform-origin: left center;
+  width: 100%;
+  will-change: transform;
+}
+
+/* ---------- Attestation finale ---------- */
+.attest {
+  align-items: center;
+  background: #07100b;
+  display: flex;
+  gap: 8px 12px;
+  min-height: 50px;
+  opacity: 0;
+  padding: 0 14px;
+  transform: translate3d(0, 6px, 0);
+  transition:
+    opacity 320ms var(--pf-ease-out),
+    transform 320ms var(--pf-ease-snap);
+}
+
+.attest[data-in="true"] {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+.attestLabel {
+  color: var(--pf-muted);
+  font-family: var(--pf-label);
+  font-size: 0.66rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.attestHash {
+  color: var(--pf-muted-strong);
+  font-family: var(--pf-mono);
+  font-size: 0.8rem;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Stamp lands with a confident settle once attested. */
+.attestStamp {
+  align-items: center;
+  color: var(--pf-green);
+  display: inline-flex;
+  font-family: var(--pf-label);
+  font-size: 0.7rem;
+  font-weight: 800;
+  gap: 6px;
+  letter-spacing: 0.1em;
+  margin-left: auto;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.attest[data-in="true"] .attestStamp {
+  animation: pf-stamp 460ms var(--pf-ease-snap) both;
+}
+
+.attestTick {
+  height: 14px;
+  width: 14px;
+}
+
+/* ---------- Keyframes (transform/opacity only) ---------- */
+@keyframes pf-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pf-blink {
+  0%,
+  50% {
+    opacity: 1;
+  }
+  50.01%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes pf-score-settle {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  45% {
+    transform: translate3d(0, -2px, 0) scale(1.012);
+  }
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@keyframes pf-stamp {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 0, 0) scale(0.86);
+  }
+  60% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1.08);
+  }
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 920px) {
+  .card {
+    min-height: auto;
+  }
+
+  .inner {
+    min-height: auto;
+    grid-template-rows: auto auto auto auto auto;
+  }
+}
+
+@media (max-width: 640px) {
+  .cmd {
+    font-size: 0.74rem;
+  }
+
+  .scoreNumber {
+    font-size: 3.6rem;
+  }
+}
+
+/* ---------- Reduced motion (belt-and-suspenders) ----------
+ * The JS path already renders the final resolved state; here we hard-disable
+ * every transition/animation so nothing moves, even on first paint. */
+@media (prefers-reduced-motion: reduce) {
+  .intake,
+  .intakeRaw,
+  .intakeClean,
+  .row,
+  .rail,
+  .markerDot,
+  .markerTick,
+  .rowRaw,
+  .rowTitle,
+  .rowEvidence,
+  .score,
+  .scoreBarFill,
+  .attest,
+  .attestStamp {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .markerSpin {
+    animation: none !important;
+    opacity: 0 !important;
+  }
+
+  .caret {
+    animation: none !important;
+    opacity: 0 !important;
+  }
+
+  .scanLayer {
+    display: none;
+  }
+}

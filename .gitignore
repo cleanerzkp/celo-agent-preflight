@@ -1,6 +1,7 @@
 node_modules/
 .turbo/
 .next/
+.vercel/
 out/
 cache/
 broadcast/
@@ -9,6 +10,7 @@ lib/
 .env.*
 !.env.example
 .dev.vars
+.claude/settings.local.json
 dist/
 coverage/
 lcov.info

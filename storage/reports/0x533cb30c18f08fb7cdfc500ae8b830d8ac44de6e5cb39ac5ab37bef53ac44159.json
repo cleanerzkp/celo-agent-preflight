@@ -1,0 +1,397 @@
+{
+  "schemaVersion": "preflight.report.v0.1",
+  "generatedAt": "2026-06-25T16:39:28.440Z",
+  "generator": {
+    "name": "celo-agent-preflight",
+    "version": "0.1.0"
+  },
+  "subject": {
+    "chainId": 42220,
+    "agentRegistry": "eip155:42220:0x8004A169FB4a3325136EB29fA0ceB6D2e539a432",
+    "agentId": "17",
+    "owner": "0x97AC19efd90731672430019d88FC080c229E5589",
+    "agentWallet": "0x0000000000000000000000000000000000000000",
+    "metadataURI": "data:application/json;base64,ewogICJ0eXBlIjogImh0dHBzOi8vZWlwcy5ldGhlcmV1bS5vcmcvRUlQUy9laXAtODAwNCNyZWdpc3RyYXRpb24tdjEiLAogICJuYW1lIjogIkxvb3B1bWFuIiwKICAiZGVzY3JpcHRpb24iOiAiVGhlIEh1bWFuIExheWVyIGZvciBBSSBcdTIwMTQgcm91dGVzIHRhc2tzIHRvIHZlcmlmaWVkIGh1bWFuIHdvcmtlcnMgd29ybGR3aWRlIHZpYSBUZWxlZ3JhbSAmIFdoYXRzQXBwIHdpdGggOC1zZWNvbmQgY1VTRCBwYXltZW50cyBvbiBDZWxvLiBTZXJ2aWNlczogZGF0YSBsYWJlbGluZywgY29udGVudCBtb2RlcmF0aW9uLCBzdXJ2ZXlzLCB0cmFuc2xhdGlvbiwgaHVtYW4gdmVyaWZpY2F0aW9uLCBlZ29jZW50cmljIHZpZGVvIGNvbGxlY3Rpb24gZm9yIHBoeXNpY2FsIEFJIGFuZCByb2JvdGljcyB0cmFpbmluZy4iLAogICJpbWFnZSI6ICJodHRwczovL2FwaS5sb29wdW1hbi5jb20vbG9nby5wbmciLAogICJhY3RpdmUiOiB0cnVlLAogICJ2ZXJzaW9uIjogIjQuNS4xIiwKICAieDQwMlN1cHBvcnQiOiB0cnVlLAogICJ0YWdzIjogWwogICAgIm1pY3JvdGFza2luZyIsCiAgICAiaHVtYW4taW4tdGhlLWxvb3AiLAogICAgImRhdGEtbGFiZWxpbmciLAogICAgInZlcmlmaWNhdGlvbiIsCiAgICAib3JhY2xlIiwKICAgICJ0YXNrLXJvdXRpbmciLAogICAgImNyeXB0by1wYXltZW50cyIsCiAgICAiQUktYWdlbnRzIiwKICAgICJyb2JvdGljcyIsCiAgICAicGh5c2ljYWwtYWkiLAogICAgInZpZGVvLWNvbGxlY3Rpb24iLAogICAgImVnb2NlbnRyaWMtZm9vdGFnZSIKICBdLAogICJzZXJ2aWNlcyI6IFsKICAgIHsKICAgICAgIm5hbWUiOiAiTUNQIiwKICAgICAgImVuZHBvaW50IjogImh0dHBzOi8vYXBpLmxvb3B1bWFuLmNvbS8ud2VsbC1rbm93bi9tY3AuanNvbiIsCiAgICAgICJ2ZXJzaW9uIjogIjIwMjUtMDYtMTgiCiAgICB9LAogICAgewogICAgICAibmFtZSI6ICJBMkEiLAogICAgICAiZW5kcG9pbnQiOiAiaHR0cHM6Ly9hcGkubG9vcHVtYW4uY29tLy53ZWxsLWtub3duL2FnZW50LWNhcmQuanNvbiIsCiAgICAgICJ2ZXJzaW9uIjogIjAuMy4wIgogICAgfSwKICAgIHsKICAgICAgIm5hbWUiOiAiT0FTRiIsCiAgICAgICJlbmRwb2ludCI6ICJodHRwczovL2FwaS5sb29wdW1hbi5jb20vLndlbGwta25vd24vb2FzZi5qc29uIiwKICAgICAgInZlcnNpb24iOiAiMC44LjAiLAogICAgICAic2tpbGxzIjogWwogICAgICAgICJ0b29sX2ludGVyYWN0aW9uL3dvcmtmbG93X2F1dG9tYXRpb24iLAogICAgICAgICJhbmFseXRpY2FsX3NraWxscy9kYXRhX2FuYWx5c2lzIiwKICAgICAgICAibmF0dXJhbF9sYW5ndWFnZV9wcm9jZXNzaW5nL2luZm9ybWF0aW9uX3JldHJpZXZhbF9zeW50aGVzaXMvc2VhcmNoIiwKICAgICAgICAidG9vbF9pbnRlcmFjdGlvbi9hcGlfc2NoZW1hX3VuZGVyc3RhbmRpbmciLAogICAgICAgICJtdWx0aV9tb2RhbC92aWRlb19wcm9jZXNzaW5nIgogICAgICBdLAogICAgICAiZG9tYWlucyI6IFsKICAgICAgICAidGVjaG5vbG9neS9ibG9ja2NoYWluIiwKICAgICAgICAidGVjaG5vbG9neS9ibG9ja2NoYWluL2NyeXB0b2N1cnJlbmN5IiwKICAgICAgICAiZmluYW5jZV9hbmRfYnVzaW5lc3MvcGF5bWVudHMiLAogICAgICAgICJtZWRpYV9hbmRfZW50ZXJ0YWlubWVudC9jb250ZW50X2NyZWF0aW9uIiwKICAgICAgICAidGVjaG5vbG9neS9hcnRpZmljaWFsX2ludGVsbGlnZW5jZSIKICAgICAgXQogICAgfSwKICAgIHsKICAgICAgIm5hbWUiOiAid2ViIiwKICAgICAgImVuZHBvaW50IjogImh0dHBzOi8vbG9vcHVtYW4uY29tIgogICAgfSwKICAgIHsKICAgICAgIm5hbWUiOiAiYWdlbnRXYWxsZXQiLAogICAgICAiZW5kcG9pbnQiOiAiZWlwMTU1OjQyMjIwOjB4ZUY0QWNkNTAxMDFDMmFmRDE0YzJjMjEzYjMwZDhEOGU5YTkxZjBkMiIKICAgIH0sCiAgICB7CiAgICAgICJuYW1lIjogIm5wbSIsCiAgICAgICJlbmRwb2ludCI6ICJodHRwczovL3d3dy5ucG1qcy5jb20vcGFja2FnZS9sb29wdW1hbi1tY3AiCiAgICB9LAogICAgewogICAgICAibmFtZSI6ICJnaXRodWIiLAogICAgICAiZW5kcG9pbnQiOiAiaHR0cHM6Ly9naXRodWIuY29tL3NlZXNheWVhcm4tYm9vcC9sb29wdW1hbi1iYWNrZW5kIgogICAgfSwKICAgIHsKICAgICAgIm5hbWUiOiAidGVsZWdyYW0iLAogICAgICAiZW5kcG9pbnQiOiAiaHR0cHM6Ly90Lm1lL2xvb3B1bWFuIgogICAgfSwKICAgIHsKICAgICAgIm5hbWUiOiAiZW1haWwiLAogICAgICAiZW5kcG9pbnQiOiAibWFpbHRvOnN1cHBvcnRAbG9vcHVtYW4uY29tIgogICAgfQogIF0sCiAgImVzY3JvdyI6IHsKICAgICJhZGRyZXNzIjogIjB4RDFhNTQ4OGZlRjRlMmExNjI0MDUzRERkMzViNGI0YjQ0ODU0NkIzYSIsCiAgICAiY2hhaW4iOiAiY2Vsby1tYWlubmV0IiwKICAgICJ0b2tlbnMiOiBbCiAgICAgICJjVVNEIiwKICAgICAgIlVTREMiLAogICAgICAiVVNEVCIKICAgIF0sCiAgICAiZmVhdHVyZXMiOiBbCiAgICAgICJhdXRvLWFwcHJvdmUtNDhoIiwKICAgICAgImRpc3B1dGUtcmVzb2x1dGlvbiIsCiAgICAgICJyZWZ1bmQtb24tZXhwaXJ5IgogICAgXQogIH0sCiAgIndvcmtlckFQSSI6IHsKICAgICJicm93c2UiOiAiR0VUIC9hcGkvdjEvd29yay9icm93c2UiLAogICAgImFjY2VwdCI6ICJQT1NUIC9hcGkvdjEvd29yay86aWQvYWNjZXB0IiwKICAgICJzdWJtaXQiOiAiUE9TVCAvYXBpL3YxL3dvcmsvOmlkL3N1Ym1pdCIKICB9LAogICJjYXBhYmlsaXRpZXMiOiB7CiAgICAic3RyZWFtaW5nIjogZmFsc2UsCiAgICAicHVzaE5vdGlmaWNhdGlvbnMiOiB0cnVlLAogICAgIng0MDIiOiB0cnVlLAogICAgImh1bWFuVmVyaWZpY2F0aW9uIjogdHJ1ZSwKICAgICJvbkNoYWluQXR0ZXN0YXRpb24iOiB0cnVlLAogICAgImdsb2JhbFdvcmtlcnMiOiB0cnVlCiAgfSwKICAicmVnaXN0cmF0aW9ucyI6IFsKICAgIHsKICAgICAgImFnZW50SWQiOiAxNywKICAgICAgImFnZW50UmVnaXN0cnkiOiAiZWlwMTU1OjQyMjIwOjB4ODAwNEExNjlGQjRhMzMyNTEzNkVCMjlmQTBjZUI2RDJlNTM5YTQzMiIsCiAgICAgICJjaGFpbklkIjogIjQyMjIwIgogICAgfQogIF0sCiAgInN1cHBvcnRlZFRydXN0IjogWwogICAgInJlcHV0YXRpb24iLAogICAgImNyeXB0by1lY29ub21pYyIsCiAgICAidGVlLWF0dGVzdGF0aW9uIgogIF0sCiAgInByaWNlUGVyTWVzc2FnZSI6ICJGcmVlIiwKICAidXBkYXRlZEF0IjogIjIwMjYtMDYtMDlUMTM6MzA6MDBaIiwKICAic2tpbGxzIjogWwogICAgewogICAgICAiaWQiOiAidG9vbF9pbnRlcmFjdGlvbi93b3JrZmxvd19hdXRvbWF0aW9uIiwKICAgICAgIm5hbWUiOiAiSHVtYW4gVGFzayBSb3V0aW5nIiwKICAgICAgImRlc2NyaXB0aW9uIjogIlJvdXRlcyBtaWNyb3Rhc2tzIHRvIHZlcmlmaWVkIGh1bWFuIHdvcmtlcnMgdmlhIFRlbGVncmFtIGFuZCBXaGF0c0FwcCIKICAgIH0sCiAgICB7CiAgICAgICJpZCI6ICJhbmFseXRpY2FsX3NraWxscy9kYXRhX2FuYWx5c2lzIiwKICAgICAgIm5hbWUiOiAiRGF0YSBMYWJlbGluZyAmIEFubm90YXRpb24iLAogICAgICAiZGVzY3JpcHRpb24iOiAiSHVtYW4tdmVyaWZpZWQgZGF0YSBsYWJlbGluZywgYW5ub3RhdGlvbiBhbmQgcXVhbGl0eSBhc3N1cmFuY2UiCiAgICB9LAogICAgewogICAgICAiaWQiOiAibmF0dXJhbF9sYW5ndWFnZV9wcm9jZXNzaW5nL2luZm9ybWF0aW9uX3JldHJpZXZhbF9hbmRfc3ludGhlc2lzL3NlYXJjaCIsCiAgICAgICJuYW1lIjogIkNvbnRlbnQgSW50ZWxsaWdlbmNlIiwKICAgICAgImRlc2NyaXB0aW9uIjogIkh1bWFuLXBvd2VyZWQgY29udGVudCBtb2RlcmF0aW9uLCB0cmFuc2xhdGlvbiBhbmQgdmVyaWZpY2F0aW9uIgogICAgfSwKICAgIHsKICAgICAgImlkIjogIm11bHRpX21vZGFsL3ZpZGVvX3Byb2Nlc3NpbmciLAogICAgICAibmFtZSI6ICJFZ29jZW50cmljIFZpZGVvIENvbGxlY3Rpb24iLAogICAgICAiZGVzY3JpcHRpb24iOiAiRmlyc3QtcGVyc29uIHZpZGVvIGNvbGxlY3Rpb24gZm9yIHBoeXNpY2FsIEFJIGFuZCByb2JvdGljcyB0cmFpbmluZyBkYXRhIgogICAgfSwKICAgIHsKICAgICAgImlkIjogImRhdGFfcHJvY2Vzc2luZy9kYXRhX2NvbGxlY3Rpb24iLAogICAgICAibmFtZSI6ICJTdXJ2ZXkgJiBSZXNlYXJjaCIsCiAgICAgICJkZXNjcmlwdGlvbiI6ICJIdW1hbi1jb25kdWN0ZWQgc3VydmV5cywgcmVzZWFyY2ggdGFza3MgYW5kIGRhdGEgY29sbGVjdGlvbiB3b3JsZHdpZGUiCiAgICB9CiAgXSwKICAiZG9tYWlucyI6IFsKICAgIHsKICAgICAgImlkIjogInRlY2hub2xvZ3kvYXJ0aWZpY2lhbF9pbnRlbGxpZ2VuY2UiLAogICAgICAibmFtZSI6ICJBcnRpZmljaWFsIEludGVsbGlnZW5jZSIsCiAgICAgICJkZXNjcmlwdGlvbiI6ICJIdW1hbi1pbi10aGUtbG9vcCBBSSB0cmFpbmluZyBhbmQgdmVyaWZpY2F0aW9uIgogICAgfSwKICAgIHsKICAgICAgImlkIjogInRlY2hub2xvZ3kvYmxvY2tjaGFpbi9jcnlwdG9jdXJyZW5jeSIsCiAgICAgICJuYW1lIjogIkJsb2NrY2hhaW4gJiBDcnlwdG8gUGF5bWVudHMiLAogICAgICAiZGVzY3JpcHRpb24iOiAiQ2VsbyBibG9ja2NoYWluIGluc3RhbnQgY1VTRCBwYXltZW50cyB0byB3b3JrZXJzIgogICAgfSwKICAgIHsKICAgICAgImlkIjogImZpbmFuY2VfYW5kX2J1c2luZXNzL3BheW1lbnRzIiwKICAgICAgIm5hbWUiOiAiUGF5bWVudHMiLAogICAgICAiZGVzY3JpcHRpb24iOiAiSW5zdGFudCBzdGFibGVjb2luIHBheW1lbnRzIHZpYSBvbmNoYWluIGVzY3JvdyIKICAgIH0sCiAgICB7CiAgICAgICJpZCI6ICJtZWRpYV9hbmRfZW50ZXJ0YWlubWVudC9jb250ZW50X2NyZWF0aW9uIiwKICAgICAgIm5hbWUiOiAiQ29udGVudCBDcmVhdGlvbiIsCiAgICAgICJkZXNjcmlwdGlvbiI6ICJWaWRlbyBjb2xsZWN0aW9uIGFuZCBjb250ZW50IG1vZGVyYXRpb24gc2VydmljZXMiCiAgICB9LAogICAgewogICAgICAiaWQiOiAidGVjaG5vbG9neS9yb2JvdGljcyIsCiAgICAgICJuYW1lIjogIlJvYm90aWNzICYgUGh5c2ljYWwgQUkiLAogICAgICAiZGVzY3JpcHRpb24iOiAiRWdvY2VudHJpYyB0cmFpbmluZyBkYXRhIGZvciBwaHlzaWNhbCBBSSBhbmQgcm9ib3RpY3MiCiAgICB9CiAgXSwKICAibGljZW5zZSI6ICJNSVQiLAogICJzb3VyY2VDb2RlIjogImh0dHBzOi8vZ2l0aHViLmNvbS9zZWVzYXllYXJuLWJvb3AvbG9vcHVtYW4tYmFja2VuZCIsCiAgImRvY3VtZW50YXRpb24iOiAiaHR0cHM6Ly9sb29wdW1hbi5jb20vZGV2ZWxvcGVycyIsCiAgIndlYnNpdGUiOiAiaHR0cHM6Ly9sb29wdW1hbi5jb20iCn0K",
+    "primaryUrl": "https://api.loopuman.com"
+  },
+  "score": {
+    "value": 80,
+    "label": "ready_with_warnings"
+  },
+  "checks": [
+    {
+      "id": "a2a.declared",
+      "category": "a2a",
+      "title": "A2A endpoint declared",
+      "status": "pass",
+      "severity": "medium",
+      "scoreImpact": 0,
+      "summary": "Metadata declares 1 A2A service(s).",
+      "evidence": [
+        {
+          "type": "url",
+          "label": "A2A",
+          "value": "https://api.loopuman.com/.well-known/agent-card.json"
+        }
+      ]
+    },
+    {
+      "id": "celo_activity.identity_address.present",
+      "category": "celo_activity",
+      "title": "Celo identity address captured",
+      "status": "pass",
+      "severity": "low",
+      "scoreImpact": 0,
+      "summary": "The ERC-8004 registry scan captured an owner or agent wallet address.",
+      "evidence": [
+        {
+          "type": "chain",
+          "label": "identity address",
+          "value": "0x0000000000000000000000000000000000000000",
+          "chainId": 42220,
+          "address": "0x0000000000000000000000000000000000000000"
+        }
+      ]
+    },
+    {
+      "id": "chain.configured",
+      "category": "contract",
+      "title": "Celo network configured",
+      "status": "pass",
+      "severity": "info",
+      "scoreImpact": 0,
+      "summary": "Using celo chain 42220.",
+      "evidence": [
+        {
+          "type": "chain",
+          "label": "chain",
+          "value": "celo",
+          "chainId": 42220
+        },
+        {
+          "type": "chain",
+          "label": "identity registry",
+          "value": "0x8004A169FB4a3325136EB29fA0ceB6D2e539a432",
+          "chainId": 42220,
+          "address": "0x8004A169FB4a3325136EB29fA0ceB6D2e539a432"
+        }
+      ]
+    },
+    {
+      "id": "endpoint.1.reachable",
+      "category": "mcp",
+      "title": "MCP endpoint responds",
+      "status": "pass",
+      "severity": "low",
+      "scoreImpact": 0,
+      "summary": "Endpoint responded with HTTP 200.",
+      "evidence": [
+        {
+          "type": "http",
+          "label": "MCP endpoint",
+          "value": "https://api.loopuman.com/.well-known/mcp.json",
+          "statusCode": 200,
+          "durationMs": 141,
+          "fetchedAt": "2026-06-25T16:39:28.440Z"
+        }
+      ]
+    },
+    {
+      "id": "endpoint.2.reachable",
+      "category": "a2a",
+      "title": "A2A endpoint responds",
+      "status": "pass",
+      "severity": "low",
+      "scoreImpact": 0,
+      "summary": "Endpoint responded with HTTP 200.",
+      "evidence": [
+        {
+          "type": "http",
+          "label": "A2A endpoint",
+          "value": "https://api.loopuman.com/.well-known/agent-card.json",
+          "statusCode": 200,
+          "durationMs": 134,
+          "fetchedAt": "2026-06-25T16:39:28.440Z"
+        }
+      ]
+    },
+    {
+      "id": "endpoint.3.reachable",
+      "category": "endpoint",
+      "title": "OASF endpoint responds",
+      "status": "pass",
+      "severity": "low",
+      "scoreImpact": 0,
+      "summary": "Endpoint responded with HTTP 200.",
+      "evidence": [
+        {
+          "type": "http",
+          "label": "OASF endpoint",
+          "value": "https://api.loopuman.com/.well-known/oasf.json",
+          "statusCode": 200,
+          "durationMs": 139,
+          "fetchedAt": "2026-06-25T16:39:28.440Z"
+        }
+      ]
+    },
+    {
+      "id": "endpoint.4.reachable",
+      "category": "endpoint",
+      "title": "web endpoint responds",
+      "status": "pass",
+      "severity": "low",
+      "scoreImpact": 0,
+      "summary": "Endpoint responded with HTTP 200.",
+      "evidence": [
+        {
+          "type": "http",
+          "label": "web endpoint",
+          "value": "https://loopuman.com/",
+          "statusCode": 200,
+          "durationMs": 139,
+          "fetchedAt": "2026-06-25T16:39:28.440Z"
+        }
+      ]
+    },
+    {
+      "id": "endpoint.probes.enabled",
+      "category": "endpoint",
+      "title": "Endpoint probes enabled",
+      "status": "pass",
+      "severity": "info",
+      "scoreImpact": 0,
+      "summary": "Probing 4 HTTP service endpoint(s).",
+      "evidence": []
+    },
+    {
+      "id": "erc8004.registry.read",
+      "category": "erc8004",
+      "title": "ERC-8004 registry record resolves",
+      "status": "pass",
+      "severity": "critical",
+      "scoreImpact": 0,
+      "summary": "Identity Registry owner, wallet, and metadata URI resolved at one block.",
+      "evidence": [
+        {
+          "type": "chain",
+          "label": "owner",
+          "value": "0x97AC19efd90731672430019d88FC080c229E5589",
+          "chainId": 42220,
+          "address": "0x97AC19efd90731672430019d88FC080c229E5589",
+          "blockNumber": 70504811
+        },
+        {
+          "type": "chain",
+          "label": "agent wallet",
+          "value": "0x0000000000000000000000000000000000000000",
+          "chainId": 42220,
+          "address": "0x0000000000000000000000000000000000000000",
+          "blockNumber": 70504811
+        },
+        {
+          "type": "chain",
+          "label": "metadata URI",
+          "value": "data:application/json",
+          "chainId": 42220,
+          "address": "0x8004A169FB4a3325136EB29fA0ceB6D2e539a432",
+          "blockNumber": 70504811
+        }
+      ]
+    },
+    {
+      "id": "mcp.declared",
+      "category": "mcp",
+      "title": "MCP endpoint declared",
+      "status": "pass",
+      "severity": "medium",
+      "scoreImpact": 0,
+      "summary": "Metadata declares 1 MCP service(s).",
+      "evidence": [
+        {
+          "type": "url",
+          "label": "MCP",
+          "value": "https://api.loopuman.com/.well-known/mcp.json"
+        }
+      ]
+    },
+    {
+      "id": "metadata.active.true",
+      "category": "metadata",
+      "title": "Metadata marks the agent active",
+      "status": "pass",
+      "severity": "high",
+      "scoreImpact": 0,
+      "summary": "Metadata does not mark the agent inactive.",
+      "evidence": []
+    },
+    {
+      "id": "metadata.description.present",
+      "category": "metadata",
+      "title": "Metadata has a description",
+      "status": "pass",
+      "severity": "medium",
+      "scoreImpact": 0,
+      "summary": "Agent description is present.",
+      "evidence": []
+    },
+    {
+      "id": "metadata.image.present",
+      "category": "metadata",
+      "title": "Metadata has an image",
+      "status": "pass",
+      "severity": "low",
+      "scoreImpact": 0,
+      "summary": "Agent image is present.",
+      "evidence": []
+    },
+    {
+      "id": "metadata.name.present",
+      "category": "metadata",
+      "title": "Metadata has a name",
+      "status": "pass",
+      "severity": "medium",
+      "scoreImpact": 0,
+      "summary": "Agent name is Loopuman.",
+      "evidence": [
+        {
+          "type": "json",
+          "label": "name",
+          "value": "Loopuman"
+        }
+      ]
+    },
+    {
+      "id": "metadata.registration.matches",
+      "category": "erc8004",
+      "title": "Metadata registration matches target",
+      "status": "pass",
+      "severity": "critical",
+      "scoreImpact": 0,
+      "summary": "Metadata registrations include the scanned agent.",
+      "evidence": [
+        {
+          "type": "json",
+          "label": "expected registration",
+          "value": "eip155:42220:0x8004A169FB4a3325136EB29fA0ceB6D2e539a432/17"
+        }
+      ]
+    },
+    {
+      "id": "metadata.resolves",
+      "category": "metadata",
+      "title": "Metadata resolves to JSON",
+      "status": "pass",
+      "severity": "critical",
+      "scoreImpact": 0,
+      "summary": "Metadata URI resolved and parsed as JSON.",
+      "evidence": [
+        {
+          "type": "json",
+          "label": "metadata document",
+          "value": "data:application/json",
+          "fetchedAt": "2026-06-25T16:39:28.440Z"
+        }
+      ]
+    },
+    {
+      "id": "metadata.services.locators",
+      "category": "metadata",
+      "title": "Declared services have locators",
+      "status": "pass",
+      "severity": "high",
+      "scoreImpact": 0,
+      "summary": "Declared services include URL or address locators.",
+      "evidence": []
+    },
+    {
+      "id": "metadata.services.present",
+      "category": "metadata",
+      "title": "Metadata declares services",
+      "status": "pass",
+      "severity": "high",
+      "scoreImpact": 0,
+      "summary": "Metadata declares 9 service(s).",
+      "evidence": [
+        {
+          "type": "json",
+          "label": "service count",
+          "value": "9"
+        }
+      ]
+    },
+    {
+      "id": "metadata.type.valid",
+      "category": "metadata",
+      "title": "Metadata type is recognized",
+      "status": "pass",
+      "severity": "low",
+      "scoreImpact": 0,
+      "summary": "Metadata type is https://eips.ethereum.org/EIPS/eip-8004#registration-v1.",
+      "evidence": [
+        {
+          "type": "json",
+          "label": "metadata document",
+          "value": "data:application/json",
+          "fetchedAt": "2026-06-25T16:39:28.440Z"
+        }
+      ]
+    },
+    {
+      "id": "metadata.uri.present",
+      "category": "metadata",
+      "title": "Metadata URI is present",
+      "status": "pass",
+      "severity": "critical",
+      "scoreImpact": 0,
+      "summary": "A metadata URI is available for scanning.",
+      "evidence": [
+        {
+          "type": "url",
+          "label": "metadata URI",
+          "value": "data:application/json"
+        }
+      ]
+    },
+    {
+      "id": "self_agent_id.claimed",
+      "category": "self_agent_id",
+      "title": "Self Agent ID declared",
+      "status": "skip",
+      "severity": "low",
+      "scoreImpact": 0,
+      "summary": "Metadata does not declare Self Agent ID evidence.",
+      "evidence": []
+    },
+    {
+      "id": "x402.declared",
+      "category": "x402",
+      "title": "x402 support declared",
+      "status": "pass",
+      "severity": "medium",
+      "scoreImpact": 0,
+      "summary": "Metadata declares x402 support.",
+      "evidence": []
+    },
+    {
+      "id": "x402.endpoint.probe",
+      "category": "x402",
+      "title": "x402 endpoint returns payment requirements",
+      "status": "fail",
+      "severity": "high",
+      "scoreImpact": -20,
+      "summary": "x402 probe failed: Endpoint did not return HTTP 402 Payment Required.",
+      "evidence": [
+        {
+          "type": "x402",
+          "label": "x402 endpoint",
+          "value": "https://api.loopuman.com/.well-known/mcp.json",
+          "statusCode": 200,
+          "durationMs": 150,
+          "fetchedAt": "2026-06-25T16:39:28.440Z"
+        }
+      ],
+      "remediation": "Return an x402 HTTP 402 response with Celo payment requirements."
+    }
+  ],
+  "reportHash": "0x533cb30c18f08fb7cdfc500ae8b830d8ac44de6e5cb39ac5ab37bef53ac44159"
+}

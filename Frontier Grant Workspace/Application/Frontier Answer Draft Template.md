@@ -10,7 +10,7 @@ TODO
 
 ## Website
 
-TODO
+https://celo-agent-preflight.vercel.app
 
 ## X handle
 
@@ -22,7 +22,7 @@ TODO
 
 ## GitHub
 
-TODO
+https://github.com/cleanerzkp/celo-agent-preflight
 
 ## One-sentence description
 
@@ -40,7 +40,7 @@ Preflight will either register its own operator agent on Celo ERC-8004 or provid
 
 Draft:
 
-Yes. The scanner library, CLI, MCP server, report schema, attestation contract, API examples, and documentation are open source under TODO license. The hosted report site is a convenience deployment; the checks, contracts, and report format can be self-hosted by other builders.
+Yes. The scanner library, CLI, MCP server, report schema, attestation contract, API examples, and documentation are open source under Apache-2.0. The hosted report site is a convenience deployment; the checks, contracts, and report format can be self-hosted by other builders.
 
 ## Deployed on Celo mainnet
 
@@ -100,7 +100,9 @@ Preflight validates x402-compatible payment routes for Celo agents, including ne
 
 ## Demo
 
-TODO: Add public demo link and video.
+Public demo: https://celo-agent-preflight.vercel.app
+
+TODO: Add short demo video.
 
 Draft:
 

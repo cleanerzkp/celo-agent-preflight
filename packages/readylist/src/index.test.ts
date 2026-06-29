@@ -22,6 +22,7 @@ const REGISTRY = "eip155:42220:0x8004A169FB4a3325136EB29fA0ceB6D2e539a432";
 
 test("creates operational ReadyList entries and summary from reports", () => {
   const report = reportWithChecks([
+    nameCheck("Agent One"),
     check("mcp.declared", "mcp", "pass"),
     check("endpoint.1.reachable", "mcp", "pass", 128),
     check("a2a.declared", "a2a", "skip"),
@@ -34,6 +35,7 @@ test("creates operational ReadyList entries and summary from reports", () => {
   const entry = snapshot.entries[0];
 
   assert.ok(entry);
+  assert.equal(entry.name, "Agent One");
   assert.equal(entry.mcp, "pass");
   assert.equal(entry.a2a, "skip");
   assert.equal(entry.x402, "fail");
@@ -149,5 +151,24 @@ function check(
           }
         ],
     ...(remediation ? { remediation } : {})
+  };
+}
+
+function nameCheck(name: string): ReadinessCheck {
+  return {
+    id: "metadata.name.present",
+    category: "metadata",
+    title: "Metadata has a name",
+    status: "pass",
+    severity: "medium",
+    scoreImpact: 0,
+    summary: `Agent name is ${name}.`,
+    evidence: [
+      {
+        type: "json",
+        label: "name",
+        value: name
+      }
+    ]
   };
 }

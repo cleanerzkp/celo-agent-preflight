@@ -51,6 +51,10 @@ export function getReportDir(): string {
     return process.env.PREFLIGHT_REPORT_DIR;
   }
 
+  if (process.env.REPORT_STORAGE_LOCAL_DIR) {
+    return process.env.REPORT_STORAGE_LOCAL_DIR;
+  }
+
   const candidates = [
     resolve(process.cwd(), "storage/reports"),
     resolve(process.cwd(), "../../storage/reports")

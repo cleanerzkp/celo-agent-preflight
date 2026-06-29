@@ -44,6 +44,7 @@ export interface ReadyListEntry {
   readonly chainId: number;
   readonly registry: string;
   readonly agentId: string;
+  readonly name?: string;
   readonly owner?: string;
   readonly status: ReadyListStatus;
   readonly score: number;
@@ -328,11 +329,13 @@ function reportToReadyListEntry(
   const stale = isReportStale(report, options);
   const latencyMs = median(reportLatencySamples(report));
   const attestationTx = report.attestation?.txHash as ChainHash | undefined;
+  const name = reportAgentName(report);
 
   return {
     chainId: report.subject.chainId,
     registry: report.subject.agentRegistry ?? "metadata-only",
     agentId: report.subject.agentId ?? "metadata-url",
+    ...(name ? { name } : {}),
     ...(report.subject.owner ? { owner: report.subject.owner } : {}),
     status: stale ? "stale" : reportScoreStatus(report),
     score: report.score.value,
@@ -362,6 +365,13 @@ function ensureReportHash(input: unknown): PreflightReport & { readonly reportHa
 
 function reportScoreStatus(report: PreflightReport): ReadyListStatus {
   return report.score.label === "unknown" ? "unverified" : report.score.label;
+}
+
+function reportAgentName(report: PreflightReport): string | undefined {
+  return report.checks
+    .find((checkEntry) => checkEntry.id === "metadata.name.present")
+    ?.evidence.find((evidence) => evidence.label === "name")
+    ?.value;
 }
 
 function capabilityStatus(

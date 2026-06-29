@@ -1,0 +1,402 @@
+{
+  "schemaVersion": "preflight.report.v0.1",
+  "generatedAt": "2026-06-25T16:39:28.440Z",
+  "generator": {
+    "name": "celo-agent-preflight",
+    "version": "0.1.0"
+  },
+  "subject": {
+    "chainId": 42220,
+    "agentRegistry": "eip155:42220:0x8004A169FB4a3325136EB29fA0ceB6D2e539a432",
+    "agentId": "4",
+    "owner": "0x1e67A381c93F34afAed8c1A7E5E35746f8bE2b23",
+    "agentWallet": "0x1e67A381c93F34afAed8c1A7E5E35746f8bE2b23",
+    "metadataURI": "https://aaa-agent-steel.vercel.app/agent-metadata.json",
+    "primaryUrl": "https://celofx.vercel.app"
+  },
+  "score": {
+    "value": 60,
+    "label": "not_ready"
+  },
+  "checks": [
+    {
+      "id": "a2a.declared",
+      "category": "a2a",
+      "title": "A2A endpoint declared",
+      "status": "pass",
+      "severity": "medium",
+      "scoreImpact": 0,
+      "summary": "Metadata declares 1 A2A service(s).",
+      "evidence": [
+        {
+          "type": "url",
+          "label": "A2A",
+          "value": "https://celofx.vercel.app/.well-known/agent-card.json"
+        }
+      ]
+    },
+    {
+      "id": "celo_activity.identity_address.present",
+      "category": "celo_activity",
+      "title": "Celo identity address captured",
+      "status": "pass",
+      "severity": "low",
+      "scoreImpact": 0,
+      "summary": "The ERC-8004 registry scan captured an owner or agent wallet address.",
+      "evidence": [
+        {
+          "type": "chain",
+          "label": "identity address",
+          "value": "0x1e67A381c93F34afAed8c1A7E5E35746f8bE2b23",
+          "chainId": 42220,
+          "address": "0x1e67A381c93F34afAed8c1A7E5E35746f8bE2b23"
+        }
+      ]
+    },
+    {
+      "id": "chain.configured",
+      "category": "contract",
+      "title": "Celo network configured",
+      "status": "pass",
+      "severity": "info",
+      "scoreImpact": 0,
+      "summary": "Using celo chain 42220.",
+      "evidence": [
+        {
+          "type": "chain",
+          "label": "chain",
+          "value": "celo",
+          "chainId": 42220
+        },
+        {
+          "type": "chain",
+          "label": "identity registry",
+          "value": "0x8004A169FB4a3325136EB29fA0ceB6D2e539a432",
+          "chainId": 42220,
+          "address": "0x8004A169FB4a3325136EB29fA0ceB6D2e539a432"
+        }
+      ]
+    },
+    {
+      "id": "endpoint.1.reachable",
+      "category": "endpoint",
+      "title": "web endpoint responds",
+      "status": "pass",
+      "severity": "low",
+      "scoreImpact": 0,
+      "summary": "Endpoint responded with HTTP 200.",
+      "evidence": [
+        {
+          "type": "http",
+          "label": "web endpoint",
+          "value": "https://celofx.vercel.app/",
+          "statusCode": 200,
+          "durationMs": 104,
+          "fetchedAt": "2026-06-25T16:39:28.440Z"
+        }
+      ]
+    },
+    {
+      "id": "endpoint.2.reachable",
+      "category": "mcp",
+      "title": "MCP endpoint responds",
+      "status": "pass",
+      "severity": "low",
+      "scoreImpact": 0,
+      "summary": "Endpoint responded with HTTP 200.",
+      "evidence": [
+        {
+          "type": "http",
+          "label": "MCP endpoint",
+          "value": "https://celofx.vercel.app/api/mcp",
+          "statusCode": 200,
+          "durationMs": 665,
+          "fetchedAt": "2026-06-25T16:39:28.440Z"
+        }
+      ]
+    },
+    {
+      "id": "endpoint.3.reachable",
+      "category": "a2a",
+      "title": "A2A endpoint responds",
+      "status": "pass",
+      "severity": "low",
+      "scoreImpact": 0,
+      "summary": "Endpoint responded with HTTP 200.",
+      "evidence": [
+        {
+          "type": "http",
+          "label": "A2A endpoint",
+          "value": "https://celofx.vercel.app/.well-known/agent-card.json",
+          "statusCode": 200,
+          "durationMs": 521,
+          "fetchedAt": "2026-06-25T16:39:28.440Z"
+        }
+      ]
+    },
+    {
+      "id": "endpoint.4.reachable",
+      "category": "endpoint",
+      "title": "OASF endpoint responds",
+      "status": "pass",
+      "severity": "low",
+      "scoreImpact": 0,
+      "summary": "Endpoint responded with HTTP 200.",
+      "evidence": [
+        {
+          "type": "http",
+          "label": "OASF endpoint",
+          "value": "https://github.com/agntcy/oasf/",
+          "statusCode": 200,
+          "durationMs": 134,
+          "fetchedAt": "2026-06-25T16:39:28.440Z"
+        }
+      ]
+    },
+    {
+      "id": "endpoint.probes.enabled",
+      "category": "endpoint",
+      "title": "Endpoint probes enabled",
+      "status": "pass",
+      "severity": "info",
+      "scoreImpact": 0,
+      "summary": "Probing 4 HTTP service endpoint(s).",
+      "evidence": []
+    },
+    {
+      "id": "erc8004.registry.read",
+      "category": "erc8004",
+      "title": "ERC-8004 registry record resolves",
+      "status": "pass",
+      "severity": "critical",
+      "scoreImpact": 0,
+      "summary": "Identity Registry owner, wallet, and metadata URI resolved at one block.",
+      "evidence": [
+        {
+          "type": "chain",
+          "label": "owner",
+          "value": "0x1e67A381c93F34afAed8c1A7E5E35746f8bE2b23",
+          "chainId": 42220,
+          "address": "0x1e67A381c93F34afAed8c1A7E5E35746f8bE2b23",
+          "blockNumber": 70504809
+        },
+        {
+          "type": "chain",
+          "label": "agent wallet",
+          "value": "0x1e67A381c93F34afAed8c1A7E5E35746f8bE2b23",
+          "chainId": 42220,
+          "address": "0x1e67A381c93F34afAed8c1A7E5E35746f8bE2b23",
+          "blockNumber": 70504809
+        },
+        {
+          "type": "chain",
+          "label": "metadata URI",
+          "value": "https://aaa-agent-steel.vercel.app/agent-metadata.json",
+          "chainId": 42220,
+          "address": "0x8004A169FB4a3325136EB29fA0ceB6D2e539a432",
+          "blockNumber": 70504809
+        }
+      ]
+    },
+    {
+      "id": "mcp.declared",
+      "category": "mcp",
+      "title": "MCP endpoint declared",
+      "status": "pass",
+      "severity": "medium",
+      "scoreImpact": 0,
+      "summary": "Metadata declares 1 MCP service(s).",
+      "evidence": [
+        {
+          "type": "url",
+          "label": "MCP",
+          "value": "https://celofx.vercel.app/api/mcp"
+        }
+      ]
+    },
+    {
+      "id": "metadata.active.true",
+      "category": "metadata",
+      "title": "Metadata marks the agent active",
+      "status": "fail",
+      "severity": "high",
+      "scoreImpact": -20,
+      "summary": "Metadata declares active=false.",
+      "evidence": [],
+      "remediation": "Set active=true when the agent is ready to receive traffic."
+    },
+    {
+      "id": "metadata.description.present",
+      "category": "metadata",
+      "title": "Metadata has a description",
+      "status": "pass",
+      "severity": "medium",
+      "scoreImpact": 0,
+      "summary": "Agent description is present.",
+      "evidence": []
+    },
+    {
+      "id": "metadata.image.present",
+      "category": "metadata",
+      "title": "Metadata has an image",
+      "status": "pass",
+      "severity": "low",
+      "scoreImpact": 0,
+      "summary": "Agent image is present.",
+      "evidence": []
+    },
+    {
+      "id": "metadata.name.present",
+      "category": "metadata",
+      "title": "Metadata has a name",
+      "status": "pass",
+      "severity": "medium",
+      "scoreImpact": 0,
+      "summary": "Agent name is CeloFX (Legacy).",
+      "evidence": [
+        {
+          "type": "json",
+          "label": "name",
+          "value": "CeloFX (Legacy)"
+        }
+      ]
+    },
+    {
+      "id": "metadata.registration.matches",
+      "category": "erc8004",
+      "title": "Metadata registration matches target",
+      "status": "pass",
+      "severity": "critical",
+      "scoreImpact": 0,
+      "summary": "Metadata registrations include the scanned agent.",
+      "evidence": [
+        {
+          "type": "json",
+          "label": "expected registration",
+          "value": "eip155:42220:0x8004A169FB4a3325136EB29fA0ceB6D2e539a432/4"
+        }
+      ]
+    },
+    {
+      "id": "metadata.resolves",
+      "category": "metadata",
+      "title": "Metadata resolves to JSON",
+      "status": "pass",
+      "severity": "critical",
+      "scoreImpact": 0,
+      "summary": "Metadata URI resolved and parsed as JSON.",
+      "evidence": [
+        {
+          "type": "http",
+          "label": "metadata document",
+          "value": "https://aaa-agent-steel.vercel.app/agent-metadata.json",
+          "statusCode": 200,
+          "durationMs": 278,
+          "fetchedAt": "2026-06-25T16:39:28.440Z"
+        }
+      ]
+    },
+    {
+      "id": "metadata.services.locators",
+      "category": "metadata",
+      "title": "Declared services have locators",
+      "status": "pass",
+      "severity": "high",
+      "scoreImpact": 0,
+      "summary": "Declared services include URL or address locators.",
+      "evidence": []
+    },
+    {
+      "id": "metadata.services.present",
+      "category": "metadata",
+      "title": "Metadata declares services",
+      "status": "pass",
+      "severity": "high",
+      "scoreImpact": 0,
+      "summary": "Metadata declares 5 service(s).",
+      "evidence": [
+        {
+          "type": "json",
+          "label": "service count",
+          "value": "5"
+        }
+      ]
+    },
+    {
+      "id": "metadata.type.valid",
+      "category": "metadata",
+      "title": "Metadata type is recognized",
+      "status": "pass",
+      "severity": "low",
+      "scoreImpact": 0,
+      "summary": "Metadata type is https://eips.ethereum.org/EIPS/eip-8004#registration-v1.",
+      "evidence": [
+        {
+          "type": "http",
+          "label": "metadata document",
+          "value": "https://aaa-agent-steel.vercel.app/agent-metadata.json",
+          "statusCode": 200,
+          "durationMs": 278,
+          "fetchedAt": "2026-06-25T16:39:28.440Z"
+        }
+      ]
+    },
+    {
+      "id": "metadata.uri.present",
+      "category": "metadata",
+      "title": "Metadata URI is present",
+      "status": "pass",
+      "severity": "critical",
+      "scoreImpact": 0,
+      "summary": "A metadata URI is available for scanning.",
+      "evidence": [
+        {
+          "type": "url",
+          "label": "metadata URI",
+          "value": "https://aaa-agent-steel.vercel.app/agent-metadata.json"
+        }
+      ]
+    },
+    {
+      "id": "self_agent_id.claimed",
+      "category": "self_agent_id",
+      "title": "Self Agent ID declared",
+      "status": "skip",
+      "severity": "low",
+      "scoreImpact": 0,
+      "summary": "Metadata does not declare Self Agent ID evidence.",
+      "evidence": []
+    },
+    {
+      "id": "x402.declared",
+      "category": "x402",
+      "title": "x402 support declared",
+      "status": "pass",
+      "severity": "medium",
+      "scoreImpact": 0,
+      "summary": "Metadata declares x402 support.",
+      "evidence": []
+    },
+    {
+      "id": "x402.endpoint.probe",
+      "category": "x402",
+      "title": "x402 endpoint returns payment requirements",
+      "status": "fail",
+      "severity": "high",
+      "scoreImpact": -20,
+      "summary": "x402 probe failed: Endpoint did not return HTTP 402 Payment Required.",
+      "evidence": [
+        {
+          "type": "x402",
+          "label": "x402 endpoint",
+          "value": "https://celofx.vercel.app",
+          "statusCode": 200,
+          "durationMs": 104,
+          "fetchedAt": "2026-06-25T16:39:28.440Z"
+        }
+      ],
+      "remediation": "Return an x402 HTTP 402 response with Celo payment requirements."
+    }
+  ],
+  "reportHash": "0xf34d032dfae9729fe2b67005f899c659a71196850e87940b45c08985f1e8747c"
+}

@@ -10,7 +10,7 @@ import { publishReport } from "../../../src/data/reports";
 const MAX_SCAN_BODY_BYTES = 16_384;
 
 export async function POST(request: Request) {
-  if (process.env.PREFLIGHT_SCAN_API_ENABLED === "false") {
+  if (scanApiEnabled() === false) {
     return Response.json({ error: "Scan API is disabled." }, { status: 503 });
   }
 
@@ -71,9 +71,9 @@ type AuthResult =
   | { readonly ok: false; readonly error: string };
 
 function authorizeScanRequest(request: Request): AuthResult {
-  const apiKey = process.env.PREFLIGHT_SCAN_API_KEY;
+  const apiKey = process.env.PREFLIGHT_SCAN_API_KEY ?? process.env.SCAN_API_KEY;
 
-  if (!apiKey) {
+  if (!apiKey && scanApiAllowsUnauthenticatedWrites()) {
     return { ok: true };
   }
 
@@ -85,6 +85,28 @@ function authorizeScanRequest(request: Request): AuthResult {
   }
 
   return { ok: false, error: "Missing or invalid scan API credentials." };
+}
+
+function scanApiEnabled(): boolean {
+  const value = process.env.PREFLIGHT_SCAN_API_ENABLED ?? process.env.SCAN_API_ENABLED;
+
+  if (value === undefined) {
+    return process.env.NODE_ENV !== "production";
+  }
+
+  return value !== "false";
+}
+
+function scanApiAllowsUnauthenticatedWrites(): boolean {
+  const value = process.env.PREFLIGHT_SCAN_API_ALLOW_UNAUTHENTICATED ??
+    process.env.SCAN_API_ALLOW_UNAUTHENTICATED;
+
+  if (value !== undefined) {
+    return value === "true";
+  }
+
+  return process.env.NODE_ENV !== "production" &&
+    process.env.SCAN_API_REQUIRE_KEY !== "true";
 }
 
 type ParseResult =

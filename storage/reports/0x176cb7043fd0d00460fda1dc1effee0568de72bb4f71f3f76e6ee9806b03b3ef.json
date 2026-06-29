@@ -1,0 +1,385 @@
+{
+  "schemaVersion": "preflight.report.v0.1",
+  "generatedAt": "2026-06-25T16:39:28.440Z",
+  "generator": {
+    "name": "celo-agent-preflight",
+    "version": "0.1.0"
+  },
+  "subject": {
+    "chainId": 42220,
+    "agentRegistry": "eip155:42220:0x8004A169FB4a3325136EB29fA0ceB6D2e539a432",
+    "agentId": "7",
+    "owner": "0x2C7CE8dc27283beFD939adC894798A52c03A9AEB",
+    "agentWallet": "0x2C7CE8dc27283beFD939adC894798A52c03A9AEB",
+    "metadataURI": "data:application/json;base64,ewogICJ0eXBlIjogIkFnZW50IiwKICAibmFtZSI6ICJNeURheSBHdWFyZGlhbiIsCiAgImRlc2NyaXB0aW9uIjogIkFJLXBvd2VyZWQgYmVoYXZpb3JhbCBmaW5hbmNlIGFnZW50IG9uIENlbG8gTDIuIFRyYWNrcyBkYWlseSBoYWJpdHMgKG1vcm5pbmcgZW5lcmd5ICsgc3Vuc2V0IG1vb2QpLCBjb21wdXRlcyBncml0IHNjb3JlcywgcnVucyB4NDAyLWdhdGVkIGNVU0Qgc3Rha2luZywgYW5kIHByb3ZpZGVzIGRpc2NpcGxpbmUgYW5hbHl0aWNzIHZpYSBNQ1AsIEEyQSwgYW5kIFRlbGVncmFtLiIsCiAgImltYWdlIjogImh0dHBzOi8vcmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbS9taWNreWFsdS9teWRheS1hZ2VudC9tYWluL3NyYy9sb2dvLnBuZyIsCiAgInZlcnNpb24iOiAiMi4wLjAiLAogICJob21lcGFnZSI6ICJodHRwczovL215ZGF5LWd1YXJkaWFuLXByb2R1Y3Rpb24udXAucmFpbHdheS5hcHAiLAogICJyZXBvc2l0b3J5IjogImh0dHBzOi8vZ2l0aHViLmNvbS9taWNreWFsdS9teWRheS1hZ2VudCIsCiAgImVuZHBvaW50cyI6IFsKICAgIHsKICAgICAgInR5cGUiOiAiYTJhIiwKICAgICAgInVybCI6ICJodHRwczovL215ZGF5LWd1YXJkaWFuLXByb2R1Y3Rpb24udXAucmFpbHdheS5hcHAvLndlbGwta25vd24vYWdlbnQuanNvbiIKICAgIH0sCiAgICB7CiAgICAgICJ0eXBlIjogIm1jcCIsCiAgICAgICJ1cmwiOiAiaHR0cHM6Ly9teWRheS1ndWFyZGlhbi1wcm9kdWN0aW9uLnVwLnJhaWx3YXkuYXBwL21jcCIKICAgIH0sCiAgICB7CiAgICAgICJ0eXBlIjogIng0MDIiLAogICAgICAidXJsIjogImh0dHBzOi8vbXlkYXktZ3VhcmRpYW4tcHJvZHVjdGlvbi51cC5yYWlsd2F5LmFwcC94NDAyL3N0YWtlIgogICAgfSwKICAgIHsKICAgICAgInR5cGUiOiAid2FsbGV0IiwKICAgICAgImFkZHJlc3MiOiAiMHgyQzdDRThkYzI3MjgzYmVGRDkzOWFkQzg5NDc5OEE1MmMwM0E5QUVCIiwKICAgICAgImNoYWluSWQiOiA0MjIyMAogICAgfQogIF0sCiAgInN1cHBvcnRlZFRydXN0IjogWyJyZXB1dGF0aW9uIiwgInZhbGlkYXRpb24iLCAidGVlIl0sCiAgInNraWxscyI6IFsKICAgIHsKICAgICAgImlkIjogImRpc2NpcGxpbmUtc2NvcmUiLAogICAgICAibmFtZSI6ICJEaXNjaXBsaW5lIFNjb3JlIiwKICAgICAgImRlc2NyaXB0aW9uIjogIlJldHVybnMgZ3JpdCBzY29yZSwgc3RyZWFrLCBlbW90aW9uYWwgc3RhYmlsaXR5IGluZGV4IGZyb20gYmVoYXZpb3JhbCBkYXRhLiIKICAgIH0sCiAgICB7CiAgICAgICJpZCI6ICJiZWhhdmlvcmFsLW9yYWNsZSIsCiAgICAgICJuYW1lIjogIkJlaGF2aW9yYWwgT3JhY2xlIiwKICAgICAgImRlc2NyaXB0aW9uIjogIk1vb2QtZW5lcmd5IGNvcnJlbGF0aW9uIGVuZ2luZSB3aXRoIHdlZWtseSB0cmVuZCBhbmFseXNpcy4iCiAgICB9LAogICAgewogICAgICAiaWQiOiAic3Vuc2V0LXJlZmxlY3Rpb24iLAogICAgICAibmFtZSI6ICJTdW5zZXQgUmVmbGVjdGlvbiIsCiAgICAgICJkZXNjcmlwdGlvbiI6ICJFdmVuaW5nIHNlbGYtYXVkaXQgY2FwdHVyaW5nIHdpbnMgYW5kIG1vb2QgZGVsdGEuIgogICAgfSwKICAgIHsKICAgICAgImlkIjogImhhYml0LXN0YWtpbmciLAogICAgICAibmFtZSI6ICJIYWJpdCBTdGFraW5nIiwKICAgICAgImRlc2NyaXB0aW9uIjogIng0MDItZ2F0ZWQgaGFiaXQgc3Rha2luZzogcmV0dXJucyBIVFRQIDQwMiB3aXRoIFgtUEFZTUVOVC1SRVFVSVJFRCBoZWFkZXIgZm9yIGNVU0QgcGF5bWVudHMgb24gQ2VsbyBMMi4gVmVyaWZpZXMgb24tY2hhaW4gYW5kIGNyZWRpdHMgdXNlciB2YXVsdC4iCiAgICB9LAogICAgewogICAgICAiaWQiOiAiaHVtYW5pdHktYXR0ZXN0YXRpb24iLAogICAgICAibmFtZSI6ICJIdW1hbml0eSBBdHRlc3RhdGlvbiIsCiAgICAgICJkZXNjcmlwdGlvbiI6ICJTZWxmQ2xhdyBwYXNzcG9ydC1ORkMgdmVyaWZpY2F0aW9uIHZpYSBTZWxmLnh5eiBwcm90b2NvbC4iCiAgICB9CiAgXSwKICAidG9vbHMiOiBbCiAgICB7CiAgICAgICJpZCI6ICJkaXNjaXBsaW5lX3Njb3JlIiwKICAgICAgIm5hbWUiOiAiR2V0IERpc2NpcGxpbmUgU2NvcmUiLAogICAgICAiZGVzY3JpcHRpb24iOiAiUmV0dXJucyB0aGUgdXNlcidzIGdyaXQgc2NvcmUgKDAtMTAwKSwgc3RyZWFrLCBlbW90aW9uYWwgc3RhYmlsaXR5IGluZGV4LCBhbmQgc3Rha2luZyBkYXRhLiIsCiAgICAgICJjYXRlZ29yeSI6ICJiZWhhdmlvcmFsX2ZpbmFuY2UiLAogICAgICAiZW5kcG9pbnQiOiAiaHR0cHM6Ly9teWRheS1ndWFyZGlhbi1wcm9kdWN0aW9uLnVwLnJhaWx3YXkuYXBwL2FwaS92MS9kaXNjaXBsaW5lLXNjb3JlL3t0ZWxlZ3JhbV9pZH0iLAogICAgICAibWV0aG9kIjogIkdFVCIsCiAgICAgICJwYXJhbWV0ZXJzIjogewogICAgICAgICJ0ZWxlZ3JhbV9pZCI6IHsgInR5cGUiOiAiaW50ZWdlciIsICJyZXF1aXJlZCI6IHRydWUsICJkZXNjcmlwdGlvbiI6ICJUZWxlZ3JhbSB1c2VyIElEIiB9CiAgICAgIH0sCiAgICAgICJyZXR1cm5zIjogewogICAgICAgICJncml0X3Njb3JlIjogImludGVnZXIgKDAtMTAwKSIsCiAgICAgICAgInN0cmVhayI6ICJpbnRlZ2VyIiwKICAgICAgICAiZW1vdGlvbmFsX3N0YWJpbGl0eV9pbmRleCI6ICJpbnRlZ2VyICgwLTEwMCkiLAogICAgICAgICJzdGF0dXMiOiAic3RyaW5nIChFbGl0ZXxTdGFibGV8V2FybmluZykiLAogICAgICAgICJhdmdfbW9ybmluZ19lbmVyZ3kiOiAibnVtYmVyIiwKICAgICAgICAiYXZnX3N1bnNldF9tb29kIjogIm51bWJlciIsCiAgICAgICAgInRvdGFsX3N0YWtlZF9jVVNEIjogIm51bWJlciIKICAgICAgfQogICAgfSwKICAgIHsKICAgICAgImlkIjogImRpc2NpcGxpbmVfc2NvcmVfcHJlbWl1bSIsCiAgICAgICJuYW1lIjogIlByZW1pdW0gRGlzY2lwbGluZSBTY29yZSAoeDQwMi1nYXRlZCkiLAogICAgICAiZGVzY3JpcHRpb24iOiAieDQwMi1nYXRlZCBwcmVtaXVtIGJlaGF2aW9yYWwgYW5hbHl0aWNzLiBSZXR1cm5zIDQwMiB3aXRoIHBheW1lbnQgcmVxdWlyZW1lbnRzICgwLjAxIGNVU0QpLiBBZnRlciBwYXltZW50LCByZXR1cm5zIGZ1bGwgZ3JpdCBzY29yZSwgc3RyZWFrLCBtb29kLWVuZXJneSBjb3JyZWxhdGlvbiBkYXRhLiIsCiAgICAgICJjYXRlZ29yeSI6ICJiZWhhdmlvcmFsX2ZpbmFuY2UiLAogICAgICAiZW5kcG9pbnQiOiAiaHR0cHM6Ly9teWRheS1ndWFyZGlhbi1wcm9kdWN0aW9uLnVwLnJhaWx3YXkuYXBwL2FwaS92MS9kaXNjaXBsaW5lLXNjb3JlL3t0ZWxlZ3JhbV9pZH0vcHJlbWl1bSIsCiAgICAgICJtZXRob2QiOiAiR0VUIiwKICAgICAgIng0MDIiOiB7CiAgICAgICAgImZlZSI6ICIwLjAxIiwKICAgICAgICAiYXNzZXQiOiAiMHg3NjVERTgxNjg0NTg2MWU3NUEyNWZDQTEyMmJiNjg5OEI4QjEyODJhIiwKICAgICAgICAibmV0d29yayI6ICJlaXAxNTU6NDIyMjAiLAogICAgICAgICJjdXJyZW5jeSI6ICJjVVNEIgogICAgICB9CiAgICB9LAogICAgewogICAgICAiaWQiOiAiaGFiaXRfc3Rha2luZyIsCiAgICAgICJuYW1lIjogIkhhYml0IFN0YWtpbmcgdmlhIHg0MDIiLAogICAgICAiZGVzY3JpcHRpb24iOiAieDQwMi1nYXRlZCBzdGFraW5nIGVuZHBvaW50LiBSZXR1cm5zIEhUVFAgNDAyIHdpdGggWC1QQVlNRU5ULVJFUVVJUkVEIGhlYWRlciBjb250YWluaW5nIHBheW1lbnQgcmVxdWlyZW1lbnRzLiBDbGllbnQgc2VuZHMgY1VTRCB0byB2YXVsdCBvbiBDZWxvIEwyLCB0aGVuIHJldHJpZXMgd2l0aCBYLVBBWU1FTlQ6IDx0eF9oYXNoPiBoZWFkZXIuIiwKICAgICAgImNhdGVnb3J5IjogImJlaGF2aW9yYWxfZmluYW5jZSIsCiAgICAgICJlbmRwb2ludCI6ICJodHRwczovL215ZGF5LWd1YXJkaWFuLXByb2R1Y3Rpb24udXAucmFpbHdheS5hcHAveDQwMi9zdGFrZSIsCiAgICAgICJtZXRob2QiOiAiR0VUIiwKICAgICAgInBhcmFtZXRlcnMiOiB7CiAgICAgICAgImFtb3VudCI6IHsgInR5cGUiOiAic3RyaW5nIiwgInJlcXVpcmVkIjogdHJ1ZSwgImRlc2NyaXB0aW9uIjogImNVU0QgYW1vdW50IHRvIHN0YWtlIiB9LAogICAgICAgICJ1c2VyIjogeyAidHlwZSI6ICJzdHJpbmciLCAicmVxdWlyZWQiOiBmYWxzZSwgImRlc2NyaXB0aW9uIjogIlRlbGVncmFtIHVzZXIgSUQgZm9yIGZvbGxvdy11cCBub3RpZmljYXRpb24iIH0sCiAgICAgICAgImZlZSI6IHsgInR5cGUiOiAic3RyaW5nIiwgInJlcXVpcmVkIjogZmFsc2UsICJkZXNjcmlwdGlvbiI6ICJ4NDAyIHByb3RvY29sIGZlZSBpbiBjVVNEIChkZWZhdWx0OiAwLjEwKSIgfQogICAgICB9LAogICAgICAieDQwMiI6IHsKICAgICAgICAidmVyc2lvbiI6ICIxLjAiLAogICAgICAgICJzY2hlbWUiOiAiZXhhY3QiLAogICAgICAgICJuZXR3b3JrIjogImVpcDE1NTo0MjIyMCIsCiAgICAgICAgImFzc2V0IjogIjB4NzY1REU4MTY4NDU4NjFlNzVBMjVmQ0ExMjJiYjY4OThCOEIxMjgyYSIsCiAgICAgICAgImZlZSI6ICIwLjEwIiwKICAgICAgICAiY3VycmVuY3kiOiAiY1VTRCIsCiAgICAgICAgImhlYWRlcnMiOiB7CiAgICAgICAgICAicmVxdWVzdCI6ICJYLVBBWU1FTlQtUkVRVUlSRUQiLAogICAgICAgICAgInJlc3BvbnNlIjogIlgtUEFZTUVOVCIKICAgICAgICB9CiAgICAgIH0KICAgIH0sCiAgICB7CiAgICAgICJpZCI6ICJ4NDAyX3ZlcmlmeSIsCiAgICAgICJuYW1lIjogIlZlcmlmeSB4NDAyIFBheW1lbnQiLAogICAgICAiZGVzY3JpcHRpb24iOiAiVmVyaWZpZXMgYW4gb24tY2hhaW4gY1VTRCBwYXltZW50IG9uIENlbG8gTDIgYWdhaW5zdCB0aGUgTXlEYXkgdmF1bHQgdXNpbmcgeDQwMiBwcm90b2NvbC4iLAogICAgICAiY2F0ZWdvcnkiOiAicGF5bWVudF92ZXJpZmljYXRpb24iLAogICAgICAiZW5kcG9pbnQiOiAiaHR0cHM6Ly9teWRheS1ndWFyZGlhbi1wcm9kdWN0aW9uLnVwLnJhaWx3YXkuYXBwL3g0MDIvdmVyaWZ5IiwKICAgICAgIm1ldGhvZCI6ICJQT1NUIiwKICAgICAgInBhcmFtZXRlcnMiOiB7CiAgICAgICAgInR4SGFzaCI6IHsgInR5cGUiOiAic3RyaW5nIiwgInJlcXVpcmVkIjogdHJ1ZSwgImRlc2NyaXB0aW9uIjogIlRyYW5zYWN0aW9uIGhhc2ggdG8gdmVyaWZ5IG9uIENlbG8gTDIiIH0sCiAgICAgICAgImV4cGVjdGVkQW1vdW50IjogeyAidHlwZSI6ICJudW1iZXIiLCAicmVxdWlyZWQiOiBmYWxzZSwgImRlc2NyaXB0aW9uIjogIkV4cGVjdGVkIGNVU0QgYW1vdW50IChkZWZhdWx0OiAwLjEwKSIgfSwKICAgICAgICAidGVsZWdyYW1Vc2VySWQiOiB7ICJ0eXBlIjogImludGVnZXIiLCAicmVxdWlyZWQiOiBmYWxzZSwgImRlc2NyaXB0aW9uIjogIlRlbGVncmFtIHVzZXIgSUQgdG8gY3JlZGl0IiB9CiAgICAgIH0KICAgIH0sCiAgICB7CiAgICAgICJpZCI6ICJ4NDAyX3JlcXVpcmVtZW50cyIsCiAgICAgICJuYW1lIjogIkdldCB4NDAyIFBheW1lbnQgUmVxdWlyZW1lbnRzIiwKICAgICAgImRlc2NyaXB0aW9uIjogIlJldHVybnMgeDQwMiBwYXltZW50IHJlcXVpcmVtZW50cyBmb3Igc3Rha2luZyAoYW1vdW50LCBhc3NldCwgbmV0d29yaywgdmF1bHQgYWRkcmVzcykuIiwKICAgICAgImNhdGVnb3J5IjogInBheW1lbnRfZGlzY292ZXJ5IiwKICAgICAgImVuZHBvaW50IjogImh0dHBzOi8vbXlkYXktZ3VhcmRpYW4tcHJvZHVjdGlvbi51cC5yYWlsd2F5LmFwcC94NDAyL3JlcXVpcmVtZW50cyIsCiAgICAgICJtZXRob2QiOiAiR0VUIiwKICAgICAgInBhcmFtZXRlcnMiOiB7CiAgICAgICAgImFtb3VudCI6IHsgInR5cGUiOiAic3RyaW5nIiwgInJlcXVpcmVkIjogZmFsc2UsICJkZXNjcmlwdGlvbiI6ICJjVVNEIGFtb3VudCAoZGVmYXVsdDogMC4xMCkiIH0KICAgICAgfQogICAgfSwKICAgIHsKICAgICAgImlkIjogImh1bWFuaXR5X2F0dGVzdGF0aW9uIiwKICAgICAgIm5hbWUiOiAiVmVyaWZ5IEh1bWFuaXR5IChTZWxmQ2xhdykiLAogICAgICAiZGVzY3JpcHRpb24iOiAiVHJpZ2dlcnMgYSBTZWxmQ2xhdyBodW1hbml0eSBhdHRlc3RhdGlvbiBoYW5kc2hha2UgZm9yIHRoZSBnaXZlbiB1c2VyLiIsCiAgICAgICJjYXRlZ29yeSI6ICJpZGVudGl0eSIsCiAgICAgICJlbmRwb2ludCI6ICJodHRwczovL215ZGF5LWd1YXJkaWFuLXByb2R1Y3Rpb24udXAucmFpbHdheS5hcHAvYXBpL3ZlcmlmeSIsCiAgICAgICJtZXRob2QiOiAiUE9TVCIsCiAgICAgICJwYXJhbWV0ZXJzIjogewogICAgICAgICJ0ZWxlZ3JhbUlkIjogeyAidHlwZSI6ICJpbnRlZ2VyIiwgInJlcXVpcmVkIjogdHJ1ZSwgImRlc2NyaXB0aW9uIjogIlRlbGVncmFtIHVzZXIgSUQgdG8gdmVyaWZ5IiB9CiAgICAgIH0KICAgIH0sCiAgICB7CiAgICAgICJpZCI6ICJhZ2VudF9tZXRhZGF0YSIsCiAgICAgICJuYW1lIjogIkFnZW50IE1ldGFkYXRhIiwKICAgICAgImRlc2NyaXB0aW9uIjogIlJldHVybnMgTXlEYXkgR3VhcmRpYW4gYWdlbnQgbWV0YWRhdGEsIGNhcGFiaWxpdGllcywgYW5kIGF2YWlsYWJsZSBlbmRwb2ludHMuIiwKICAgICAgImNhdGVnb3J5IjogImRpc2NvdmVyeSIsCiAgICAgICJlbmRwb2ludCI6ICJodHRwczovL215ZGF5LWd1YXJkaWFuLXByb2R1Y3Rpb24udXAucmFpbHdheS5hcHAvYXBpL3YxL2FnZW50IiwKICAgICAgIm1ldGhvZCI6ICJHRVQiCiAgICB9CiAgXQp9Cg==",
+    "primaryUrl": "https://myday-guardian-production.up.railway.app"
+  },
+  "score": {
+    "value": 50,
+    "label": "not_ready"
+  },
+  "checks": [
+    {
+      "id": "a2a.declared",
+      "category": "a2a",
+      "title": "A2A endpoint declared",
+      "status": "pass",
+      "severity": "medium",
+      "scoreImpact": 0,
+      "summary": "Metadata declares 1 A2A service(s).",
+      "evidence": [
+        {
+          "type": "url",
+          "label": "a2a",
+          "value": "https://myday-guardian-production.up.railway.app/.well-known/agent.json"
+        }
+      ]
+    },
+    {
+      "id": "celo_activity.identity_address.present",
+      "category": "celo_activity",
+      "title": "Celo identity address captured",
+      "status": "pass",
+      "severity": "low",
+      "scoreImpact": 0,
+      "summary": "The ERC-8004 registry scan captured an owner or agent wallet address.",
+      "evidence": [
+        {
+          "type": "chain",
+          "label": "identity address",
+          "value": "0x2C7CE8dc27283beFD939adC894798A52c03A9AEB",
+          "chainId": 42220,
+          "address": "0x2C7CE8dc27283beFD939adC894798A52c03A9AEB"
+        }
+      ]
+    },
+    {
+      "id": "chain.configured",
+      "category": "contract",
+      "title": "Celo network configured",
+      "status": "pass",
+      "severity": "info",
+      "scoreImpact": 0,
+      "summary": "Using celo chain 42220.",
+      "evidence": [
+        {
+          "type": "chain",
+          "label": "chain",
+          "value": "celo",
+          "chainId": 42220
+        },
+        {
+          "type": "chain",
+          "label": "identity registry",
+          "value": "0x8004A169FB4a3325136EB29fA0ceB6D2e539a432",
+          "chainId": 42220,
+          "address": "0x8004A169FB4a3325136EB29fA0ceB6D2e539a432"
+        }
+      ]
+    },
+    {
+      "id": "endpoint.1.reachable",
+      "category": "a2a",
+      "title": "a2a endpoint responds",
+      "status": "pass",
+      "severity": "low",
+      "scoreImpact": 0,
+      "summary": "Endpoint responded with HTTP 404.",
+      "evidence": [
+        {
+          "type": "http",
+          "label": "a2a endpoint",
+          "value": "https://myday-guardian-production.up.railway.app/.well-known/agent.json",
+          "statusCode": 404,
+          "durationMs": 67,
+          "fetchedAt": "2026-06-25T16:39:28.440Z"
+        }
+      ]
+    },
+    {
+      "id": "endpoint.2.reachable",
+      "category": "mcp",
+      "title": "mcp endpoint responds",
+      "status": "pass",
+      "severity": "low",
+      "scoreImpact": 0,
+      "summary": "Endpoint responded with HTTP 404.",
+      "evidence": [
+        {
+          "type": "http",
+          "label": "mcp endpoint",
+          "value": "https://myday-guardian-production.up.railway.app/mcp",
+          "statusCode": 404,
+          "durationMs": 54,
+          "fetchedAt": "2026-06-25T16:39:28.440Z"
+        }
+      ]
+    },
+    {
+      "id": "endpoint.3.reachable",
+      "category": "endpoint",
+      "title": "x402 endpoint responds",
+      "status": "pass",
+      "severity": "low",
+      "scoreImpact": 0,
+      "summary": "Endpoint responded with HTTP 404.",
+      "evidence": [
+        {
+          "type": "http",
+          "label": "x402 endpoint",
+          "value": "https://myday-guardian-production.up.railway.app/x402/stake",
+          "statusCode": 404,
+          "durationMs": 53,
+          "fetchedAt": "2026-06-25T16:39:28.440Z"
+        }
+      ]
+    },
+    {
+      "id": "endpoint.probes.enabled",
+      "category": "endpoint",
+      "title": "Endpoint probes enabled",
+      "status": "pass",
+      "severity": "info",
+      "scoreImpact": 0,
+      "summary": "Probing 3 HTTP service endpoint(s).",
+      "evidence": []
+    },
+    {
+      "id": "erc8004.registry.read",
+      "category": "erc8004",
+      "title": "ERC-8004 registry record resolves",
+      "status": "pass",
+      "severity": "critical",
+      "scoreImpact": 0,
+      "summary": "Identity Registry owner, wallet, and metadata URI resolved at one block.",
+      "evidence": [
+        {
+          "type": "chain",
+          "label": "owner",
+          "value": "0x2C7CE8dc27283beFD939adC894798A52c03A9AEB",
+          "chainId": 42220,
+          "address": "0x2C7CE8dc27283beFD939adC894798A52c03A9AEB",
+          "blockNumber": 70504810
+        },
+        {
+          "type": "chain",
+          "label": "agent wallet",
+          "value": "0x2C7CE8dc27283beFD939adC894798A52c03A9AEB",
+          "chainId": 42220,
+          "address": "0x2C7CE8dc27283beFD939adC894798A52c03A9AEB",
+          "blockNumber": 70504810
+        },
+        {
+          "type": "chain",
+          "label": "metadata URI",
+          "value": "data:application/json",
+          "chainId": 42220,
+          "address": "0x8004A169FB4a3325136EB29fA0ceB6D2e539a432",
+          "blockNumber": 70504810
+        }
+      ]
+    },
+    {
+      "id": "mcp.declared",
+      "category": "mcp",
+      "title": "MCP endpoint declared",
+      "status": "pass",
+      "severity": "medium",
+      "scoreImpact": 0,
+      "summary": "Metadata declares 1 MCP service(s).",
+      "evidence": [
+        {
+          "type": "url",
+          "label": "mcp",
+          "value": "https://myday-guardian-production.up.railway.app/mcp"
+        }
+      ]
+    },
+    {
+      "id": "metadata.active.true",
+      "category": "metadata",
+      "title": "Metadata marks the agent active",
+      "status": "pass",
+      "severity": "high",
+      "scoreImpact": 0,
+      "summary": "Metadata does not mark the agent inactive.",
+      "evidence": []
+    },
+    {
+      "id": "metadata.description.present",
+      "category": "metadata",
+      "title": "Metadata has a description",
+      "status": "pass",
+      "severity": "medium",
+      "scoreImpact": 0,
+      "summary": "Agent description is present.",
+      "evidence": []
+    },
+    {
+      "id": "metadata.image.present",
+      "category": "metadata",
+      "title": "Metadata has an image",
+      "status": "pass",
+      "severity": "low",
+      "scoreImpact": 0,
+      "summary": "Agent image is present.",
+      "evidence": []
+    },
+    {
+      "id": "metadata.name.present",
+      "category": "metadata",
+      "title": "Metadata has a name",
+      "status": "pass",
+      "severity": "medium",
+      "scoreImpact": 0,
+      "summary": "Agent name is MyDay Guardian.",
+      "evidence": [
+        {
+          "type": "json",
+          "label": "name",
+          "value": "MyDay Guardian"
+        }
+      ]
+    },
+    {
+      "id": "metadata.registration.matches",
+      "category": "erc8004",
+      "title": "Metadata registration matches target",
+      "status": "fail",
+      "severity": "critical",
+      "scoreImpact": -30,
+      "summary": "Metadata registrations do not include the scanned agent.",
+      "evidence": [
+        {
+          "type": "json",
+          "label": "expected registration",
+          "value": "eip155:42220:0x8004A169FB4a3325136EB29fA0ceB6D2e539a432/7"
+        }
+      ],
+      "remediation": "Add the expected agentRegistry and agentId to metadata.registrations."
+    },
+    {
+      "id": "metadata.resolves",
+      "category": "metadata",
+      "title": "Metadata resolves to JSON",
+      "status": "pass",
+      "severity": "critical",
+      "scoreImpact": 0,
+      "summary": "Metadata URI resolved and parsed as JSON.",
+      "evidence": [
+        {
+          "type": "json",
+          "label": "metadata document",
+          "value": "data:application/json",
+          "fetchedAt": "2026-06-25T16:39:28.440Z"
+        }
+      ]
+    },
+    {
+      "id": "metadata.services.locators",
+      "category": "metadata",
+      "title": "Declared services have locators",
+      "status": "pass",
+      "severity": "high",
+      "scoreImpact": 0,
+      "summary": "Declared services include URL or address locators.",
+      "evidence": []
+    },
+    {
+      "id": "metadata.services.present",
+      "category": "metadata",
+      "title": "Metadata declares services",
+      "status": "pass",
+      "severity": "high",
+      "scoreImpact": 0,
+      "summary": "Metadata declares 4 service(s).",
+      "evidence": [
+        {
+          "type": "json",
+          "label": "service count",
+          "value": "4"
+        }
+      ]
+    },
+    {
+      "id": "metadata.type.valid",
+      "category": "metadata",
+      "title": "Metadata type is recognized",
+      "status": "pass",
+      "severity": "low",
+      "scoreImpact": 0,
+      "summary": "Metadata type is Agent.",
+      "evidence": [
+        {
+          "type": "json",
+          "label": "metadata document",
+          "value": "data:application/json",
+          "fetchedAt": "2026-06-25T16:39:28.440Z"
+        }
+      ]
+    },
+    {
+      "id": "metadata.uri.present",
+      "category": "metadata",
+      "title": "Metadata URI is present",
+      "status": "pass",
+      "severity": "critical",
+      "scoreImpact": 0,
+      "summary": "A metadata URI is available for scanning.",
+      "evidence": [
+        {
+          "type": "url",
+          "label": "metadata URI",
+          "value": "data:application/json"
+        }
+      ]
+    },
+    {
+      "id": "self_agent_id.claimed",
+      "category": "self_agent_id",
+      "title": "Self Agent ID declared",
+      "status": "skip",
+      "severity": "low",
+      "scoreImpact": 0,
+      "summary": "Metadata does not declare Self Agent ID evidence.",
+      "evidence": []
+    },
+    {
+      "id": "x402.declared",
+      "category": "x402",
+      "title": "x402 support declared",
+      "status": "pass",
+      "severity": "medium",
+      "scoreImpact": 0,
+      "summary": "Metadata declares x402 support.",
+      "evidence": [
+        {
+          "type": "url",
+          "label": "x402",
+          "value": "https://myday-guardian-production.up.railway.app/x402/stake"
+        }
+      ]
+    },
+    {
+      "id": "x402.endpoint.probe",
+      "category": "x402",
+      "title": "x402 endpoint returns payment requirements",
+      "status": "fail",
+      "severity": "high",
+      "scoreImpact": -20,
+      "summary": "x402 probe failed: Endpoint did not return HTTP 402 Payment Required.",
+      "evidence": [
+        {
+          "type": "x402",
+          "label": "x402 endpoint",
+          "value": "https://myday-guardian-production.up.railway.app/x402/stake",
+          "statusCode": 404,
+          "durationMs": 58,
+          "fetchedAt": "2026-06-25T16:39:28.440Z"
+        }
+      ],
+      "remediation": "Return an x402 HTTP 402 response with Celo payment requirements."
+    }
+  ],
+  "reportHash": "0x176cb7043fd0d00460fda1dc1effee0568de72bb4f71f3f76e6ee9806b03b3ef"
+}

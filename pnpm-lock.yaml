@@ -130,6 +130,31 @@ importers:
         specifier: ^5.9.3
         version: 5.9.3
 
+  apps/worker:
+    dependencies:
+      '@celo-agent-preflight/db':
+        specifier: workspace:*
+        version: link:../../packages/db
+      '@celo-agent-preflight/preflight-core':
+        specifier: workspace:*
+        version: link:../../packages/preflight-core
+      '@celo-agent-preflight/storage':
+        specifier: workspace:*
+        version: link:../../packages/storage
+      viem:
+        specifier: ^2.53.1
+        version: 2.53.1(bufferutil@4.1.0)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@4.4.3)
+    devDependencies:
+      '@types/node':
+        specifier: ^24.10.0
+        version: 24.13.2
+      tsx:
+        specifier: ^4.22.4
+        version: 4.22.4
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
+
   packages/celo:
     dependencies:
       viem:
@@ -157,6 +182,18 @@ importers:
       viem:
         specifier: ^2.53.1
         version: 2.53.1(bufferutil@4.1.0)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@4.4.3)
+    devDependencies:
+      '@types/node':
+        specifier: ^24.10.0
+        version: 24.13.2
+      tsx:
+        specifier: ^4.22.4
+        version: 4.22.4
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
+
+  packages/db:
     devDependencies:
       '@types/node':
         specifier: ^24.10.0
@@ -267,6 +304,22 @@ importers:
       zod:
         specifier: ^4.4.3
         version: 4.4.3
+    devDependencies:
+      '@types/node':
+        specifier: ^24.10.0
+        version: 24.13.2
+      tsx:
+        specifier: ^4.22.4
+        version: 4.22.4
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
+
+  packages/storage:
+    dependencies:
+      '@celo-agent-preflight/report-schema':
+        specifier: workspace:*
+        version: link:../report-schema
     devDependencies:
       '@types/node':
         specifier: ^24.10.0

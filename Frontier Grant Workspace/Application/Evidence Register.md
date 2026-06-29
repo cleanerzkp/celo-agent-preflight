@@ -6,13 +6,13 @@ Use this file as the single place to collect proof for the application.
 
 | Item | Link | Status |
 | --- | --- | --- |
-| Website/demo | TODO | Missing |
-| GitHub | TODO | Missing |
+| Website/demo | https://celo-agent-preflight.vercel.app | Live Vercel deployment |
+| GitHub | https://github.com/cleanerzkp/celo-agent-preflight | Pending public push |
 | KarmaGAP | TODO | Missing |
 | X announcement | TODO | Missing |
 | Demo video | TODO | Missing |
-| Docs | TODO | Missing |
-| Public report index | TODO | Missing |
+| Docs | https://github.com/cleanerzkp/celo-agent-preflight/tree/master/docs | Pending public push |
+| Public report index | https://celo-agent-preflight.vercel.app/api/agents | Live; stale demo reports only |
 
 ## Celo mainnet contracts
 

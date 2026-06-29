@@ -25,13 +25,15 @@ export default async function AgentPage({
     notFound();
   }
 
+  const name = reportAgentName(report);
+
   return (
     <main className={styles.shell}>
       <section className={styles.section}>
         <div className={styles.sectionHeader}>
           <div>
             <p className={styles.kicker}>Agent detail</p>
-            <h1>Agent {report.subject.agentId}</h1>
+            <h1>{name ?? `Agent ${report.subject.agentId}`}</h1>
           </div>
           <Link href="/agents" className={styles.textLink}>
             ReadyList
@@ -84,4 +86,19 @@ export default async function AgentPage({
       </section>
     </main>
   );
+}
+
+function reportAgentName(report: {
+  readonly checks: readonly {
+    readonly id: string;
+    readonly evidence: readonly {
+      readonly label: string;
+      readonly value: string;
+    }[];
+  }[];
+}): string | undefined {
+  return report.checks
+    .find((checkEntry) => checkEntry.id === "metadata.name.present")
+    ?.evidence.find((evidence) => evidence.label === "name")
+    ?.value;
 }

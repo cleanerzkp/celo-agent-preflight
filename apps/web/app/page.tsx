@@ -5,6 +5,7 @@ import {
   getReadyListSnapshot,
   registryAddress
 } from "../src/data/reports";
+import { PreflightVerifier } from "../src/components/preflight-verifier";
 
 import styles from "./page.module.css";
 
@@ -13,8 +14,6 @@ export const dynamic = "force-dynamic";
 export default function HomePage() {
   const snapshot = getReadyListSnapshot();
   const { entries: agents, reports, summary } = snapshot;
-  const featuredReport = reports[0];
-  const featuredChecks = featuredReport?.checks.slice(0, 4) ?? [];
 
   return (
     <main className={styles.shell}>
@@ -57,52 +56,7 @@ export default function HomePage() {
           </div>
         </div>
 
-        <div
-          className={styles.consoleShell}
-          role="img"
-          aria-label="A Celo Agent Preflight readiness console showing command output, score, and evidence checks."
-        >
-          <div className={styles.consoleHeader}>
-            <span>Celo Agent Preflight</span>
-            <span>chain 42220</span>
-          </div>
-          <div className={styles.commandBox} aria-label="CLI command">
-            <span>npx agentproof check</span>
-            <code>--chain celo --registry erc8004 --agent-id 1</code>
-          </div>
-          <div className={styles.scanGrid} aria-hidden="true">
-            <span>metadata</span>
-            <span>service</span>
-            <span>payment</span>
-            <span>attest</span>
-          </div>
-          <div className={styles.scorePanel}>
-            <div>
-              <span>Readiness score</span>
-              <strong>{featuredReport?.score.value ?? 0}</strong>
-            </div>
-            <p>{featuredReport?.score.label.replaceAll("_", " ") ?? "awaiting report"}</p>
-          </div>
-          {featuredChecks.length === 0 ? (
-            <div className={styles.consoleEmpty}>Publish a Preflight Report JSON file to show live checks.</div>
-          ) : (
-            <ol className={styles.checkList}>
-              {featuredChecks.map((check) => (
-                <li key={check.id}>
-                  <span className={`${styles.checkDot} ${styles[check.status]}`} aria-hidden="true" />
-                  <div>
-                    <strong>{check.title}</strong>
-                    <span>{check.category} / {check.status}</span>
-                  </div>
-                </li>
-              ))}
-            </ol>
-          )}
-          <div className={styles.hashBar}>
-            <span>Preflight Report hash</span>
-            <code>{featuredReport?.reportHash ? shortHash(featuredReport.reportHash) : "not published"}</code>
-          </div>
-        </div>
+        <PreflightVerifier />
       </section>
 
       <section className={styles.metrics} aria-label="Readiness summary">
@@ -163,6 +117,7 @@ export default function HomePage() {
                       <AgentLink
                         agentId={agent.agentId}
                         chainId={agent.chainId}
+                        name={agent.name}
                         registry={agent.registry}
                         reportUrl={agent.latestReportUrl}
                       />
@@ -212,6 +167,9 @@ export default function HomePage() {
                 className={styles.reportCard}
               >
                 <span className={styles.mono}>{shortHash(report.reportHash ?? "")}</span>
+                <span className={styles.reportName}>
+                  {reportAgentName(report) ?? "AgentProof report"}
+                </span>
                 <strong>{report.score.value} / {report.score.label.replaceAll("_", " ")}</strong>
                 <span>{report.checks.length} checks, generated {formatDate(report.generatedAt)}</span>
               </Link>
@@ -247,18 +205,20 @@ function StatusBadge({ status }: { readonly status: string }) {
 function AgentLink({
   agentId,
   chainId,
+  name,
   registry,
   reportUrl
 }: {
   readonly agentId: string;
   readonly chainId: number;
+  readonly name: string | undefined;
   readonly registry: string;
   readonly reportUrl: string;
 }) {
   if (registry === "metadata-only" || agentId === "metadata-url") {
     return (
       <Link href={reportUrl as Route} className={styles.rowLink}>
-        Metadata scan
+        {name ?? "Metadata scan"}
       </Link>
     );
   }
@@ -268,7 +228,7 @@ function AgentLink({
       href={`/agents/${chainId}/${registryAddress(registry)}/${agentId}` as Route}
       className={styles.rowLink}
     >
-      Agent {agentId}
+      {name ?? `Agent ${agentId}`}
     </Link>
   );
 }
@@ -302,4 +262,19 @@ function formatDate(input: string): string {
 
 function formatLatency(input: number | undefined): string {
   return input === undefined ? "n/a" : `${input}ms`;
+}
+
+function reportAgentName(report: {
+  readonly checks: readonly {
+    readonly id: string;
+    readonly evidence: readonly {
+      readonly label: string;
+      readonly value: string;
+    }[];
+  }[];
+}): string | undefined {
+  return report.checks
+    .find((checkEntry) => checkEntry.id === "metadata.name.present")
+    ?.evidence.find((evidence) => evidence.label === "name")
+    ?.value;
 }

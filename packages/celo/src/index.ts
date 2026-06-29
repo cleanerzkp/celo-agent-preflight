@@ -25,7 +25,9 @@ export const CELO_NETWORKS = {
   celo: {
     key: "celo",
     chain: celo,
-    rpcUrl: process.env.CELO_MAINNET_RPC_URL ?? "https://forno.celo.org",
+    rpcUrl: process.env.CELO_MAINNET_RPC_URL ??
+      process.env.CELO_RPC_URL ??
+      "https://forno.celo.org",
     explorerBaseUrl: "https://celoscan.io",
     identityRegistry: CELO_MAINNET_IDENTITY_REGISTRY,
     reputationRegistry: CELO_MAINNET_REPUTATION_REGISTRY
@@ -35,6 +37,7 @@ export const CELO_NETWORKS = {
     chain: celoSepolia,
     rpcUrl:
       process.env.CELO_SEPOLIA_RPC_URL ??
+      process.env.CELO_TESTNET_RPC_URL ??
       "https://forno.celo-sepolia.celo-testnet.org",
     explorerBaseUrl: "https://sepolia.celoscan.io",
     identityRegistry: CELO_SEPOLIA_IDENTITY_REGISTRY,

@@ -64,6 +64,7 @@ export default function AgentsPage() {
                       <AgentLink
                         agentId={agent.agentId}
                         chainId={agent.chainId}
+                        name={agent.name}
                         registry={agent.registry}
                         reportUrl={agent.latestReportUrl}
                       />
@@ -118,18 +119,20 @@ function StatusBadge({ status }: { readonly status: string }) {
 function AgentLink({
   agentId,
   chainId,
+  name,
   registry,
   reportUrl
 }: {
   readonly agentId: string;
   readonly chainId: number;
+  readonly name: string | undefined;
   readonly registry: string;
   readonly reportUrl: string;
 }) {
   if (registry === "metadata-only" || agentId === "metadata-url") {
     return (
       <Link href={reportUrl as Route} className={styles.rowLink}>
-        {chainId} / metadata scan
+        {name ?? `${chainId} / metadata scan`}
       </Link>
     );
   }
@@ -139,7 +142,7 @@ function AgentLink({
       href={`/agents/${chainId}/${registryAddress(registry)}/${agentId}` as Route}
       className={styles.rowLink}
     >
-      {chainId} / {agentId}
+      {name ?? `${chainId} / ${agentId}`}
     </Link>
   );
 }
