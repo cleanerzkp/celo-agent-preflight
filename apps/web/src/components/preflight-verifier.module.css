@@ -24,9 +24,9 @@
   --pf-ease-out: var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1));
   --pf-ease-snap: var(--ease-snap, cubic-bezier(0.2, 0, 0, 1));
 
-  --pf-mono: "SFMono-Regular", "IBM Plex Mono", "Liberation Mono", Consolas, monospace;
-  --pf-label: "DIN Alternate", "Avenir Next Condensed", sans-serif;
-  --pf-serif: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+  --pf-mono: var(--font-mono, "SFMono-Regular", "IBM Plex Mono", monospace);
+  --pf-label: var(--font-ui, "Avenir Next", system-ui, sans-serif);
+  --pf-serif: var(--font-serif, "Iowan Old Style", "Palatino Linotype", Georgia, serif);
 
   background:
     linear-gradient(
@@ -520,7 +520,7 @@
   color: #041209;
   font-family: var(--pf-label);
   font-size: 0.7rem;
-  font-weight: 800;
+  font-weight: 700;
   letter-spacing: 0.12em;
   line-height: 1;
   padding: 6px 9px;
@@ -622,7 +622,7 @@
   display: inline-flex;
   font-family: var(--pf-label);
   font-size: 0.7rem;
-  font-weight: 800;
+  font-weight: 700;
   gap: 6px;
   letter-spacing: 0.1em;
   margin-left: auto;

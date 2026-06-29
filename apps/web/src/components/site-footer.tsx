@@ -51,7 +51,7 @@ export function SiteFooter() {
         </div>
 
         <nav className={styles.footerCol} aria-label="Product">
-          <h3 className={styles.footerHeading}>Product</h3>
+          <h2 className={styles.footerHeading}>Product</h2>
           <Link className={styles.footerLink} href={"/scan" as Route}>Run a check</Link>
           <Link className={styles.footerLink} href={"/agents" as Route}>ReadyList</Link>
           <a className={styles.footerLink} href={SITE.links.reportsApi}>
@@ -61,7 +61,7 @@ export function SiteFooter() {
         </nav>
 
         <nav className={styles.footerCol} aria-label="Protocols">
-          <h3 className={styles.footerHeading}>Protocols</h3>
+          <h2 className={styles.footerHeading}>Protocols</h2>
           <a className={styles.footerLink} href={celoscanAddress(SITE.contracts.erc8004Identity)} target="_blank" rel="noopener noreferrer">
             ERC-8004 registry
             <ArrowUpRight className={styles.extGlyph} />
@@ -72,7 +72,7 @@ export function SiteFooter() {
         </nav>
 
         <nav className={styles.footerCol} aria-label="Project">
-          <h3 className={styles.footerHeading}>Project</h3>
+          <h2 className={styles.footerHeading}>Project</h2>
           {SITE.links.github ? <ExtLink href={SITE.links.github}>GitHub</ExtLink> : null}
           {SITE.links.docs ? <ExtLink href={SITE.links.docs}>Docs</ExtLink> : null}
           <ExtLink href={SITE.external.celo}>Celo</ExtLink>

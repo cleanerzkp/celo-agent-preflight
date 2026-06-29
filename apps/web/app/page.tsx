@@ -163,7 +163,6 @@ export default function HomePage() {
         <section className={styles.section} aria-labelledby="status-heading">
           <div className={styles.sectionHeader}>
             <div>
-              <p className={styles.kicker}>At a glance</p>
               <h2 id="status-heading">Network status</h2>
             </div>
             <Link href="/agents" className={styles.textLink}>
@@ -190,7 +189,6 @@ export default function HomePage() {
       <section className={styles.section} aria-labelledby="readylist-heading">
         <div className={styles.sectionHeader}>
           <div>
-            <p className={styles.kicker}>ReadyList</p>
             <h2 id="readylist-heading">Agents with current evidence</h2>
           </div>
           <Link href="/agents" className={styles.textLink}>
@@ -256,7 +254,6 @@ export default function HomePage() {
       <section className={styles.section} aria-labelledby="reports-heading">
         <div className={styles.sectionHeader}>
           <div>
-            <p className={styles.kicker}>Preflight Reports</p>
             <h2 id="reports-heading">A machine-readable proof trail</h2>
           </div>
           <Link href="/api/agents" className={styles.textLink}>

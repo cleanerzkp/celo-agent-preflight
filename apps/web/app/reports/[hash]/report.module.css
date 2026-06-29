@@ -10,7 +10,9 @@
   align-items: baseline;
   display: flex;
   flex-wrap: wrap;
+  font-weight: 500;
   gap: 8px 18px;
+  margin: 0;
 }
 
 .scoreBig {

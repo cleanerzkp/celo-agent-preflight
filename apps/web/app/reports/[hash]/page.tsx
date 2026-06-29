@@ -104,13 +104,14 @@ export default async function ReportPage({
       <section className={pageStyles.section}>
         <div className={styles.reportHero}>
           <p className={pageStyles.kicker}>Preflight Report</p>
-          <div className={styles.scoreRow}>
+          <h1 className={styles.scoreRow}>
+            <span className="srOnly">Readiness score </span>
             <span className={styles.scoreBig}>{report.score.value}</span>
             <span className={styles.scoreDenom}>/ 100</span>
             <span className={`${styles.scoreLabel} ${pageStyles[report.score.label]}`}>
               {report.score.label.replaceAll("_", " ")}
             </span>
-          </div>
+          </h1>
           <div className={styles.metaRow}>
             <span className={`${pageStyles.badge} ${hashVerified ? pageStyles.verified : pageStyles.fail}`}>
               {hashVerified ? (
