@@ -32,7 +32,14 @@ export function CopyButton({
       data-copied={copied ? "true" : "false"}
       aria-label={copied ? `${label} copied` : `Copy ${label}`}
     >
-      {copied ? <CheckTick size={13} /> : <CopyIcon size={13} />}
+      <span className={styles.iconStack} aria-hidden="true">
+        <span className={styles.copyIcon}>
+          <CopyIcon size={13} />
+        </span>
+        <span className={styles.doneIcon}>
+          <CheckTick size={13} />
+        </span>
+      </span>
     </button>
   );
 }

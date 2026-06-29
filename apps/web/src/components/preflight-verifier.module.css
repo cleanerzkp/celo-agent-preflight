@@ -13,6 +13,7 @@
 .card {
   --pf-green: var(--green, #35d07f);
   --pf-green-soft: var(--green-soft, rgba(53, 208, 127, 0.16));
+  --pf-on-green: var(--on-green, #041209);
   --pf-amber: var(--amber, #e2aa45);
   --pf-red: var(--red, #f16f5f);
   --pf-blue: var(--blue, #93a8ff);
@@ -463,7 +464,7 @@
 
 .scoreTag {
   background: var(--pf-green);
-  color: #041209;
+  color: var(--pf-on-green);
   font-family: var(--pf-label);
   font-size: 0.7rem;
   font-weight: 700;

@@ -33,7 +33,7 @@ export default function AgentsPage() {
           <EmptyState />
         ) : (
           <>
-            <div className={styles.metrics} aria-label="ReadyList summary">
+            <div className={styles.metrics} role="group" aria-label="ReadyList summary">
               <Metric label="Indexed agents" value={summary.indexedAgents} tone="neutral" />
               <Metric label="Reports" value={summary.reportsGenerated} tone="neutral" />
               <Metric label="Attestations" value={summary.celoAttestations} tone="neutral" />

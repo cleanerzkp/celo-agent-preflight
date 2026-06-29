@@ -8,14 +8,59 @@
   flex: none;
   height: 30px;
   justify-content: center;
+  position: relative;
   transition:
     color 160ms var(--ease-out),
     background-color 160ms var(--ease-out);
   width: 30px;
 }
 
+/* Hit-area extension to a 40x40 tap target without enlarging the visible chip. */
+.copy::after {
+  content: "";
+  inset: -5px;
+  position: absolute;
+}
+
 .copy[data-copied="true"] {
   color: var(--green);
+}
+
+/* Copy -> check cross-fade: both icons share one fixed 13px cell (no layout shift). */
+.iconStack {
+  display: inline-flex;
+  height: 13px;
+  position: relative;
+  width: 13px;
+}
+
+.copyIcon,
+.doneIcon {
+  display: inline-flex;
+  inset: 0;
+  position: absolute;
+  transition:
+    opacity 300ms var(--ease-snap),
+    transform 300ms var(--ease-snap),
+    filter 300ms var(--ease-snap);
+}
+
+.doneIcon {
+  filter: blur(4px);
+  opacity: 0;
+  transform: scale(0.25);
+}
+
+.copy[data-copied="true"] .copyIcon {
+  filter: blur(4px);
+  opacity: 0;
+  transform: scale(0.25);
+}
+
+.copy[data-copied="true"] .doneIcon {
+  filter: blur(0);
+  opacity: 1;
+  transform: scale(1);
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -26,7 +71,9 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .copy {
+  .copy,
+  .copyIcon,
+  .doneIcon {
     transition-duration: 0ms;
   }
 }
