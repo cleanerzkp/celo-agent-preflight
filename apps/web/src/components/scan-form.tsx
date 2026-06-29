@@ -5,6 +5,7 @@ import type { FormEvent } from "react";
 import { useState } from "react";
 import type { Route } from "next";
 
+import { ArrowRight, CheckTick } from "./icons";
 import styles from "../../app/page.module.css";
 
 interface ScanResponse {
@@ -20,6 +21,9 @@ interface ScanResponse {
   readonly reportUrl?: string;
 }
 
+const SAMPLE_METADATA_URL =
+  "https://myday-guardian-production.up.railway.app/.well-known/agent.json";
+
 export function ScanForm() {
   const [agentId, setAgentId] = useState("");
   const [chain, setChain] = useState("celo");
@@ -29,6 +33,26 @@ export function ScanForm() {
   const [probeEndpoints, setProbeEndpoints] = useState(true);
   const [result, setResult] = useState<ScanResponse | undefined>();
   const [submitting, setSubmitting] = useState(false);
+
+  const canSubmit = (agentId.trim().length > 0 || metadataUrl.trim().length > 0) && !submitting;
+
+  function clearFeedback() {
+    if (error) setError(undefined);
+    if (result) setResult(undefined);
+  }
+
+  function fillSampleAgent() {
+    setAgentId("1");
+    setMetadataUrl("");
+    setChain("celo");
+    clearFeedback();
+  }
+
+  function fillSampleUrl() {
+    setMetadataUrl(SAMPLE_METADATA_URL);
+    setAgentId("");
+    clearFeedback();
+  }
 
   async function submitScan(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -67,7 +91,7 @@ export function ScanForm() {
   }
 
   return (
-    <form className={styles.scanForm} onSubmit={submitScan}>
+    <form className={styles.scanForm} onSubmit={submitScan} aria-busy={submitting}>
       <div className={styles.fieldGrid}>
         <label className={styles.fieldGroup}>
           <span>Chain</span>
@@ -80,7 +104,10 @@ export function ScanForm() {
           <span>ERC-8004 agent ID</span>
           <input
             inputMode="numeric"
-            onChange={(event) => setAgentId(event.target.value)}
+            onChange={(event) => {
+              setAgentId(event.target.value);
+              clearFeedback();
+            }}
             placeholder="1"
             value={agentId}
           />
@@ -89,12 +116,24 @@ export function ScanForm() {
       <label className={styles.fieldGroup}>
         <span>Metadata URL</span>
         <input
-          onChange={(event) => setMetadataUrl(event.target.value)}
+          onChange={(event) => {
+            setMetadataUrl(event.target.value);
+            clearFeedback();
+          }}
           placeholder="https://agent.example/.well-known/agent.json"
           type="url"
           value={metadataUrl}
         />
       </label>
+      <div className={styles.sampleRow}>
+        <span className={styles.sampleLabel}>Try a sample:</span>
+        <button type="button" className={styles.sampleChip} onClick={fillSampleAgent}>
+          Agent ID
+        </button>
+        <button type="button" className={styles.sampleChip} onClick={fillSampleUrl}>
+          agent.json URL
+        </button>
+      </div>
       <div className={styles.fieldGrid}>
         <label className={styles.fieldGroup}>
           <span>Endpoint probe cap</span>
@@ -116,15 +155,36 @@ export function ScanForm() {
         </label>
       </div>
       <div className={styles.formActions}>
-        <button disabled={submitting} type="submit">
-          {submitting ? "Scanning..." : "Run scan"}
+        <button disabled={!canSubmit} type="submit" className="onGreen">
+          {submitting ? (
+            <>
+              <span className={styles.spinner} aria-hidden="true" />
+              Scanning&hellip;
+            </>
+          ) : (
+            <>
+              Run scan
+              <ArrowRight size={15} />
+            </>
+          )}
         </button>
-        <span>Scans write canonical JSON into report storage by hash.</span>
+        <span>
+          {submitting
+            ? "Probing live endpoints; this can take up to ~10s."
+            : "Each scan produces a hash-verifiable report you can share or re-verify."}
+        </span>
       </div>
-      {error ? <div className={styles.errorBox}>{error}</div> : null}
+      {error ? (
+        <div className={styles.errorBox} role="alert">
+          {error}
+        </div>
+      ) : null}
       {result?.report ? (
-        <div className={styles.resultBox}>
-          <span className={`${styles.badge} ${styles.pass}`}>saved</span>
+        <div className={styles.resultBox} role="status" aria-live="polite">
+          <span className={`${styles.badge} ${styles.pass}`}>
+            <CheckTick size={12} />
+            Report saved
+          </span>
           <strong>
             {result.report.score?.value ?? "n/a"} /{" "}
             {result.report.score?.label.replaceAll("_", " ") ?? "unknown"}
@@ -133,6 +193,7 @@ export function ScanForm() {
           {result.reportUrl ? (
             <Link href={result.reportUrl as Route} className={styles.textLink}>
               Open report
+              <ArrowRight size={14} />
             </Link>
           ) : null}
         </div>

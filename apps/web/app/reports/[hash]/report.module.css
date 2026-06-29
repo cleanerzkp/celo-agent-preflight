@@ -1,0 +1,442 @@
+/* Report detail - turns the canonical report into a credible proof artifact. */
+
+.reportHero {
+  display: grid;
+  gap: 18px;
+  margin-bottom: 8px;
+}
+
+.scoreRow {
+  align-items: baseline;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+}
+
+.scoreBig {
+  color: var(--ink);
+  font-family: var(--font-serif);
+  font-optical-sizing: auto;
+  font-size: clamp(3.5rem, 8vw, 6rem);
+  font-variant-numeric: lining-nums tabular-nums;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 0.85;
+}
+
+.scoreDenom {
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 1.4rem;
+}
+
+.scoreLabel {
+  align-self: center;
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 0 0 1px currentColor;
+  font-family: var(--font-ui);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  margin-left: 6px;
+  padding: 8px 12px;
+  text-transform: uppercase;
+}
+
+.metaRow {
+  align-items: center;
+  color: var(--muted);
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 0.86rem;
+  gap: 8px 14px;
+}
+
+.metaRow .dot {
+  color: var(--line-strong);
+}
+
+/* ---- Summary counts ---- */
+.countBar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.countPill {
+  align-items: baseline;
+  background: rgba(255, 255, 255, 0.04);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+  display: inline-flex;
+  gap: 8px;
+  padding: 10px 14px;
+}
+
+.countNum {
+  font-family: var(--font-serif);
+  font-optical-sizing: auto;
+  font-size: 1.5rem;
+  font-variant-numeric: lining-nums tabular-nums;
+  font-weight: 500;
+  line-height: 1;
+}
+
+.countLabel {
+  color: var(--muted);
+  font-family: var(--font-ui);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* ---- Subject / identity strip ---- */
+.subjectGrid {
+  background: rgba(255, 255, 255, 0.03);
+  box-shadow: var(--shadow-border);
+  display: grid;
+  gap: 1px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.subjectItem {
+  background: rgba(5, 8, 6, 0.4);
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+  padding: 16px 18px;
+}
+
+.subjectKey {
+  color: var(--muted);
+  font-family: var(--font-ui);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.subjectVal {
+  align-items: center;
+  color: var(--muted-strong);
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 0.92rem;
+  gap: 6px 10px;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.subjectVal a {
+  color: var(--green);
+  text-decoration: none;
+}
+
+/* ---- Identity card from decoded metadata ---- */
+.identityCard {
+  align-items: center;
+  background: rgba(255, 255, 255, 0.035);
+  box-shadow: var(--shadow-border);
+  display: flex;
+  gap: 16px;
+  padding: 18px 20px;
+}
+
+.identityImg {
+  flex: none;
+  height: 56px;
+  object-fit: cover;
+  outline: 1px solid rgba(255, 255, 255, 0.1);
+  width: 56px;
+}
+
+.identityBody {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+
+.identityName {
+  color: var(--ink);
+  font-family: var(--font-serif);
+  font-optical-sizing: auto;
+  font-size: 1.3rem;
+  font-weight: 500;
+}
+
+.identityDesc {
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.5;
+  text-wrap: pretty;
+}
+
+/* ---- Verification panel ---- */
+.verifyGrid {
+  display: grid;
+  gap: 12px;
+}
+
+.hashCard {
+  background: rgba(255, 255, 255, 0.04);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+  display: grid;
+  gap: 10px;
+  padding: 16px 18px;
+}
+
+.hashHead {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: space-between;
+}
+
+.hashLabel {
+  color: var(--muted);
+  font-family: var(--font-ui);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.hashLine {
+  align-items: center;
+  display: flex;
+  gap: 10px;
+}
+
+.hashCode {
+  color: var(--muted-strong);
+  flex: 1;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.verifyExplain {
+  background: rgba(53, 208, 127, 0.06);
+  box-shadow: inset 0 0 0 1px rgba(53, 208, 127, 0.18);
+  display: grid;
+  gap: 10px;
+  padding: 18px 20px;
+}
+
+.verifyExplain p {
+  color: var(--muted-strong);
+  font-size: 0.92rem;
+  line-height: 1.55;
+  margin: 0;
+  text-wrap: pretty;
+}
+
+.verifyExplain code {
+  color: var(--ink);
+  font-family: var(--font-mono);
+  font-size: 0.84rem;
+}
+
+.cmd {
+  align-items: center;
+  background: rgba(5, 8, 6, 0.6);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+  display: flex;
+  gap: 10px;
+  padding: 12px 14px;
+}
+
+.cmd code {
+  color: var(--muted-strong);
+  flex: 1;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.cmdPrompt {
+  color: var(--green);
+  font-family: var(--font-mono);
+}
+
+/* ---- Checks grouped by category ---- */
+.groups {
+  display: grid;
+  gap: 14px;
+}
+
+.group {
+  background: rgba(255, 255, 255, 0.025);
+  box-shadow: var(--shadow-border);
+  overflow: hidden;
+}
+
+.groupHead {
+  align-items: center;
+  background: rgba(255, 255, 255, 0.03);
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 14px;
+  justify-content: space-between;
+  padding: 14px 18px;
+}
+
+.groupName {
+  color: var(--ink);
+  font-family: var(--font-ui);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.groupCounts {
+  display: flex;
+  gap: 6px;
+}
+
+.miniCount {
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.check {
+  border-bottom: 1px solid var(--line);
+  display: grid;
+  gap: 8px;
+  padding: 16px 18px;
+}
+
+.check:last-child {
+  border-bottom: 0;
+}
+
+.checkHead {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.checkTitle {
+  color: var(--ink);
+  flex: 1;
+  font-size: 0.98rem;
+  font-weight: 600;
+  min-width: 0;
+}
+
+.checkId {
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+}
+
+.checkSummary {
+  color: var(--muted-strong);
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin: 0;
+  text-wrap: pretty;
+}
+
+.evidence {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 2px;
+}
+
+.evChip {
+  align-items: center;
+  background: rgba(255, 255, 255, 0.04);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.07);
+  color: var(--muted-strong);
+  display: inline-flex;
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  gap: 6px;
+  max-width: 100%;
+  min-width: 0;
+  overflow: hidden;
+  padding: 6px 10px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+a.evChip {
+  color: var(--green);
+  text-decoration: none;
+}
+
+.evKey {
+  color: var(--muted);
+}
+
+.remediation {
+  background: rgba(226, 170, 69, 0.08);
+  box-shadow: inset 0 0 0 1px rgba(226, 170, 69, 0.2);
+  color: var(--muted-strong);
+  display: flex;
+  font-size: 0.86rem;
+  gap: 8px;
+  line-height: 1.45;
+  padding: 10px 12px;
+  text-wrap: pretty;
+}
+
+.remediationKey {
+  color: var(--amber);
+  font-family: var(--font-ui);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* ---- Appendix ---- */
+.appendix {
+  background: rgba(255, 255, 255, 0.025);
+  box-shadow: var(--shadow-border);
+}
+
+.appendixSummary {
+  align-items: center;
+  color: var(--muted-strong);
+  cursor: pointer;
+  display: flex;
+  font-family: var(--font-ui);
+  font-size: 0.86rem;
+  font-weight: 600;
+  gap: 10px;
+  justify-content: space-between;
+  list-style: none;
+  padding: 16px 18px;
+}
+
+.appendixSummary::-webkit-details-marker {
+  display: none;
+}
+
+.appendixHint {
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  font-weight: 400;
+}
+
+.appendix[open] .appendixSummary {
+  border-bottom: 1px solid var(--line);
+}
+
+@media (max-width: 640px) {
+  .subjectGrid {
+    grid-template-columns: 1fr;
+  }
+}

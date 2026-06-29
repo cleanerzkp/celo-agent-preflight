@@ -149,20 +149,24 @@ export function loadReportsFromDirectory(
     return [];
   }
 
-  return readdirSync(reportDir, { withFileTypes: true })
+  const reports: PreflightReport[] = [];
+
+  for (const entry of readdirSync(reportDir, { withFileTypes: true })
     .filter((entry) => entry.isFile() && entry.name.endsWith(".json"))
-    .sort((left, right) => left.name.localeCompare(right.name))
-    .map((entry) => {
-      const reportPath = join(reportDir, entry.name);
+    .sort((left, right) => left.name.localeCompare(right.name))) {
+    const reportPath = join(reportDir, entry.name);
 
-      try {
-        return ensureReportHash(JSON.parse(readFileSync(reportPath, "utf8")));
-      } catch (error) {
-        const message = error instanceof Error ? error.message : String(error);
+    try {
+      reports.push(ensureReportHash(JSON.parse(readFileSync(reportPath, "utf8"))));
+    } catch (error) {
+      // Degrade gracefully: one malformed report file should drop a single
+      // row, never take down every page and API route that reads the catalog.
+      const message = error instanceof Error ? error.message : String(error);
+      console.warn(`Skipping unreadable preflight report ${reportPath}: ${message}`);
+    }
+  }
 
-        throw new Error(`Failed to load preflight report ${reportPath}: ${message}`);
-      }
-    });
+  return reports;
 }
 
 export function persistReportToDirectory({

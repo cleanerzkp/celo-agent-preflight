@@ -45,7 +45,7 @@ export function SiteFooter() {
               Built on Celo
             </span>
             <span className={styles.chip}>
-              {SITE.chain.name} &middot; <span className={styles.chipMono}>{SITE.chain.id}</span>
+              {SITE.chain.name} / <span className={styles.chipMono}>{SITE.chain.id}</span>
             </span>
           </div>
         </div>
@@ -81,7 +81,7 @@ export function SiteFooter() {
 
       <div className={styles.footerBottom}>
         <span>
-          &copy; {year} {SITE.name} &middot; Reports are content-addressed by hash
+          Copyright {year} {SITE.name} / Reports are content-addressed by hash
         </span>
         <a href={celoscanAddress(SITE.contracts.erc8004Identity)} target="_blank" rel="noopener noreferrer">
           Identity registry {shortHash(SITE.contracts.erc8004Identity, 6, 4)}

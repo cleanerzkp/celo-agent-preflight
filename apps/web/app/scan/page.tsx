@@ -1,9 +1,15 @@
-import Link from "next/link";
+import type { Metadata } from "next";
 
 import { ScanForm } from "../../src/components/scan-form";
 import styles from "../page.module.css";
 
 export const dynamic = "force-dynamic";
+
+export const metadata: Metadata = {
+  title: "Run a check",
+  description:
+    "Run a Celo Agent Preflight on an ERC-8004 agent ID or an agent.json URL and get a scored, hash-verifiable report."
+};
 
 export default function ScanPage() {
   return (
@@ -11,20 +17,18 @@ export default function ScanPage() {
       <section className={styles.section}>
         <div className={styles.sectionHeader}>
           <div>
-            <p className={styles.kicker}>Run Preflight</p>
-            <h1>Generate a report</h1>
+            <p className={styles.kicker}>Run a preflight</p>
+            <h1>Check an agent</h1>
           </div>
-          <Link href="/" className={styles.textLink}>
-            Overview
-          </Link>
         </div>
         <div className={styles.scanPanel}>
           <div>
             <p className={styles.lede}>
-              Scan an ERC-8004 agent ID or a direct metadata URL. The result is
-              persisted by report hash and becomes available to ReadyList, the
-              reports API, and public report pages.
+              Enter an ERC-8004 agent ID or an agent.json URL on Celo. We verify identity, live
+              endpoints, payment routes, Self status, and onchain activity, then return a scored,
+              hash-verifiable report you can share.
             </p>
+            <p className={styles.sectionLede}>Same input, same hash, every time.</p>
           </div>
           <ScanForm />
         </div>

@@ -1,0 +1,32 @@
+.copy {
+  align-items: center;
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 0 0 1px var(--line-strong);
+  color: var(--muted);
+  cursor: pointer;
+  display: inline-flex;
+  flex: none;
+  height: 30px;
+  justify-content: center;
+  transition:
+    color 160ms var(--ease-out),
+    background-color 160ms var(--ease-out);
+  width: 30px;
+}
+
+.copy[data-copied="true"] {
+  color: var(--green);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .copy:hover {
+    background: rgba(255, 255, 255, 0.09);
+    color: var(--ink);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .copy {
+    transition-duration: 0ms;
+  }
+}

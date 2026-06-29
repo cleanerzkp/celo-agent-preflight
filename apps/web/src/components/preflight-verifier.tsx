@@ -62,7 +62,7 @@ const PILLARS: readonly Pillar[] = [
     label: "Identity",
     category: "erc8004",
     title: "ERC-8004 registry record resolves",
-    evidence: "agent #1 · owner 0x9f..2a · metadata OK",
+    evidence: "agent #1 / owner 0x9f..2a / metadata OK",
     status: "pass",
     raw: '0x7f3a9c84d2..e91c {"name":"¤❖§'
   },
@@ -71,7 +71,7 @@ const PILLARS: readonly Pillar[] = [
     label: "Endpoint",
     category: "mcp / a2a",
     title: "MCP endpoint responds",
-    evidence: "HTTP 200 · 84ms · A2A declared",
+    evidence: "HTTP 200 / 84ms / A2A declared",
     status: "pass",
     raw: "https://agent.example/.well-known/▒▒▒"
   },
@@ -80,22 +80,22 @@ const PILLARS: readonly Pillar[] = [
     label: "Payment",
     category: "x402",
     title: "x402 returns Celo payment requirements",
-    evidence: "HTTP 402 · network Celo · asset USDC",
+    evidence: "HTTP 402 / network Celo / asset USDC",
     status: "warn",
     raw: "402?▒ accepts=¿¿ network=▒▒▒▒"
   },
   {
     key: "onchain",
     label: "Onchain",
-    category: "celo · self",
-    title: "Celo identity captured · Self Agent ID",
-    evidence: "1,204 txns · Self proof-of-personhood",
+    category: "celo / self",
+    title: "Celo identity captured / Self Agent ID",
+    evidence: "1,204 txns / Self proof-of-personhood",
     status: "pass",
     raw: "ipfs://▒▒▒▒ txns=¿,¿¿¿ self=▒"
   }
 ];
 
-const COMMAND = "npx agentproof check --chain celo --registry erc8004 --agent-id 1";
+const COMMAND = "npx celo-agent-preflight check --chain celo --agent-id 1";
 const FINAL_SCORE = 97;
 const SCORE_TAG = "ready"; // >=90 => ready / green
 const REPORT_HASH = "0x9c1d..af20"; // shortened display form (0x + short hex)
@@ -301,7 +301,7 @@ export function PreflightVerifier() {
   const ariaLabel =
     "Illustration: a raw, unverified Celo agent target is scanned and decoded " +
     "into four verified checks (identity, endpoint, payment, onchain), scored " +
-    "97 out of 100 — ready — and attested on Celo.";
+    "97 out of 100, ready, and attested on Celo.";
 
   return (
     <div
@@ -318,7 +318,7 @@ export function PreflightVerifier() {
           <span className={styles.chain}>chain 42220</span>
         </div>
 
-        {/* Command line — types in with a blinking caret (live check starting) */}
+        {/* Command line: types in with a blinking caret (live check starting) */}
         <div className={styles.command}>
           <span className={styles.prompt}>$</span>
           <code className={styles.cmd}>
@@ -332,17 +332,17 @@ export function PreflightVerifier() {
 
         {/* Scan body: intake target + four resolving rows + the scan-line */}
         <div className={styles.body}>
-          {/* Intake target — raw glyphs cross-fade to a DONE summary */}
+          {/* Intake target: raw glyphs cross-fade to a DONE summary */}
           <div
             className={styles.intake}
             data-in={intakeIn ? "true" : "false"}
             data-decoded={intakeDecoded ? "true" : "false"}
           >
             <span className={styles.intakeRaw}>
-              0x7f3a9c84d2..e91c · ipfs://Qm▒▒ · {'{"name":"¤❖"}'}
+              0x7f3a9c84d2..e91c / ipfs://Qm▒▒ / {'{"name":"¤❖"}'}
             </span>
             <span className={styles.intakeClean}>
-              target 0x7f3a..e91c · agent.json verified
+              target 0x7f3a..e91c / agent.json verified
             </span>
           </div>
 
@@ -398,7 +398,7 @@ export function PreflightVerifier() {
 
                   <div className={styles.rowMain}>
                     <span className={styles.rowLabel}>
-                      {pillar.label} · {pillar.category}
+                      {pillar.label} / {pillar.category}
                     </span>
                     {/* Decode-reveal: raw glyphs cross-fade to the clean title
                         inside one fixed-height cell (no reflow). */}
@@ -406,7 +406,7 @@ export function PreflightVerifier() {
                       <span className={styles.rowRaw}>{pillar.raw}</span>
                       <span className={styles.rowTitle}>{pillar.title}</span>
                     </span>
-                    {/* Single concise evidence line — communicates once. */}
+                    {/* Single concise evidence line: communicates once. */}
                     <span className={styles.rowEvidence}>{pillar.evidence}</span>
                   </div>
                 </li>
@@ -415,7 +415,7 @@ export function PreflightVerifier() {
           </ul>
         </div>
 
-        {/* Score panel — the editorial climax: big serif count-up + bar */}
+        {/* Score panel: the editorial climax, big serif count-up + bar */}
         <div className={styles.score} data-settled={scoreSettled ? "true" : "false"}>
           <div className={styles.scoreHead}>
             <span className={styles.scoreCaption}>readiness score</span>
@@ -435,7 +435,7 @@ export function PreflightVerifier() {
           </div>
         </div>
 
-        {/* Attestation finale — report hash + attested stamp land */}
+        {/* Attestation finale: report hash + attested stamp land */}
         <div className={styles.attest} data-in={attestIn ? "true" : "false"}>
           <span className={styles.attestLabel}>report hash</span>
           <code className={styles.attestHash}>{REPORT_HASH}</code>
