@@ -105,16 +105,18 @@ const REPORT_HASH = "0x9c1d..af20"; // shortened display form (0x + short hex)
  * Total loop ~6.9s (sequence ~5.4s + ~1.5s hold).
  */
 const T = {
-  intake: 200, // raw target row appears
-  typeStart: 360, // command begins typing
-  typePerChar: 14, // ~1.0s to type the full command
-  scanStart: 1500, // scan-line begins its sweep
-  scanEnd: 4000, // scan-line finishes (~2.5s sweep, crossing all rows)
-  scoreStart: 4180,
-  scoreEnd: 5080, // count-up duration ~900ms
-  attest: 5380,
-  holdStart: 5700, // beyond here nothing moves until loop wrap
-  loopLength: 7200
+  intake: 220, // raw target row appears
+  typeStart: 300, // command begins typing
+  typePerChar: 13, // types the full command in ~0.8s
+  fadeIn: 260, // inner cross-fades in at the start of each loop
+  scanStart: 1250, // scan-line begins its sweep
+  scanEnd: 3650, // scan-line finishes (~2.4s sweep, crossing all rows)
+  scoreStart: 3820,
+  scoreEnd: 4720, // count-up duration ~900ms
+  attest: 5020,
+  holdStart: 5450, // beyond here nothing moves until the reset fade
+  resetStart: 6500, // inner cross-fades out to mask the loop wrap
+  loopLength: 7000
 } as const;
 
 const TYPE_END = T.typeStart + COMMAND.length * T.typePerChar;
@@ -128,7 +130,7 @@ function rowCentreFraction(index: number): number {
   return (2 * index + 1) / (2 * PILLARS.length);
 }
 
-type RowState = "raw" | "spinning" | "settled";
+type RowState = "raw" | "settled";
 
 function easeOutCubic(t: number): number {
   const c = t < 0 ? 0 : t > 1 ? 1 : t;
@@ -183,9 +185,10 @@ export function PreflightVerifier() {
         startRef.current = now;
       }
       const e = (now - startRef.current) % T.loopLength;
-      // Commit only inside the moving window; once held, pin the resolved frame
-      // a single time and stop committing until the loop wraps.
-      if (e < T.holdStart) {
+      // Commit while the sequence is moving and again during the reset fade.
+      // Through the static hold we pin a single resolved frame and stop
+      // committing, so CPU/render cost stays near zero between beats.
+      if (e < T.holdStart || e >= T.resetStart) {
         setElapsed(e);
       } else {
         setElapsed(T.holdStart);
@@ -270,16 +273,9 @@ export function PreflightVerifier() {
     if (resolved) {
       return "settled";
     }
-    const centre = rowCentreFraction(index);
-    // A small spin band just past the crossing point before the row settles.
-    const spinBand = 0.06;
-    if (scanProgress < centre) {
-      return "raw";
-    }
-    if (scanProgress < centre + spinBand) {
-      return "spinning";
-    }
-    return "settled";
+    // The row resolves the instant the scan-line reaches its centre, so the
+    // reveal reads as caused by the line passing over it (cause -> effect).
+    return scanProgress >= rowCentreFraction(index) ? "settled" : "raw";
   };
 
   // Score count-up (0 -> 97), cubic ease-out.
@@ -298,6 +294,17 @@ export function PreflightVerifier() {
   const attestIn = resolved || elapsed >= T.attest;
   const intakeDecoded = resolved || rowState(0) !== "raw";
 
+  // Cross-fade the whole sequence in at loop start and out before the wrap, so
+  // the count-up / rows resetting (97 -> 0) is never visible as a hard snap.
+  let innerOpacity = 1;
+  if (!resolved) {
+    if (elapsed >= T.resetStart) {
+      innerOpacity = Math.max(0, 1 - (elapsed - T.resetStart) / (T.loopLength - T.resetStart));
+    } else if (elapsed < T.fadeIn) {
+      innerOpacity = Math.min(1, elapsed / T.fadeIn);
+    }
+  }
+
   const ariaLabel =
     "Illustration: a raw, unverified Celo agent target is scanned and decoded " +
     "into four verified checks (identity, endpoint, payment, onchain), scored " +
@@ -311,7 +318,7 @@ export function PreflightVerifier() {
       aria-label={ariaLabel}
       data-resolved={resolved ? "true" : "false"}
     >
-      <div className={styles.inner} aria-hidden="true">
+      <div className={styles.inner} aria-hidden="true" style={{ opacity: innerOpacity }}>
         {/* Header: brand + muted chain badge */}
         <div className={styles.header}>
           <span className={styles.brand}>celo agent preflight</span>
@@ -369,13 +376,9 @@ export function PreflightVerifier() {
                   data-state={state}
                   data-status={pillar.status}
                 >
-                  {/* Left accent rail (scaleY resolve cue) */}
-                  <span className={styles.rail} aria-hidden="true" />
-
-                  {/* Status marker: dot -> spinner -> SVG tick / warn */}
+                  {/* Status marker: dot cross-fades to an SVG tick / warn */}
                   <span className={styles.marker} aria-hidden="true">
                     <span className={styles.markerDot} />
-                    <span className={styles.markerSpin} />
                     <svg className={styles.markerTick} viewBox="0 0 16 16" fill="none">
                       {pillar.status === "warn" ? (
                         <path
@@ -419,7 +422,7 @@ export function PreflightVerifier() {
         <div className={styles.score} data-settled={scoreSettled ? "true" : "false"}>
           <div className={styles.scoreHead}>
             <span className={styles.scoreCaption}>readiness score</span>
-            <span className={styles.scoreTag}>{SCORE_TAG}</span>
+            <span className={styles.scoreTag} data-on={scoreSettled ? "true" : "false"}>{SCORE_TAG}</span>
           </div>
           <div className={styles.scoreMain}>
             <span className={styles.scoreNumberBox}>

@@ -272,12 +272,12 @@
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.045);
   display: grid;
   gap: 0 12px;
-  grid-template-columns: 3px 22px minmax(0, 1fr);
+  grid-template-columns: 22px minmax(0, 1fr);
   min-height: 64px;
   overflow: hidden;
-  padding: 10px 14px 10px 11px;
+  padding: 12px 14px;
   position: relative;
-  transition: box-shadow 300ms var(--pf-ease-out);
+  transition: box-shadow 320ms var(--pf-ease-out);
 }
 
 .row[data-state="settled"][data-status="pass"] {
@@ -288,41 +288,7 @@
   box-shadow: inset 0 0 0 1px rgba(226, 170, 69, 0.26);
 }
 
-/* Left accent rail: scaleY resolve cue (transform only, no bloom). */
-.rail {
-  align-self: stretch;
-  background: var(--pf-muted);
-  height: 100%;
-  margin: -10px 0 -10px -11px;
-  opacity: 0.3;
-  transform: scaleY(0);
-  transform-origin: top center;
-  transition:
-    transform 300ms var(--pf-ease-snap),
-    opacity 240ms var(--pf-ease-out),
-    background-color 240ms var(--pf-ease-out);
-  width: 3px;
-}
-
-.row[data-state="spinning"] .rail {
-  background: var(--pf-green);
-  opacity: 0.7;
-  transform: scaleY(1);
-}
-
-.row[data-state="settled"][data-status="pass"] .rail {
-  background: var(--pf-green);
-  opacity: 1;
-  transform: scaleY(1);
-}
-
-.row[data-state="settled"][data-status="warn"] .rail {
-  background: var(--pf-amber);
-  opacity: 1;
-  transform: scaleY(1);
-}
-
-/* Status marker: dot -> spinner -> tick, layered and cross-faded by state. */
+/* Status marker: dot cross-fades to a tick once the scan-line resolves the row. */
 .marker {
   align-items: center;
   display: inline-flex;
@@ -341,25 +307,14 @@
   width: 9px;
 }
 
-.markerSpin {
-  border: 2px solid rgba(147, 168, 255, 0.25);
-  border-top-color: var(--pf-blue);
-  border-radius: 50%;
-  box-sizing: border-box;
-  height: 16px;
-  opacity: 0;
-  position: absolute;
-  width: 16px;
-}
-
 .markerTick {
   height: 16px;
   opacity: 0;
   position: absolute;
-  transform: scale(0.6);
+  transform: scale(0.4);
   transition:
-    opacity 200ms var(--pf-ease-out),
-    transform 240ms var(--pf-ease-snap);
+    opacity 220ms var(--pf-ease-out),
+    transform 260ms var(--pf-ease-snap);
   width: 16px;
 }
 
@@ -369,15 +324,6 @@
 
 .row[data-status="warn"] .markerTick {
   color: var(--pf-amber);
-}
-
-.row[data-state="spinning"] .markerDot {
-  opacity: 0;
-}
-
-.row[data-state="spinning"] .markerSpin {
-  animation: pf-spin 700ms linear infinite;
-  opacity: 1;
 }
 
 .row[data-state="settled"] .markerDot {
@@ -523,8 +469,20 @@
   font-weight: 700;
   letter-spacing: 0.12em;
   line-height: 1;
+  opacity: 0;
   padding: 6px 9px;
   text-transform: uppercase;
+  transform: scale(0.82);
+  transform-origin: right center;
+  transition:
+    opacity 220ms var(--pf-ease-out),
+    transform 280ms var(--pf-ease-snap);
+}
+
+/* The tag only lands once the count-up settles, so it never claims READY at 0. */
+.scoreTag[data-on="true"] {
+  opacity: 1;
+  transform: scale(1);
 }
 
 .scoreMain {
@@ -640,12 +598,6 @@
 }
 
 /* ---------- Keyframes (transform/opacity only) ---------- */
-@keyframes pf-spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
 @keyframes pf-blink {
   0%,
   50% {
@@ -735,23 +687,18 @@
   .intakeRaw,
   .intakeClean,
   .row,
-  .rail,
   .markerDot,
   .markerTick,
   .rowRaw,
   .rowTitle,
   .rowEvidence,
   .score,
+  .scoreTag,
   .scoreBarFill,
   .attest,
   .attestStamp {
     animation: none !important;
     transition: none !important;
-  }
-
-  .markerSpin {
-    animation: none !important;
-    opacity: 0 !important;
   }
 
   .caret {
