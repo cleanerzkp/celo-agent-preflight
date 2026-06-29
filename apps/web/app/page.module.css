@@ -175,14 +175,6 @@
   text-wrap: pretty;
 }
 
-.leadTech {
-  color: var(--muted);
-  font-family: var(--font-mono);
-  font-size: 0.82rem;
-  letter-spacing: 0.01em;
-  margin: 18px 0 0;
-}
-
 .actionRow {
   align-items: center;
   display: flex;
@@ -211,7 +203,7 @@
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.28),
     0 18px 42px rgba(53, 208, 127, 0.2);
-  color: #041209;
+  color: var(--on-green);
   display: inline-flex;
   gap: 12px;
   padding: 0 8px 0 22px;
@@ -220,7 +212,7 @@
 .primaryAction span:last-child {
   align-items: center;
   background: rgba(4, 18, 9, 0.14);
-  color: #041209;
+  color: var(--on-green);
   display: inline-flex;
   height: 34px;
   justify-content: center;
@@ -271,40 +263,16 @@
   text-transform: uppercase;
 }
 
-.commandBox {
-  background: rgba(255, 255, 255, 0.05);
-  box-shadow:
-    0 0 0 1px rgba(255, 255, 255, 0.08),
-    inset 0 1px 0 rgba(255, 255, 255, 0.05);
-  color: var(--ink);
-  display: grid;
-  gap: 10px;
-  margin-top: 8px;
-  padding: 18px;
-}
-
-.commandBox span {
-  color: var(--muted);
-  font-size: 0.84rem;
-  text-wrap: pretty;
-}
-
-.commandBox code,
-.mono {
-  font-family: var(--font-mono);
-}
-
-.commandBox code {
-  color: var(--ink);
-  line-height: 1.45;
-  overflow-wrap: anywhere;
-}
-
 /* ============================ Sections ============================ */
 .section {
   margin: 0 auto;
   max-width: var(--maxw);
   padding: clamp(64px, 9vw, 124px) 0 0;
+}
+
+/* Tighter top rhythm for dense data surfaces (report detail) vs marketing sections. */
+.sectionTight {
+  padding-top: clamp(40px, 6vw, 72px);
 }
 
 .sectionHeader {
@@ -675,7 +643,7 @@
   background: var(--green);
   border: 0;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.28);
-  color: #041209;
+  color: var(--on-green);
   cursor: pointer;
   display: inline-flex;
   font-family: var(--font-ui);
@@ -696,20 +664,6 @@
 }
 
 /* ============================ Report / detail bits ============================ */
-.statusRow {
-  align-items: center;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  margin: 0 0 22px;
-}
-
-.verificationGrid {
-  display: grid;
-  gap: 12px;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-}
-
 .jsonBlock {
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.025)),
@@ -779,7 +733,7 @@
     0 0 0 1px var(--line-strong),
     inset 0 1px 0 rgba(255, 255, 255, 0.05);
   color: var(--ink);
-  font: 500 0.95rem/1.3 var(--font-ui);
+  font: 500 1rem/1.3 var(--font-ui);
   min-height: 48px;
   outline: none;
   padding: 0 13px;
@@ -838,9 +792,22 @@
   font: 600 0.78rem/1 var(--font-ui);
   min-height: 34px;
   padding: 0 11px;
+  position: relative;
   transition:
     color 160ms var(--ease-out),
-    background-color 160ms var(--ease-out);
+    background-color 160ms var(--ease-out),
+    transform 160ms var(--ease-out);
+}
+
+/* Invisible hit-area extension to a >=40px tap target (8px row gap absorbs it). */
+.sampleChip::after {
+  content: "";
+  inset: -3px 0;
+  position: absolute;
+}
+
+.sampleChip:active {
+  transform: scale(0.96);
 }
 
 .formActions {
@@ -855,7 +822,7 @@
   background: var(--green);
   border: 0;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.28);
-  color: #041209;
+  color: var(--on-green);
   cursor: pointer;
   display: inline-flex;
   font: 700 0.92rem/1 var(--font-ui);
@@ -868,7 +835,7 @@
 }
 
 .formActions button:active {
-  transform: scale(0.97);
+  transform: scale(0.96);
 }
 
 .formActions button:disabled {
@@ -880,7 +847,7 @@
   animation: spin 700ms linear infinite;
   border: 2px solid rgba(4, 18, 9, 0.3);
   border-radius: 50%;
-  border-top-color: #041209;
+  border-top-color: var(--on-green);
   height: 15px;
   width: 15px;
 }
@@ -963,6 +930,15 @@
   text-wrap: balance;
 }
 
+/* Status label demoted from the display serif so the numeral owns the scale. */
+.reportScoreSuffix {
+  color: var(--muted);
+  font-family: var(--font-ui);
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0;
+}
+
 .reportName {
   color: var(--muted-strong);
   font-weight: 600;
@@ -1032,7 +1008,7 @@
 @media (prefers-reduced-motion: no-preference) {
   @supports (animation-timeline: view()) {
     .section {
-      animation: enterUp 700ms var(--ease-out) both;
+      animation: sectionReveal 700ms var(--ease-out) both;
       animation-range: entry 0% cover 24%;
       animation-timeline: view();
     }
@@ -1051,8 +1027,7 @@
   }
 
   .metrics,
-  .reportGrid,
-  .verificationGrid {
+  .reportGrid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
@@ -1102,8 +1077,7 @@
   .pillars,
   .metrics,
   .fieldGrid,
-  .reportGrid,
-  .verificationGrid {
+  .reportGrid {
     grid-template-columns: 1fr;
   }
 
@@ -1157,6 +1131,20 @@
 
   to {
     filter: blur(0);
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Scroll-scrubbed variant of enterUp: no blur(), since a view() timeline
+   interpolates it per scroll frame (blur re-rasterizes; transform/opacity composite). */
+@keyframes sectionReveal {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
     opacity: 1;
     transform: translateY(0);
   }

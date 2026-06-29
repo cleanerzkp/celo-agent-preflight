@@ -12,6 +12,7 @@
   --panel-soft: rgba(243, 248, 237, 0.045);
   --green: #35d07f;
   --green-soft: rgba(53, 208, 127, 0.16);
+  --on-green: #041209;
   --amber: #e2aa45;
   --amber-soft: rgba(226, 170, 69, 0.16);
   --red: #f16f5f;
@@ -119,7 +120,7 @@ a {
 /* ---- Skip link: hidden until focused ---- */
 .skipLink {
   background: var(--green);
-  color: #041209;
+  color: var(--on-green);
   font: 700 0.85rem/1 var(--font-ui);
   left: 16px;
   padding: 12px 16px;

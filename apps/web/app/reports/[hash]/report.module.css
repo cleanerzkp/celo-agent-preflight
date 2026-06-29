@@ -55,7 +55,7 @@
 }
 
 .metaRow .dot {
-  color: var(--line-strong);
+  color: var(--muted);
 }
 
 /* ---- Summary counts ---- */
@@ -293,6 +293,7 @@
   font-size: 0.78rem;
   font-weight: 700;
   letter-spacing: 0.1em;
+  margin: 0;
   text-transform: uppercase;
 }
 
@@ -374,6 +375,9 @@
 a.evChip {
   color: var(--green);
   text-decoration: none;
+  transition:
+    color 160ms var(--ease-out),
+    box-shadow 160ms var(--ease-out);
 }
 
 .evKey {
@@ -435,6 +439,23 @@ a.evChip {
 
 .appendix[open] .appendixSummary {
   border-bottom: 1px solid var(--line);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  a.evChip:hover {
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.16);
+    color: var(--ink);
+  }
+
+  .subjectVal a:hover {
+    color: var(--ink);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  a.evChip {
+    transition-duration: 0ms;
+  }
 }
 
 @media (max-width: 640px) {

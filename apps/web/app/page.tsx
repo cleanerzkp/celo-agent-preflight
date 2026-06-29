@@ -192,7 +192,7 @@ export default function HomePage() {
             <h2 id="readylist-heading">Agents with current evidence</h2>
           </div>
           <Link href="/agents" className={styles.textLink}>
-            View directory
+            Open ReadyList
           </Link>
         </div>
         {agents.length === 0 ? (
@@ -279,7 +279,7 @@ export default function HomePage() {
                 <span className={styles.reportName}>
                   {reportAgentName(report) ?? "Preflight report"}
                 </span>
-                <strong>{report.score.value} / {report.score.label.replaceAll("_", " ")}</strong>
+                <strong>{report.score.value}<span className={styles.reportScoreSuffix}> / {report.score.label.replaceAll("_", " ")}</span></strong>
                 <span>{report.checks.length} checks / generated {formatDate(report.generatedAt)}</span>
               </Link>
             ))}

@@ -140,7 +140,7 @@ export default async function ReportPage({
       </section>
 
       {meta.kind === "data-json" && (meta.name || meta.image) ? (
-        <section className={pageStyles.section} style={{ paddingTop: "clamp(40px, 6vw, 72px)" }}>
+        <section className={`${pageStyles.section} ${pageStyles.sectionTight}`}>
           <div className={styles.identityCard}>
             {meta.image && /^https?:\/\//.test(meta.image) ? (
               // eslint-disable-next-line @next/next/no-img-element
@@ -154,7 +154,7 @@ export default async function ReportPage({
         </section>
       ) : null}
 
-      <section className={pageStyles.section} aria-labelledby="subject-heading">
+      <section className={`${pageStyles.section} ${pageStyles.sectionTight}`} aria-labelledby="subject-heading">
         <div className={pageStyles.sectionHeader}>
           <div>
             <p className={pageStyles.kicker}>Subject</p>
@@ -197,7 +197,7 @@ export default async function ReportPage({
         </div>
       </section>
 
-      <section className={pageStyles.section} aria-labelledby="verify-heading">
+      <section className={`${pageStyles.section} ${pageStyles.sectionTight}`} aria-labelledby="verify-heading">
         <div className={pageStyles.sectionHeader}>
           <div>
             <p className={pageStyles.kicker}>Verifiability</p>
@@ -257,7 +257,7 @@ export default async function ReportPage({
         </div>
       </section>
 
-      <section className={pageStyles.section} aria-labelledby="checks-heading">
+      <section className={`${pageStyles.section} ${pageStyles.sectionTight}`} aria-labelledby="checks-heading">
         <div className={pageStyles.sectionHeader}>
           <div>
             <p className={pageStyles.kicker}>Evidence</p>
@@ -268,7 +268,7 @@ export default async function ReportPage({
           {grouped.map(({ category, checks }) => (
             <div key={category} className={styles.group}>
               <div className={styles.groupHead}>
-                <span className={styles.groupName}>{CATEGORY_LABELS[category]}</span>
+                <h3 className={styles.groupName}>{CATEGORY_LABELS[category]}</h3>
                 <span className={styles.groupCounts}>
                   {STATUS_ORDER.filter((s) => checks.some((c) => c.status === s)).map((s) => (
                     <span key={s} className={`${styles.miniCount} ${pageStyles[s]}`}>
@@ -305,7 +305,7 @@ export default async function ReportPage({
         </div>
       </section>
 
-      <section className={pageStyles.section}>
+      <section className={`${pageStyles.section} ${pageStyles.sectionTight}`}>
         <details className={styles.appendix}>
           <summary className={styles.appendixSummary}>
             <span>Hash preimage: canonical JSON</span>
@@ -360,7 +360,7 @@ function MetadataValue({ meta }: { readonly meta: ReturnType<typeof decodeMetada
         <summary className={pageStyles.textLink} style={{ cursor: "pointer" }}>
           inline data: URI ({meta.bytes ?? 0} bytes): view
         </summary>
-        <pre className={pageStyles.jsonBlock} style={{ marginTop: 10, maxHeight: 360 }} tabIndex={0}>
+        <pre className={pageStyles.jsonBlock} style={{ marginTop: 10, maxHeight: 360 }} tabIndex={0} role="region" aria-label="Inline metadata payload">
           {meta.pretty ?? meta.raw}
         </pre>
       </details>
