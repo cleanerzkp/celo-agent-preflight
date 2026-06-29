@@ -5,6 +5,7 @@ import {
   getReadyListSnapshot,
   registryAddress
 } from "../../src/data/reports";
+import { shortHash } from "../../src/site";
 import styles from "../page.module.css";
 
 export const dynamic = "force-dynamic";
@@ -13,7 +14,7 @@ export default function AgentsPage() {
   const { entries: agents, summary } = getReadyListSnapshot();
 
   return (
-    <main className={styles.shell}>
+    <main id="main-content" className={styles.shell}>
       <section className={styles.section}>
         <div className={styles.sectionHeader}>
           <div>
@@ -78,10 +79,12 @@ export default function AgentsPage() {
                     <td><StatusBadge status={agent.celoActivity} /></td>
                     <td>{formatLatency(agent.latencyMs)}</td>
                     <td>{formatDate(agent.lastScanAt)}</td>
-                    <td className={styles.mono}>{agent.attestationTx?.slice(0, 10) ?? "none"}</td>
+                    <td className={styles.mono}>
+                      {agent.attestationTx ? shortHash(agent.attestationTx) : "none"}
+                    </td>
                     <td>
                       <Link href={agent.latestReportUrl as Route} className={styles.textLink}>
-                        {agent.latestReportHash.slice(0, 10)}
+                        {shortHash(agent.latestReportHash)}
                       </Link>
                     </td>
                   </tr>

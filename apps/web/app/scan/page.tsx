@@ -7,7 +7,7 @@ export const dynamic = "force-dynamic";
 
 export default function ScanPage() {
   return (
-    <main className={styles.shell}>
+    <main id="main-content" className={styles.shell}>
       <section className={styles.section}>
         <div className={styles.sectionHeader}>
           <div>

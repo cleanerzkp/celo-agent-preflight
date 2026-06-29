@@ -6,6 +6,7 @@ import {
   registryAddress
 } from "../src/data/reports";
 import { PreflightVerifier } from "../src/components/preflight-verifier";
+import { SITE, shortHash } from "../src/site";
 
 import styles from "./page.module.css";
 
@@ -16,30 +17,18 @@ export default function HomePage() {
   const { entries: agents, reports, summary } = snapshot;
 
   return (
-    <main className={styles.shell}>
-      <nav className={styles.nav} aria-label="Primary">
-        <Link href="/" className={styles.brand}>
-          <span className={styles.brandMark}>PF</span>
-          <span>Celo Agent Preflight</span>
-        </Link>
-        <div className={styles.navLinks}>
-          <Link href={"/scan" as Route}>Scan</Link>
-          <Link href="/agents">ReadyList</Link>
-          <Link href="/api/agents">API</Link>
-        </div>
-      </nav>
-
+    <main id="main-content" className={styles.shell}>
       <section className={styles.hero}>
         <div className={styles.heroCopy}>
           <p className={styles.eyebrow}>ReadyList for Celo agents</p>
-          <h1>Celo Agent Preflight</h1>
+          <h1>{SITE.name}</h1>
           <p className={styles.lede}>
             Deterministic Preflight Reports for ERC-8004
             metadata, MCP/A2A endpoints, x402 payment routes, Self Agent ID status,
             and Celo onchain evidence.
           </p>
           <div className={styles.actionRow}>
-            <Link href={"/scan" as Route} className={styles.primaryAction}>
+            <Link href={"/scan" as Route} className={`${styles.primaryAction} onGreen`}>
               <span>Run scan</span>
               <span aria-hidden="true">-&gt;</span>
             </Link>
@@ -246,10 +235,6 @@ function EmptyState({
       <span>{body}</span>
     </div>
   );
-}
-
-function shortHash(hash: string): string {
-  return `${hash.slice(0, 8)}...${hash.slice(-6)}`;
 }
 
 function formatDate(input: string): string {

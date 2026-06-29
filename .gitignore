@@ -2,6 +2,7 @@ node_modules/
 .turbo/
 .next/
 .vercel/
+.polish-baseline/
 out/
 cache/
 broadcast/

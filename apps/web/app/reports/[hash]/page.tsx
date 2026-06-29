@@ -8,6 +8,7 @@ import {
 } from "@celo-agent-preflight/report-schema";
 
 import { getReportByHash } from "../../../src/data/reports";
+import { celoscanTx } from "../../../src/site";
 import styles from "../../page.module.css";
 
 export const dynamic = "force-dynamic";
@@ -31,13 +32,12 @@ export default async function ReportPage({
   const canonical = canonicalJson(toHashableReport(report));
   const recomputedHash = hashPreflightReport(report);
   const hashVerified = report.reportHash === recomputedHash;
-  const attestationUrl = formatExplorerUrl(
-    report.attestation?.chainId,
-    report.attestation?.txHash
-  );
+  const attestationUrl = report.attestation?.txHash
+    ? celoscanTx(report.attestation.txHash, report.attestation.chainId)
+    : undefined;
 
   return (
-    <main className={styles.shell}>
+    <main id="main-content" className={styles.shell}>
       <section className={styles.section}>
         <div className={styles.sectionHeader}>
           <div>
@@ -110,19 +110,4 @@ export default async function ReportPage({
       </section>
     </main>
   );
-}
-
-function formatExplorerUrl(
-  chainId: number | undefined,
-  txHash: string | undefined
-): string | undefined {
-  if (!txHash) {
-    return undefined;
-  }
-
-  if (chainId === 11142220) {
-    return `https://sepolia.celoscan.io/tx/${txHash}`;
-  }
-
-  return `https://celoscan.io/tx/${txHash}`;
 }
