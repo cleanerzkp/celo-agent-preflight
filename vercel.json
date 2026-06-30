@@ -1,7 +1,7 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "buildCommand": "pnpm --filter @celo-agent-preflight/web build",
-  "installCommand": "pnpm install --frozen-lockfile",
   "framework": "nextjs",
+  "installCommand": "pnpm install --frozen-lockfile",
+  "buildCommand": "pnpm --filter @celo-agent-preflight/web... build",
   "outputDirectory": "apps/web/.next"
 }
