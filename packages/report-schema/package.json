@@ -17,7 +17,7 @@
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {
-    "viem": "^2.53.1",
+    "viem": "^2.54.0",
     "zod": "^4.4.3"
   },
   "devDependencies": {

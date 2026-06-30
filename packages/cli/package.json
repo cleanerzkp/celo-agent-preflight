@@ -23,7 +23,7 @@
   "dependencies": {
     "@celo-agent-preflight/preflight-core": "workspace:*",
     "@celo-agent-preflight/report-schema": "workspace:*",
-    "viem": "^2.53.1"
+    "viem": "^2.54.0"
   },
   "devDependencies": {
     "@types/node": "^24.10.0",
