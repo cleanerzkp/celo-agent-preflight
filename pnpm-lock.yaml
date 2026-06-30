@@ -22,8 +22,8 @@ importers:
         specifier: ^1.29.0
         version: 1.29.0(zod@4.4.3)
       '@x402/evm':
-        specifier: ^2.16.0
-        version: 2.16.0(bufferutil@4.1.0)(typescript@5.9.3)(utf-8-validate@5.0.10)
+        specifier: ^2.17.0
+        version: 2.17.0(bufferutil@4.1.0)(typescript@5.9.3)(utf-8-validate@5.0.10)
       viem:
         specifier: ^2.53.1
         version: 2.53.1(bufferutil@4.1.0)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@4.4.3)
@@ -1627,8 +1627,11 @@ packages:
   '@x402/core@2.16.0':
     resolution: {integrity: sha512-7MjwOEiE6ICAYtOsK9vQl66Ho4jERDuuoRg/No2Nc2GQ7y/M/yu4DJ65LzeBycQE+Qrg2RqQG7KR51tyT+hzjQ==}
 
-  '@x402/evm@2.16.0':
-    resolution: {integrity: sha512-DGcwATWosIb3hmO/CfWASrn+xbxp7KQyzmMPcIW23XuDjo9YPVRElZWtHBur3euakdM021Hl8SPF1zR0G+W4hw==}
+  '@x402/core@2.17.0':
+    resolution: {integrity: sha512-BBooe9Kewl5KLaKadElFwhZzZ+n/X/m2djzGtc7OY51D8fk2vHTVvDZtBFEJYdJxtQoUZMKX73hew0ss81FENQ==}
+
+  '@x402/evm@2.17.0':
+    resolution: {integrity: sha512-MjeouRdVJ1Y20Ikk03RHlnyOuo2FRkh0Nnrxt8aku2qt5fr5M7U8pUGn5iR6aFfRK3xlh48bp0Kypv1zjKuegw==}
 
   abitype@1.0.6:
     resolution: {integrity: sha512-MMSqYh4+C/aVqI2RQaWqbvI4Kxo5cQV40WQ4QFtDnNzCkqChm8MuENhElmynZlO0qUy/ObkEUaXtKqYnx1Kp3A==}
@@ -4775,9 +4778,13 @@ snapshots:
     dependencies:
       zod: 3.25.76
 
-  '@x402/evm@2.16.0(bufferutil@4.1.0)(typescript@5.9.3)(utf-8-validate@5.0.10)':
+  '@x402/core@2.17.0':
     dependencies:
-      '@x402/core': 2.16.0
+      zod: 3.25.76
+
+  '@x402/evm@2.17.0(bufferutil@4.1.0)(typescript@5.9.3)(utf-8-validate@5.0.10)':
+    dependencies:
+      '@x402/core': 2.17.0
       viem: 2.53.1(bufferutil@4.1.0)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@3.25.76)
       zod: 3.25.76
     transitivePeerDependencies:
