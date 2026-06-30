@@ -97,26 +97,28 @@ export async function assertSafeHttpUrl(url: URL): Promise<void> {
 }
 
 export async function resolveSafeHttpUrl(url: URL): Promise<PinnedDnsRecord | undefined> {
-  if (url.protocol !== "https:" && url.protocol !== "http:") {
-    throw new Error(`Unsupported URL protocol: ${url.protocol}`);
+  if (url.protocol !== "https:") {
+    throw new Error(`Unsupported URL protocol: ${url.protocol}. Use HTTPS.`);
   }
 
   if (url.username || url.password) {
     throw new Error("URLs with embedded credentials are not allowed.");
   }
 
-  if (isBlockedHostname(url.hostname)) {
-    throw new Error(`Blocked internal hostname: ${url.hostname}`);
+  const hostname = normalizeHostname(url.hostname);
+
+  if (isBlockedHostname(hostname)) {
+    throw new Error(`Blocked internal hostname: ${hostname}`);
   }
 
-  const literalFamily = isIP(url.hostname);
+  const literalFamily = isIP(hostname);
 
   if (literalFamily !== 0) {
-    assertSafeIp(url.hostname);
+    assertSafeIp(hostname);
     return undefined;
   }
 
-  const addresses = await lookup(url.hostname, { all: true, verbatim: true });
+  const addresses = await lookup(hostname, { all: true, verbatim: true });
 
   for (const { address } of addresses) {
     assertSafeIp(address);
@@ -125,7 +127,7 @@ export async function resolveSafeHttpUrl(url: URL): Promise<PinnedDnsRecord | un
   const firstAddress = addresses[0];
 
   if (!firstAddress) {
-    throw new Error(`DNS lookup returned no addresses for ${url.hostname}.`);
+    throw new Error(`DNS lookup returned no addresses for ${hostname}.`);
   }
 
   return normalizeDnsRecord(firstAddress.address, firstAddress.family);
@@ -167,7 +169,7 @@ function isRedirect(status: number): boolean {
 }
 
 function createPinnedDnsDispatcher(url: URL, record: PinnedDnsRecord): Dispatcher {
-  const expectedHostname = url.hostname.toLowerCase();
+  const expectedHostname = normalizeHostname(url.hostname).toLowerCase();
   const agent = new Agent();
 
   return agent.compose(
@@ -186,6 +188,12 @@ function createPinnedDnsDispatcher(url: URL, record: PinnedDnsRecord): Dispatche
       }
     })
   );
+}
+
+function normalizeHostname(hostname: string): string {
+  return hostname.startsWith("[") && hostname.endsWith("]")
+    ? hostname.slice(1, -1)
+    : hostname;
 }
 
 function isBlockedHostname(hostname: string): boolean {
@@ -231,16 +239,30 @@ function createBlockedIpList(): BlockList {
 
   blockList.addSubnet("0.0.0.0", 8, "ipv4");
   blockList.addSubnet("10.0.0.0", 8, "ipv4");
+  blockList.addSubnet("100.64.0.0", 10, "ipv4");
   blockList.addSubnet("127.0.0.0", 8, "ipv4");
   blockList.addSubnet("169.254.0.0", 16, "ipv4");
   blockList.addSubnet("172.16.0.0", 12, "ipv4");
+  blockList.addSubnet("192.0.0.0", 24, "ipv4");
+  blockList.addSubnet("192.0.2.0", 24, "ipv4");
+  blockList.addSubnet("192.88.99.0", 24, "ipv4");
   blockList.addSubnet("192.168.0.0", 16, "ipv4");
+  blockList.addSubnet("198.18.0.0", 15, "ipv4");
+  blockList.addSubnet("198.51.100.0", 24, "ipv4");
+  blockList.addSubnet("203.0.113.0", 24, "ipv4");
   blockList.addSubnet("224.0.0.0", 4, "ipv4");
   blockList.addSubnet("240.0.0.0", 4, "ipv4");
   blockList.addAddress("::", "ipv6");
   blockList.addAddress("::1", "ipv6");
+  blockList.addSubnet("::ffff:0.0.0.0", 96, "ipv6");
+  blockList.addSubnet("64:ff9b::", 96, "ipv6");
+  blockList.addSubnet("100::", 64, "ipv6");
+  blockList.addSubnet("2001::", 23, "ipv6");
+  blockList.addSubnet("2001:db8::", 32, "ipv6");
+  blockList.addSubnet("2002::", 16, "ipv6");
   blockList.addSubnet("fc00::", 7, "ipv6");
   blockList.addSubnet("fe80::", 10, "ipv6");
+  blockList.addSubnet("ff00::", 8, "ipv6");
 
   return blockList;
 }

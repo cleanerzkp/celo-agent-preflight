@@ -15,6 +15,10 @@ export const CELO_X402_TOKENS = {
   }
 } as const;
 
+const CELO_MAINNET_X402_ASSETS = new Set(
+  Object.values(CELO_X402_TOKENS).map((token) => token.address.toLowerCase())
+);
+
 export type X402ProbeMode = "probe-only" | "owned-settlement-demo";
 
 export interface X402PaymentRequirement {
@@ -47,7 +51,9 @@ export function summarizeX402Probe(input: X402ProbeInput): X402ProbeSummary {
   const paymentRequired = input.statusCode === 402;
   const parsedBody = parseJsonObject(input.bodyText);
   const requirements = parsedBody ? extractRequirements(parsedBody) : [];
-  const network = requirements.find((requirement) => requirement.network)?.network;
+  const validRequirement = requirements.find(isValidCeloPaymentRequirement);
+  const network = validRequirement?.network ??
+    requirements.find((requirement) => requirement.network)?.network;
   const issues: string[] = [];
 
   if (!paymentRequired) {
@@ -62,8 +68,10 @@ export function summarizeX402Probe(input: X402ProbeInput): X402ProbeSummary {
     issues.push("HTTP 402 response did not include payment requirements.");
   }
 
-  if (requirements.length > 0 && !requirements.some(hasUsableRequirementShape)) {
-    issues.push("Payment requirements are missing network, asset, payTo, or amount fields.");
+  if (requirements.length > 0 && !validRequirement) {
+    issues.push(
+      "Payment requirements must include a Celo network, supported Celo asset, recipient address, and positive integer amount."
+    );
   }
 
   return {
@@ -71,7 +79,7 @@ export function summarizeX402Probe(input: X402ProbeInput): X402ProbeSummary {
     endpoint: input.endpoint,
     ...(input.statusCode === undefined ? {} : { statusCode: input.statusCode }),
     paymentRequired,
-    validPaymentDetails: paymentRequired && requirements.some(hasUsableRequirementShape),
+    validPaymentDetails: paymentRequired && Boolean(validRequirement),
     ...(network ? { network } : {}),
     requirements,
     issues
@@ -110,12 +118,14 @@ function extractRequirements(body: Record<string, unknown>): X402PaymentRequirem
     }));
 }
 
-function hasUsableRequirementShape(requirement: X402PaymentRequirement): boolean {
+function isValidCeloPaymentRequirement(requirement: X402PaymentRequirement): boolean {
+  const network = normalizeCeloNetwork(requirement.network);
+
   return Boolean(
-    requirement.network &&
-      requirement.asset &&
-      requirement.payTo &&
-      requirement.maxAmountRequired
+    network &&
+      isSupportedCeloAsset(requirement.asset, network) &&
+      isEvmAddress(requirement.payTo) &&
+      isPositiveIntegerAmount(requirement.maxAmountRequired)
   );
 }
 
@@ -139,4 +149,51 @@ function isRecord(input: unknown): input is Record<string, unknown> {
 
 function optionalString(key: string, value: unknown): Record<string, string> {
   return typeof value === "string" && value.length > 0 ? { [key]: value } : {};
+}
+
+function normalizeCeloNetwork(
+  network: string | undefined
+): "celo" | "celo-sepolia" | undefined {
+  if (!network) {
+    return undefined;
+  }
+
+  const normalized = network.toLowerCase();
+
+  if (normalized === "celo" || normalized === "eip155:42220") {
+    return "celo";
+  }
+
+  if (normalized === "celo-sepolia" || normalized === "eip155:11142220") {
+    return "celo-sepolia";
+  }
+
+  return undefined;
+}
+
+function isSupportedCeloAsset(
+  asset: string | undefined,
+  network: "celo" | "celo-sepolia"
+): boolean {
+  if (!isEvmAddress(asset)) {
+    return false;
+  }
+
+  if (network === "celo") {
+    return CELO_MAINNET_X402_ASSETS.has(asset.toLowerCase());
+  }
+
+  return true;
+}
+
+function isEvmAddress(input: string | undefined): input is Address {
+  return Boolean(input && /^0x[a-fA-F0-9]{40}$/.test(input));
+}
+
+function isPositiveIntegerAmount(input: string | undefined): boolean {
+  if (!input || !/^\d+$/u.test(input)) {
+    return false;
+  }
+
+  return BigInt(input) > 0n;
 }

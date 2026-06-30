@@ -1,13 +1,17 @@
 import {
   runPreflight,
-  type PreflightTarget,
-  type RunPreflightOptions
 } from "@celo-agent-preflight/preflight-core";
-import type { Address } from "viem";
 
 import { publishReport } from "../../../src/data/reports";
-
-const MAX_SCAN_BODY_BYTES = 16_384;
+import {
+  authorizeScanRequest,
+  consumeScanRateLimit,
+  parseScanOptions,
+  parseScanTarget,
+  readJsonRequestBody,
+  reserveScanSlot,
+  scanApiEnabled
+} from "../../../src/scan-api";
 
 export async function POST(request: Request) {
   if (scanApiEnabled() === false) {
@@ -20,30 +24,40 @@ export async function POST(request: Request) {
     return Response.json({ error: auth.error }, { status: 401 });
   }
 
-  const contentLength = request.headers.get("content-length");
+  const rateLimit = consumeScanRateLimit(request);
 
-  if (contentLength && Number(contentLength) > MAX_SCAN_BODY_BYTES) {
-    return Response.json({ error: "Request body is too large." }, { status: 413 });
+  if (!rateLimit.ok) {
+    return Response.json(
+      { error: rateLimit.error },
+      {
+        status: rateLimit.status,
+        headers: { "Retry-After": String(rateLimit.retryAfterSeconds) }
+      }
+    );
   }
 
-  let body: unknown;
+  const body = await readJsonRequestBody(request);
 
-  try {
-    body = await request.json();
-  } catch {
-    return Response.json({ error: "Request body must be JSON." }, { status: 400 });
+  if (!body.ok) {
+    return Response.json({ error: body.error }, { status: body.status });
   }
 
-  const target = parseScanTarget(body);
+  const target = parseScanTarget(body.value);
 
   if (!target.ok) {
     return Response.json({ error: target.error }, { status: 400 });
   }
 
-  const options = parseScanOptions(body);
+  const options = parseScanOptions(body.value);
 
   if (!options.ok) {
     return Response.json({ error: options.error }, { status: 400 });
+  }
+
+  const scanSlot = reserveScanSlot();
+
+  if (!scanSlot.ok) {
+    return Response.json({ error: scanSlot.error }, { status: scanSlot.status });
   }
 
   try {
@@ -63,143 +77,7 @@ export async function POST(request: Request) {
       { error: error instanceof Error ? error.message : String(error) },
       { status: 500 }
     );
+  } finally {
+    scanSlot.release();
   }
-}
-
-type AuthResult =
-  | { readonly ok: true }
-  | { readonly ok: false; readonly error: string };
-
-function authorizeScanRequest(request: Request): AuthResult {
-  const apiKey = process.env.PREFLIGHT_SCAN_API_KEY ?? process.env.SCAN_API_KEY;
-
-  if (!apiKey && scanApiAllowsUnauthenticatedWrites()) {
-    return { ok: true };
-  }
-
-  const authorization = request.headers.get("authorization");
-  const providedApiKey = request.headers.get("x-api-key");
-
-  if (authorization === `Bearer ${apiKey}` || providedApiKey === apiKey) {
-    return { ok: true };
-  }
-
-  return { ok: false, error: "Missing or invalid scan API credentials." };
-}
-
-function scanApiEnabled(): boolean {
-  const value = process.env.PREFLIGHT_SCAN_API_ENABLED ?? process.env.SCAN_API_ENABLED;
-
-  if (value === undefined) {
-    return process.env.NODE_ENV !== "production";
-  }
-
-  return value !== "false";
-}
-
-function scanApiAllowsUnauthenticatedWrites(): boolean {
-  const value = process.env.PREFLIGHT_SCAN_API_ALLOW_UNAUTHENTICATED ??
-    process.env.SCAN_API_ALLOW_UNAUTHENTICATED;
-
-  if (value !== undefined) {
-    return value === "true";
-  }
-
-  return process.env.NODE_ENV !== "production" &&
-    process.env.SCAN_API_REQUIRE_KEY !== "true";
-}
-
-type ParseResult =
-  | { readonly ok: true; readonly value: PreflightTarget }
-  | { readonly ok: false; readonly error: string };
-
-type OptionsParseResult =
-  | { readonly ok: true; readonly value: RunPreflightOptions }
-  | { readonly ok: false; readonly error: string };
-
-function parseScanTarget(input: unknown): ParseResult {
-  if (!isRecord(input)) {
-    return { ok: false, error: "Request body must be an object." };
-  }
-
-  const chain = input.chain ?? "celo";
-
-  if (chain !== "celo" && chain !== "celo-sepolia") {
-    return { ok: false, error: "chain must be celo or celo-sepolia." };
-  }
-
-  const agentId = typeof input.agentId === "string" ? input.agentId : undefined;
-  const metadataUrl = typeof input.metadataUrl === "string" ? input.metadataUrl : undefined;
-
-  if (!agentId && !metadataUrl) {
-    return { ok: false, error: "agentId or metadataUrl is required." };
-  }
-
-  if (input.registry !== undefined && !isAddress(input.registry)) {
-    return { ok: false, error: "registry must be a 0x-prefixed EVM address." };
-  }
-
-  return {
-    ok: true,
-    value: {
-      chain,
-      ...(agentId ? { agentId } : {}),
-      ...(metadataUrl ? { metadataUrl } : {}),
-      ...(isAddress(input.registry) ? { registry: input.registry } : {})
-    }
-  };
-}
-
-function parseScanOptions(input: unknown): OptionsParseResult {
-  if (!isRecord(input)) {
-    return { ok: false, error: "Request body must be an object." };
-  }
-
-  if (
-    input.probeEndpoints !== undefined &&
-    typeof input.probeEndpoints !== "boolean"
-  ) {
-    return { ok: false, error: "probeEndpoints must be a boolean." };
-  }
-
-  if (
-    input.maxEndpointProbes !== undefined &&
-    !isBoundedInteger(input.maxEndpointProbes, 0, 20)
-  ) {
-    return { ok: false, error: "maxEndpointProbes must be an integer from 0 to 20." };
-  }
-
-  if (
-    input.generatedAt !== undefined &&
-    (typeof input.generatedAt !== "string" || Number.isNaN(Date.parse(input.generatedAt)))
-  ) {
-    return { ok: false, error: "generatedAt must be an ISO timestamp." };
-  }
-
-  return {
-    ok: true,
-    value: {
-      ...(typeof input.probeEndpoints === "boolean"
-        ? { probeEndpoints: input.probeEndpoints }
-        : {}),
-      ...(typeof input.maxEndpointProbes === "number"
-        ? { maxEndpointProbes: input.maxEndpointProbes }
-        : {}),
-      ...(typeof input.generatedAt === "string"
-        ? { generatedAt: input.generatedAt }
-        : {})
-    }
-  };
-}
-
-function isRecord(input: unknown): input is Record<string, unknown> {
-  return Boolean(input && typeof input === "object" && !Array.isArray(input));
-}
-
-function isBoundedInteger(input: unknown, min: number, max: number): input is number {
-  return typeof input === "number" && Number.isInteger(input) && input >= min && input <= max;
-}
-
-function isAddress(input: unknown): input is Address {
-  return typeof input === "string" && /^0x[a-fA-F0-9]{40}$/.test(input);
 }

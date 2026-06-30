@@ -142,6 +142,69 @@ test("runPreflight validates Celo x402 payment requirements", async () => {
   assert.equal(checkStatus(report, "x402.endpoint.probe"), "pass");
 });
 
+test("runPreflight fails x402 probes with non-settleable payment details", async () => {
+  const report = await runPreflight(
+    {
+      chain: "celo",
+      metadataUrl: dataJson({
+        type: "Agent",
+        name: "Payable Agent",
+        description: "Agent with a malformed x402 endpoint",
+        image: "ipfs://bafybeigdyrzt/image.png",
+        x402Support: true,
+        services: [{ type: "x402", url: "https://agent.example/pay" }]
+      })
+    },
+    {
+      generatedAt: GENERATED_AT,
+      fetchText: async (url) => ({
+        url,
+        statusCode: 402,
+        contentType: "application/json",
+        bodyText: JSON.stringify({
+          accepts: [
+            {
+              scheme: "exact",
+              network: "celo",
+              asset: "not-an-address",
+              payTo: "not-a-recipient",
+              maxAmountRequired: "nan"
+            }
+          ]
+        })
+      })
+    }
+  );
+
+  assert.equal(checkStatus(report, "x402.endpoint.probe"), "fail");
+});
+
+test("runPreflight treats 4xx endpoint probes as failed readiness evidence", async () => {
+  const report = await runPreflight(
+    {
+      chain: "celo",
+      metadataUrl: dataJson({
+        type: "Agent",
+        name: "Client Error Agent",
+        description: "Agent with a 404 endpoint",
+        image: "ipfs://bafybeigdyrzt/image.png",
+        services: [{ type: "mcp", url: "https://agent.example/missing" }]
+      })
+    },
+    {
+      generatedAt: GENERATED_AT,
+      fetchText: async (url) => ({
+        url,
+        statusCode: 404,
+        contentType: "text/plain",
+        bodyText: "not found"
+      })
+    }
+  );
+
+  assert.equal(checkStatus(report, "endpoint.1.reachable"), "fail");
+});
+
 function dataJson(value: unknown): string {
   return `data:application/json;base64,${Buffer.from(JSON.stringify(value)).toString("base64")}`;
 }

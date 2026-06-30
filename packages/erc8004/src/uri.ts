@@ -21,11 +21,7 @@ export async function resolveJsonUri(
   const maxBytes = options.maxBytes ?? 256_000;
 
   if (uri.startsWith("data:")) {
-    const body = decodeDataUri(uri);
-
-    if (body.byteLength > maxBytes) {
-      throw new Error(`Data URI exceeds ${maxBytes} bytes.`);
-    }
+    const body = decodeDataUri(uri, maxBytes);
 
     return {
       uri,
@@ -65,8 +61,8 @@ export function toIpfsGatewayUrl(uri: string, gatewayBaseUrl = DEFAULT_IPFS_GATE
   return new URL(path, ensureTrailingSlash(gatewayBaseUrl)).href;
 }
 
-function decodeDataUri(uri: string): Buffer {
-  const match = /^data:application\/json(?<base64>;base64)?,(?<data>.*)$/iu.exec(uri);
+function decodeDataUri(uri: string, maxBytes: number): Buffer {
+  const match = /^data:application\/json(?<base64>;base64)?,(?<data>[\s\S]*)$/iu.exec(uri);
 
   if (!match?.groups) {
     throw new Error("Only data:application/json URIs are supported.");
@@ -74,9 +70,57 @@ function decodeDataUri(uri: string): Buffer {
 
   const data = match.groups.data ?? "";
 
-  return match.groups.base64
-    ? Buffer.from(data, "base64")
-    : Buffer.from(decodeURIComponent(data), "utf8");
+  if (match.groups.base64) {
+    const decodedBytes = decodedBase64ByteLength(data);
+
+    if (decodedBytes > maxBytes) {
+      throw new Error(`Data URI exceeds ${maxBytes} bytes.`);
+    }
+
+    return Buffer.from(data, "base64");
+  }
+
+  return percentDecodeToBuffer(data, maxBytes);
+}
+
+function decodedBase64ByteLength(input: string): number {
+  const normalized = input.replace(/\s/gu, "");
+  const padding = normalized.endsWith("==") ? 2 : normalized.endsWith("=") ? 1 : 0;
+
+  return Math.max(0, Math.floor((normalized.length * 3) / 4) - padding);
+}
+
+function percentDecodeToBuffer(input: string, maxBytes: number): Buffer {
+  const bytes: number[] = [];
+
+  for (let index = 0; index < input.length;) {
+    if (input[index] === "%") {
+      const hex = input.slice(index + 1, index + 3);
+
+      if (!/^[\da-f]{2}$/iu.test(hex)) {
+        throw new Error("Data URI contains malformed percent encoding.");
+      }
+
+      bytes.push(Number.parseInt(hex, 16));
+      index += 3;
+    } else {
+      const codePoint = input.codePointAt(index);
+
+      if (codePoint === undefined) {
+        break;
+      }
+
+      const value = String.fromCodePoint(codePoint);
+      bytes.push(...Buffer.from(value, "utf8"));
+      index += value.length;
+    }
+
+    if (bytes.length > maxBytes) {
+      throw new Error(`Data URI exceeds ${maxBytes} bytes.`);
+    }
+  }
+
+  return Buffer.from(bytes);
 }
 
 function ensureTrailingSlash(input: string): string {

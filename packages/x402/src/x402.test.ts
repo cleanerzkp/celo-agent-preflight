@@ -36,7 +36,49 @@ test("summarizeX402Probe reports malformed payment details", () => {
 
   assert.equal(summary.paymentRequired, true);
   assert.equal(summary.validPaymentDetails, false);
-  assert.ok(summary.issues.some((issue) => issue.includes("missing network")));
+  assert.ok(summary.issues.some((issue) => issue.includes("supported Celo asset")));
+});
+
+test("summarizeX402Probe rejects non-settleable Celo payment details", () => {
+  const summary = summarizeX402Probe({
+    endpoint: "https://agent.example/pay",
+    statusCode: 402,
+    bodyText: JSON.stringify({
+      accepts: [
+        {
+          scheme: "exact",
+          network: "celo",
+          asset: "not-an-address",
+          payTo: "not-a-recipient",
+          maxAmountRequired: "nan"
+        }
+      ]
+    })
+  });
+
+  assert.equal(summary.paymentRequired, true);
+  assert.equal(summary.validPaymentDetails, false);
+  assert.ok(summary.issues.some((issue) => issue.includes("supported Celo asset")));
+});
+
+test("summarizeX402Probe rejects unsupported Celo mainnet assets", () => {
+  const summary = summarizeX402Probe({
+    endpoint: "https://agent.example/pay",
+    statusCode: 402,
+    bodyText: JSON.stringify({
+      accepts: [
+        {
+          scheme: "exact",
+          network: "eip155:42220",
+          asset: "0x0000000000000000000000000000000000000001",
+          payTo: "0x0000000000000000000000000000000000000002",
+          maxAmountRequired: "10000"
+        }
+      ]
+    })
+  });
+
+  assert.equal(summary.validPaymentDetails, false);
 });
 
 test("summarizeX402Probe reports endpoints that do not require payment", () => {

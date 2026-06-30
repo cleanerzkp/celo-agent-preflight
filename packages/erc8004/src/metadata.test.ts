@@ -99,6 +99,15 @@ test("resolveJsonUri enforces maxBytes for data application json URIs", async ()
   );
 });
 
+test("resolveJsonUri enforces maxBytes while percent-decoding data URIs", async () => {
+  await assert.rejects(
+    () => resolveJsonUri(`data:application/json,${encodeURIComponent(JSON.stringify({
+      name: "Preflight Demo"
+    }))}`, { maxBytes: 4 }),
+    /Data URI exceeds/
+  );
+});
+
 test("toIpfsGatewayUrl maps ipfs URIs to gateway URLs", () => {
   assert.equal(
     toIpfsGatewayUrl("ipfs://bafybeigdyrzt/example.json", "https://gateway.example/ipfs"),
@@ -113,11 +122,16 @@ test("toIpfsGatewayUrl rejects path escapes", () => {
 });
 
 test("assertSafeHttpUrl blocks localhost and private IP targets", async () => {
+  await assert.rejects(() => assertSafeHttpUrl(new URL("http://agent.example/agent.json")));
   await assert.rejects(() => assertSafeHttpUrl(new URL("https://localhost/agent.json")));
   await assert.rejects(() => assertSafeHttpUrl(new URL("https://127.0.0.1/agent.json")));
   await assert.rejects(() => assertSafeHttpUrl(new URL("https://10.0.0.4/agent.json")));
+  await assert.rejects(() => assertSafeHttpUrl(new URL("https://100.64.0.1/agent.json")));
+  await assert.rejects(() => assertSafeHttpUrl(new URL("https://198.18.0.1/agent.json")));
+  await assert.rejects(() => assertSafeHttpUrl(new URL("https://192.0.2.1/agent.json")));
   await assert.rejects(() => assertSafeHttpUrl(new URL("https://[::ffff:192.168.0.1]/agent.json")));
   await assert.rejects(() => assertSafeHttpUrl(new URL("https://[0:0:0:0:0:0:0:1]/agent.json")));
+  await assert.rejects(() => assertSafeHttpUrl(new URL("https://[2001:db8::1]/agent.json")));
 });
 
 test("readIdentityRegistryAgent reads one consistent block snapshot", async () => {

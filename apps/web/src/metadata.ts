@@ -75,3 +75,13 @@ export function decodeMetadataUri(uri: string | undefined): DecodedMetadata {
 
   return { kind: "text", raw };
 }
+
+export function metadataImageSrc(image: string | undefined): string | undefined {
+  const value = image?.trim();
+
+  if (!value || value.startsWith("//")) {
+    return undefined;
+  }
+
+  return value.startsWith("/") ? value : undefined;
+}

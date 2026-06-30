@@ -7,7 +7,7 @@ import type { PreflightReport } from "@celo-agent-preflight/report-schema";
 
 import { getReportForAgent } from "../../../../../src/data/reports";
 import { celoscanAddress, shortHash } from "../../../../../src/site";
-import { decodeMetadataUri } from "../../../../../src/metadata";
+import { decodeMetadataUri, metadataImageSrc } from "../../../../../src/metadata";
 import { ArrowRight } from "../../../../../src/components/icons";
 import styles from "../../../../page.module.css";
 import reportStyles from "../../../../reports/[hash]/report.module.css";
@@ -53,6 +53,7 @@ export default async function AgentPage({
 
   const name = reportAgentName(report);
   const meta = decodeMetadataUri(report.subject.metadataURI);
+  const imageSrc = metadataImageSrc(meta.image);
 
   return (
     <main id="main-content" className={styles.shell}>
@@ -64,11 +65,11 @@ export default async function AgentPage({
           </div>
         </div>
 
-        {meta.description || meta.image ? (
+        {meta.description || imageSrc ? (
           <div className={reportStyles.identityCard}>
-            {meta.image && /^https?:\/\//.test(meta.image) ? (
+            {imageSrc ? (
               // eslint-disable-next-line @next/next/no-img-element
-              <img className={reportStyles.identityImg} src={meta.image} alt="" />
+              <img className={reportStyles.identityImg} src={imageSrc} alt="" />
             ) : null}
             <div className={reportStyles.identityBody}>
               {name ? <span className={reportStyles.identityName}>{name}</span> : null}

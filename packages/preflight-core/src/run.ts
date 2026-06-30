@@ -663,14 +663,17 @@ async function probeEndpoint({
 
   try {
     const response = await fetchText(url, getFetchOptions(options));
+    const isClientError = response.statusCode >= 400 && response.statusCode < 500;
     const isServerError = response.statusCode >= 500;
+    const status = isClientError ? "fail" : isServerError ? "warn" : "pass";
+    const severity = isClientError || isServerError ? "medium" : "low";
 
     return check({
       id: `endpoint.${index + 1}.reachable`,
       category: endpointCategory(service),
       title: `${service.type} endpoint responds`,
-      status: isServerError ? "warn" : "pass",
-      severity: isServerError ? "medium" : "low",
+      status,
+      severity,
       summary: `Endpoint responded with HTTP ${response.statusCode}.`,
       evidence: [
         {
@@ -681,7 +684,10 @@ async function probeEndpoint({
           ...(response.durationMs === undefined ? {} : { durationMs: response.durationMs }),
           fetchedAt: generatedAt
         }
-      ]
+      ],
+      ...(isClientError
+        ? { remediation: "Return a successful 2xx response for readiness probes." }
+        : {})
     });
   } catch (error) {
     return check({
@@ -736,8 +742,8 @@ async function addX402ProbeCheck({
         title: "x402 endpoint returns payment requirements",
         status: "fail",
         severity: "high",
-        summary: "x402 is declared but no HTTP endpoint is available to probe.",
-        remediation: "Declare an x402 service URL or a payable service endpoint."
+        summary: "x402 is declared but no HTTPS endpoint is available to probe.",
+        remediation: "Declare an HTTPS x402 service URL or a payable HTTPS service endpoint."
       })
     );
     return;
@@ -985,7 +991,7 @@ function httpOrigin(input: string | undefined): string | undefined {
   try {
     const url = new URL(input);
 
-    if (url.protocol !== "https:" && url.protocol !== "http:") {
+    if (url.protocol !== "https:") {
       return undefined;
     }
 

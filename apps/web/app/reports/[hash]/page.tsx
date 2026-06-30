@@ -13,7 +13,7 @@ import {
 
 import { getReportByHash } from "../../../src/data/reports";
 import { SITE, celoscanAddress, celoscanTx, shortHash } from "../../../src/site";
-import { decodeMetadataUri } from "../../../src/metadata";
+import { decodeMetadataUri, metadataImageSrc } from "../../../src/metadata";
 import { CopyButton } from "../../../src/components/copy-button";
 import { CheckTick } from "../../../src/components/icons";
 import pageStyles from "../../page.module.css";
@@ -95,6 +95,7 @@ export default async function ReportPage({
   const counts = countStatuses(report.checks);
   const grouped = groupByCategory(report.checks);
   const meta = decodeMetadataUri(report.subject.metadataURI);
+  const imageSrc = metadataImageSrc(meta.image);
   const attestationTxUrl = report.attestation?.txHash
     ? celoscanTx(report.attestation.txHash, report.attestation.chainId)
     : undefined;
@@ -139,12 +140,12 @@ export default async function ReportPage({
         </div>
       </section>
 
-      {meta.kind === "data-json" && (meta.name || meta.image) ? (
+      {meta.kind === "data-json" && (meta.name || meta.description || imageSrc) ? (
         <section className={`${pageStyles.section} ${pageStyles.sectionTight}`}>
           <div className={styles.identityCard}>
-            {meta.image && /^https?:\/\//.test(meta.image) ? (
+            {imageSrc ? (
               // eslint-disable-next-line @next/next/no-img-element
-              <img className={styles.identityImg} src={meta.image} alt="" />
+              <img className={styles.identityImg} src={imageSrc} alt="" />
             ) : null}
             <div className={styles.identityBody}>
               {meta.name ? <span className={styles.identityName}>{meta.name}</span> : null}
