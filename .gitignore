@@ -1,18 +1,42 @@
+# Dependencies
 node_modules/
-.turbo/
-.next/
-.vercel/
-.polish-baseline/
-out/
-cache/
-broadcast/
-lib/
+.pnpm-store/
+
+# Local environment and credentials
 .env
 .env.*
 !.env.example
 .dev.vars
-.claude/settings.local.json
+*.local
+*.key
+*.pem
+*.p12
+
+# Build and test output
+.turbo/
+.next/
+out/
 dist/
 coverage/
 lcov.info
 *.tsbuildinfo
+*.log
+
+# Platform/tool state
+.vercel/
+.wrangler/
+.polish-baseline/
+.claude/settings.local.json
+
+# Foundry output and vendored install cache
+cache/
+out/
+broadcast/
+lib/
+contracts/cache/
+contracts/out/
+contracts/broadcast/
+contracts/lib/
+
+# OS/editor noise
+.DS_Store
