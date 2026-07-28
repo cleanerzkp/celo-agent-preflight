@@ -14,7 +14,7 @@
     "@celo-agent-preflight/preflight-core": "workspace:*",
     "@celo-agent-preflight/readylist": "workspace:*",
     "@celo-agent-preflight/report-schema": "workspace:*",
-    "next": "^16.2.9",
+    "next": "^16.2.11",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },
