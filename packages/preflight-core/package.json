@@ -22,7 +22,7 @@
     "@celo-agent-preflight/report-schema": "workspace:*",
     "@celo-agent-preflight/self-agent-id": "workspace:*",
     "@celo-agent-preflight/x402": "workspace:*",
-    "zod": "^4.4.3"
+    "zod": "^4.5.4"
   },
   "devDependencies": {
     "@types/node": "^24.10.0",
